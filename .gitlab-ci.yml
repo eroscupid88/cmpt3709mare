@@ -26,6 +26,7 @@ variables:
 
 # Packages installation before running script
 before_script:
+  - cd client
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
 
@@ -75,23 +76,6 @@ stages:
   - deploy
 
 
-lintDebug:
-  tags:
-    - docker
-  stage: build
-  script:
-    - ./client/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-assembleDebug:
-  tags:
-    - docker
-  stage: build
-  script:
-    - ./client/gradlew assembleDebug
-  artifacts:
-    paths:
-    - app/build/outputs/
-
 build1:
   tags:
     - docker
@@ -99,12 +83,6 @@ build1:
   script:
     - echo "Do your build here"
 
-debugTests:
-  tags:
-    - docker
-  stage: test
-  script:
-    - ./client/gradlew -Pci --console=plain :app:testDebug
 
 test1:
   tags:
