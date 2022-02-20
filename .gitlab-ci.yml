@@ -58,7 +58,7 @@ before_script:
   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
 
   # Not necessary, but just for surity
-  - chmod +x ./client/gradlew
+  - chmod +x ./gradlew
 
 # Basic android and gradle stuff
 # Check linting
@@ -76,11 +76,15 @@ stages:
 
 
 lintDebug:
+  tags:
+    - docker
   stage: build
   script:
     - ./client/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebug:
+  tags:
+    - docker
   stage: build
   script:
     - ./client/gradlew assembleDebug
@@ -96,6 +100,8 @@ build1:
     - echo "Do your build here"
 
 debugTests:
+  tags:
+    - docker
   stage: test
   script:
     - ./client/gradlew -Pci --console=plain :app:testDebug
