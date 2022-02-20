@@ -60,6 +60,7 @@ before_script:
 
   # Not necessary, but just for surity
   - chmod +x ./gradlew
+  - cd ..
 
 # Basic android and gradle stuff
 # Check linting
@@ -74,6 +75,32 @@ stages:
   - build
   - test
   - deploy
+
+
+# Basic android and gradle stuff
+# Check linting
+lintDebug:
+  interruptible: true
+  stage: build
+  script:
+    - ./client/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+
+# Make Project
+assembleDebug:
+  interruptible: true
+  stage: build
+  script:
+    - ./client/gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+# Run all tests, if any fails, interrupt the pipeline(fail it)
+debugTests:
+  interruptible: true
+  stage: test
+  script:
+    - ./client/gradlew -Pci --console=plain :app:testDebug
 
 
 build1:
