@@ -58,7 +58,7 @@ before_script:
   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
 
   # Not necessary, but just for surity
-  - chmod +x ./gradlew
+  - chmod +x ./client/gradlew
 
 # Basic android and gradle stuff
 # Check linting
@@ -78,12 +78,12 @@ stages:
 lintDebug:
   stage: build
   script:
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - ./client/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebug:
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./client/gradlew assembleDebug
   artifacts:
     paths:
     - app/build/outputs/
@@ -98,7 +98,7 @@ build1:
 debugTests:
   stage: test
   script:
-    - ./gradlew -Pci --console=plain :app:testDebug
+    - ./client/gradlew -Pci --console=plain :app:testDebug
 
 test1:
   tags:
