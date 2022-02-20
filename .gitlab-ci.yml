@@ -77,9 +77,18 @@ stages:
   - deploy
 
 
+build1:
+  tags:
+    - docker
+  stage: build
+  script:
+    - echo "Do your build here"
+
 # Basic android and gradle stuff
 # Check linting
 lintDebug:
+  tags:
+    - docker
   interruptible: true
   stage: build
   script:
@@ -87,6 +96,8 @@ lintDebug:
 
 # Make Project
 assembleDebug:
+  tags:
+    - docker
   interruptible: true
   stage: build
   script:
@@ -97,18 +108,14 @@ assembleDebug:
 
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 debugTests:
+  tags:
+    - docker
   interruptible: true
   stage: test
   script:
     - ./client/gradlew -Pci --console=plain :app:testDebug
 
 
-build1:
-  tags:
-    - docker
-  stage: build
-  script:
-    - echo "Do your build here"
 
 
 test1:
