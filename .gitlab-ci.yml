@@ -61,15 +61,11 @@ before_script:
   # Not necessary, but just for surity
   - chmod +x ./gradlew
   - cd ..
+  - ls -la
+  - PWD
 
 # Basic android and gradle stuff
 # Check linting
-
-
-after_script:
-    
-  - echo "After script section"
-  - echo "For example you might do some cleanup here"
 
 stages:
   - build
