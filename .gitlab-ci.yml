@@ -11,8 +11,8 @@ image: unitedclassifiedsapps/gitlab-ci-android-fastlane
 
 cache:
   paths:
-    - ./client/m2/
-    - ./client/gradle/
+    - ./m2/
+    - ./gradle/
 
 variables:
   ANDROID_COMPILE_SDK: "31"
@@ -20,8 +20,8 @@ variables:
   ANDROID_SDK_TOOLS: "7562133"
 
 before_script:
-  - export GRADLE_USER_HOME=$(pwd)/client/.gradle
-  - chmod +x ./client/gradlew
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
     # use yes to accept all licenses
   - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses || true
 
@@ -33,8 +33,8 @@ build:
     - docker
   stage: build
   script:
-    - ./client/gradlew assembleDebug
+    - ./gradlew assembleDebug
   artifacts:
     paths:
-      - ./client/app/build/outputs/
+      - app/build/outputs/
 
