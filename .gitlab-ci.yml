@@ -163,7 +163,7 @@ build:
     - docker
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./client/gradlew assembleDebug
   artifacts:
     paths:
       - client/app/build/outputs/
