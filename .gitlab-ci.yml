@@ -166,7 +166,7 @@ build:
     - ./client/gradlew assembleDebug
   artifacts:
     paths:
-      - client/app/build/outputs/
+      - ./client/app/build/outputs/
 
 
 
