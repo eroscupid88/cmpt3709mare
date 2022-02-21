@@ -99,7 +99,6 @@ qa_instrumentation_tests:
   stage: test
   script:
     - emulator -avd testAVD -no-audio -no-window &
-    -
     - ./ci/android-wait-for-emulator.sh
     - adb devices
     - adb shell settings put global window_animation_scale 0 &
