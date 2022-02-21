@@ -104,7 +104,7 @@ assembleDebug:
     - ./client/gradlew assembleDebug
   artifacts:
     paths:
-      - app/build/outputs/
+      - client/app/build/outputs/
 
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 debugTests:
@@ -118,25 +118,25 @@ debugTests:
 
 
 
-test1:
-  tags:
-    - docker
-  stage: test
-  script:
-    - echo "Do a test here"
-    - echo "For example run a test suite"
+# test1:
+#   tags:
+#     - docker
+#   stage: test
+#   script:
+#     - echo "Do a test here"
+#     - echo "For example run a test suite"
 
-test2:
-  tags:
-    - docker
-  stage: test
-  script:
-    - echo "Do another parallel test here"
-    - echo "For example run a lint test"
+# test2:
+#   tags:
+#     - docker
+#   stage: test
+#   script:
+#     - echo "Do another parallel test here"
+#     - echo "For example run a lint test"
 
-deploy1:
-  tags:
-    - docker
-  stage: deploy
-  script:
-    - echo "Do your deploy here"
+# deploy1:
+#   tags:
+#     - docker
+#   stage: deploy
+#   script:
+#     - echo "Do your deploy here"
