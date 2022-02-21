@@ -10,11 +10,12 @@
 
 
 image: openjdk:11-jdk
-
 cache:
+  key: "$CI_JOB_NAME"
   paths:
     - ./m2/
-    - ./gradle/
+    - ./gradle/wrapper
+    - ./gradle/caches
 
 variables:
   ANDROID_COMPILE_SDK: "31"
@@ -47,6 +48,7 @@ before_script:
 
 stages:
   - build
+  - quality
   - test
 
 qa_build:
@@ -66,6 +68,36 @@ qa_lintDebug:
   script:
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
+qa_storage lint:
+  tags:
+    - docker
+  stage: quality
+  script:
+    - ./gradlew storage:lintDebug
+
+qa_app ktlint:
+  tags:
+    - docker
+  stage: quality
+  script:
+    - ./gradlew app:ktlintCheck
+  artifacts:
+    when: on_failure
+    paths:
+      - app/build/reports/ktlint
+
+
+qa_storage ktlint:
+  tags:
+    - docker
+  stage: quality
+  script:
+    - ./gradlew storage:ktlintCheck
+  artifacts:
+    when: on_failure
+    paths:
+      - storage/build/reports/ktlint
+
 qa_debugTests:
   tags:
     - docker
@@ -78,23 +110,34 @@ qa_unitTests:
     - docker
   stage: test
   script:
-    - ./gradlew test
+    - ./gradlew app:test
+  artifacts:
+    when: always
+    reports:
+      junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
 
-qa_instrumentedTests:
+qa_storage_unit_tests:
   tags:
     - docker
   stage: test
   script:
-    - apt-get --quiet update --yes
-    - apt-get --quiet install --yes libx11-dev libpulse0 libgl1 libnss3 libxcomposite-dev libxcursor1 libasound2
-    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
-    - chmod +x android-wait-for-emulator
-    - android-sdk-linux/tools/bin/sdkmanager --update > update.log
-    - android-sdk-linux/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"  > installEmulator.log
-    - echo no | android-sdk-linux/tools/bin/avdmanager create avd -n test -k "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
-    - android-sdk-linux/emulator/emulator -avd test -no-window -no-audio &
-    - ./android-wait-for-emulator
-    - adb shell input keyevent 82
-    - ./gradlew connectedCheck
+    - ./gradlew storage:test
+  artifacts:
+    when: always
+    reports:
+      junit: storage/build/test-results/testDebugUnitTest/TEST-*.xml
+
+
+qa_debugInstrumentationTests:
+  stage: test
+  cache: {}
+  script:
+    - emulator -avd default -no-audio -no-boot-anim -no-window -accel on -gpu off &
+    - adb wait-for-device
+    - adb devices
+    - ./gradlew connectedAndroidTest
+    - exit
+  tags:
+    - hardware-acceleration
 
 
