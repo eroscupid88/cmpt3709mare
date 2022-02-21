@@ -50,7 +50,7 @@ stages:
   - build
   - test
   - quality_assurance
-  - deploy
+#  - deploy
 
 qa_build:
   tags:
@@ -62,34 +62,34 @@ qa_build:
     paths:
       - app/build/outputs/
 
-qa_lintDebug:
-  tags:
-    - docker
-  stage: build
-  script:
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-qa_debugTests:
-  tags:
-    - docker
-  stage: test
-  script:
-    - ./gradlew -Pci --console=plain :app:testDebug
-
-qa_unitTests:
-  tags:
-    - docker
-  stage: test
-  script:
-    - ./gradlew app:test
-  artifacts:
-    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
-    when: on_failure
-    expire_in: 4 days
-    paths:
-      - app/build/reports/tests/
-    reports:
-      junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
+#qa_lintDebug:
+#  tags:
+#    - docker
+#  stage: build
+#  script:
+#    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+#
+#qa_debugTests:
+#  tags:
+#    - docker
+#  stage: test
+#  script:
+#    - ./gradlew -Pci --console=plain :app:testDebug
+#
+#qa_unitTests:
+#  tags:
+#    - docker
+#  stage: test
+#  script:
+#    - ./gradlew app:test
+#  artifacts:
+#    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+#    when: on_failure
+#    expire_in: 4 days
+#    paths:
+#      - app/build/reports/tests/
+#    reports:
+#      junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
 
 qa_instrumentation_tests:
   tags:
@@ -103,6 +103,7 @@ qa_instrumentation_tests:
     - adb shell settings put global transition_animation_scale 0 &
     - adb shell settings put global animator_duration_scale 0 &
     - adb shell input keyevent 82 &
+    - ./gradlew connectedCheck
     - ./gradlew connectedAndroidTest
     - ./ci/stop-emulators.sh
   artifacts:
