@@ -47,8 +47,9 @@ before_script:
 
 stages:
   - build
+  - test
 
-build:
+qa_build:
   tags:
     - docker
   stage: build
@@ -57,5 +58,23 @@ build:
   artifacts:
     paths:
       - app/build/outputs/
+
+qa_lintDebug:
+  tags:
+    - docker
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+
+qa_debugTests:
+  tags:
+    - docker
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
+qa_unitTests:
+  stage: test
+  script:
+    - ./gradlew test
 
 
