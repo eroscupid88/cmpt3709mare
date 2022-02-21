@@ -1,159 +1,49 @@
-# ## To contribute improvements to CI/CD templates, please follow the Development guide at:
-# # https://docs.gitlab.com/ee/development/cicd/templates.html
-# # This specific template is located at:
-# # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Android.gitlab-ci.yml
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Android.gitlab-ci.yml
 
-# # Read more about this script on this blog post https://about.gitlab.com/2018/10/24/setting-up-gitlab-ci-for-android-projects/, by Jason Lenny
-# # If you are interested in using Android with FastLane for publishing take a look at the Android-Fastlane template.
-
-# image: openjdk:8-jdk
-
-# variables:
-#   # ANDROID_COMPILE_SDK is the version of Android you're compiling with.
-#   # It should match compileSdkVersion.
-#   ANDROID_COMPILE_SDK: "30"
-
-#   # ANDROID_BUILD_TOOLS is the version of the Android build tools you are using.
-#   # It should match buildToolsVersion.
-#   ANDROID_BUILD_TOOLS: "30.0.3"
-
-#   # It's what version of the command line tools we're going to download from the official site.
-#   # Official Site-> https://developer.android.com/studio/index.html
-#   # There, look down below at the cli tools only, sdk tools package is of format:
-#   #        commandlinetools-os_type-ANDROID_SDK_TOOLS_latest.zip
-#   # when the script was last modified for latest compileSdkVersion, it was which is written down below
-#   ANDROID_SDK_TOOLS: "7583922"
-
-# # Packages installation before running script
-# before_script:
-#   - cd client
-#   - apt-get --quiet update --yes
-#   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-
-#   # Setup path as ANDROID_SDK_ROOT for moving/exporting the downloaded sdk into it
-#   - export ANDROID_SDK_ROOT="${PWD}/android-home"
-#   # Create a new directory at specified location
-#   - install -d $ANDROID_SDK_ROOT
-#   # Here we are installing androidSDK tools from official source,
-#   # (the key thing here is the url from where you are downloading these sdk tool for command line, so please do note this url pattern there and here as well)
-#   # after that unzipping those tools and
-#   # then running a series of SDK manager commands to install necessary android SDK packages that'll allow the app to build
-#   - wget --output-document=$ANDROID_SDK_ROOT/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
-#   # move to the archive at ANDROID_SDK_ROOT
-#   - pushd $ANDROID_SDK_ROOT
-#   - unzip -d cmdline-tools cmdline-tools.zip
-#   - pushd cmdline-tools
-#   # since commandline tools version 7583922 the root folder is named "cmdline-tools" so we rename it if necessary
-#   - mv cmdline-tools tools || true
-#   - popd
-#   - popd
-#   - export PATH=$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin/
-
-#   # Nothing fancy here, just checking sdkManager version
-#   - sdkmanager --version
-
-#   # use yes to accept all licenses
-#   - yes | sdkmanager --licenses || true
-#   - sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
-#   - sdkmanager "platform-tools"
-#   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
-
-#   # Not necessary, but just for surity
-#   - chmod +x ./gradlew
-#   - cd ..
-#   - ls -la
-#   - PWD
-
-# # Basic android and gradle stuff
-# # Check linting
-
-# stages:
-#   - build
-#   - test
-#   - deploy
-
-
-# build1:
-#   tags:
-#     - docker
-#   stage: build
-#   script:
-#     - echo "Do your build here"
-
-# # Basic android and gradle stuff
-# # Check linting
-# lintDebug:
-#   tags:
-#     - docker
-#   interruptible: true
-#   stage: build
-#   script:
-#     - ./client/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-# # Make Project
-# assembleDebug:
-#   tags:
-#     - docker
-#   interruptible: true
-#   stage: build
-#   script:
-#     - ./client/gradlew assembleDebug
-#   artifacts:
-#     paths:
-#       - client/app/build/outputs/
-
-# # Run all tests, if any fails, interrupt the pipeline(fail it)
-# debugTests:
-#   tags:
-#     - docker
-#   interruptible: true
-#   stage: test
-#   script:
-#     - ./client/gradlew -Pci --console=plain :app:testDebug
+# Read more about this script on this blog post https://about.gitlab.com/2018/10/24/setting-up-gitlab-ci-for-android-projects/, by Jason Lenny
+# If you are interested in using Android with FastLane for publishing take a look at the Android-Fastlane template.
 
 
 
-
-# # test1:
-# #   tags:
-# #     - docker
-# #   stage: test
-# #   script:
-# #     - echo "Do a test here"
-# #     - echo "For example run a test suite"
-
-# # test2:
-# #   tags:
-# #     - docker
-# #   stage: test
-# #   script:
-# #     - echo "Do another parallel test here"
-# #     - echo "For example run a lint test"
-
-# # deploy1:
-# #   tags:
-# #     - docker
-# #   stage: deploy
-# #   script:
-# #     - echo "Do your deploy here"
-
-image: unitedclassifiedsapps/gitlab-ci-android-fastlane
+image: openjdk:11-jdk
 
 cache:
   paths:
-    - ./client/m2/
-    - ./client/gradle/
+    - ./m2/
+    - ./gradle/
 
 variables:
   ANDROID_COMPILE_SDK: "31"
-  ANDROID_BUILD_TOOLS: "31.0.3"
-  ANDROID_SDK_TOOLS: "7562133"
+  ANDROID_BUILD_TOOLS: "32.0.0"
+  ANDROID_COMMAND_LINE_TOOLS: "7583922"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 before_script:
-  - export GRADLE_USER_HOME=$(pwd)/client/.gradle
-  - chmod +x ./client/gradlew
-    # use yes to accept all licenses
-  - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses || true
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+  - mkdir -p android-sdk-linux/cmdline-tools
+  - export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
+  - cd android-sdk-linux/cmdline-tools
+  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMAND_LINE_TOOLS}_latest.zip
+  - unzip android-sdk.zip
+  - rm android-sdk.zip
+  - mv cmdline-tools version
+  - echo y | version/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
+  - echo y | version/bin/sdkmanager "platform-tools" >/dev/null
+  - echo y | version/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
+  - export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+  # temporarily disable checking for EPIPE error and use yes to accept all licenses
+  - set +o pipefail
+  - yes | version/bin/sdkmanager --licenses
+  - set -o pipefail
+  - cd ../../
+  - chmod +x ./gradlew
 
 stages:
   - build
@@ -163,11 +53,9 @@ build:
     - docker
   stage: build
   script:
-    - ./client/gradlew assembleDebug
+    - ./gradlew assembleDebug
   artifacts:
     paths:
-      - ./client/app/build/outputs/
-
-
+      - app/build/outputs/
 
 
