@@ -68,36 +68,6 @@ qa_lintDebug:
   script:
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
-qa_storage lint:
-  tags:
-    - docker
-  stage: quality
-  script:
-    - ./gradlew storage:lintDebug
-
-qa_app ktlint:
-  tags:
-    - docker
-  stage: quality
-  script:
-    - ./gradlew app:ktlintCheck
-  artifacts:
-    when: on_failure
-    paths:
-      - app/build/reports/ktlint
-
-
-qa_storage ktlint:
-  tags:
-    - docker
-  stage: quality
-  script:
-    - ./gradlew storage:ktlintCheck
-  artifacts:
-    when: on_failure
-    paths:
-      - storage/build/reports/ktlint
-
 qa_debugTests:
   tags:
     - docker
@@ -115,18 +85,6 @@ qa_unitTests:
     when: always
     reports:
       junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
-
-qa_storage_unit_tests:
-  tags:
-    - docker
-  stage: test
-  script:
-    - ./gradlew storage:test
-  artifacts:
-    when: always
-    reports:
-      junit: storage/build/test-results/testDebugUnitTest/TEST-*.xml
-
 
 qa_debugInstrumentationTests:
   stage: test
