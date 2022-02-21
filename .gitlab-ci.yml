@@ -48,15 +48,16 @@ before_script:
 
 stages:
   - build
-  - quality
   - test
+  - quality_assurance
+  - deploy
 
 qa_build:
   tags:
     - docker
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew clean assembleRelease
   artifacts:
     paths:
       - app/build/outputs/
@@ -82,20 +83,47 @@ qa_unitTests:
   script:
     - ./gradlew app:test
   artifacts:
-    when: always
+    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+    when: on_failure
+    expire_in: 4 days
+    paths:
+      - app/build/reports/tests/
     reports:
       junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
 
-qa_debugInstrumentationTests:
-  stage: test
-  cache: {}
-  script:
-    - emulator -avd default -no-audio -no-boot-anim -no-window -accel on -gpu off &
-    - adb wait-for-device
-    - adb devices
-    - ./gradlew connectedAndroidTest
-    - exit
+qa_instrumentation_tests:
   tags:
-    - hardware-acceleration
+    - docker
+  stage: test
+  script:
+    - emulator -avd testAVD -no-audio -no-window &
+    - ./ci/android-wait-for-emulator.sh
+    - adb devices
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &
+    - adb shell input keyevent 82 &
+    - ./gradlew connectedAndroidTest
+    - ./ci/stop-emulators.sh
+  artifacts:
+    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+    when: on_failure
+    expire_in: 4 days
+    paths:
+      - app/build/reports/androidTests/connected/
+
+static_analysis:
+  stage: quality_assurance
+  script:
+    - ./gradlew lint
+    - ./gradlew checkstyle
+    - ./gradlew pmd
+    - ./gradlew findbugs
+  artifacts:
+    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+    when: on_failure
+    expire_in: 4 days
+    paths:
+      - app/build/reports/
 
 
