@@ -52,15 +52,15 @@ stages:
   - quality_assurance
 #  - deploy
 
-qa_build:
-  tags:
-    - docker
-  stage: build
-  script:
-    - ./gradlew clean assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/
+#qa_build:
+#  tags:
+#    - docker
+#  stage: build
+#  script:
+#    - ./gradlew clean assembleDebug
+#  artifacts:
+#    paths:
+#      - app/build/outputs/
 
 #qa_lintDebug:
 #  tags:
@@ -98,9 +98,9 @@ qa_instrumentation_tests:
   script:
     - cd android-sdk-linux/cmdline-tools
     - echo y | version/bin/sdkmanager  "emulator" >/dev/null
-    - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
+    - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a"
     - echo y | version/bin/sdkmanager --update
-    - echo no | version/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
+    - echo no | version/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" -n test
     - emulator -list-avds
     - emulator -avd test -no-window -no-audio &
     - adb devices
