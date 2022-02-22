@@ -39,7 +39,11 @@ before_script:
   - echo y | version/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
   - echo y | version/bin/sdkmanager  "ndk-bundle" >/dev/null
   - echo y | version/bin/sdkmanager  "emulator" >/dev/null
+  - export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
   - export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
+  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/
+  - PATH=$ANDROID_HOME/emulator:$PATH
   # temporarily disable checking for EPIPE error and use yes to accept all licenses
   - set +o pipefail
   - yes | version/bin/sdkmanager --licenses
@@ -100,11 +104,12 @@ qa_instrumentation_tests:
     - cd android-sdk-linux/cmdline-tools
     - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
     - chmod +x android-wait-for-emulator
-    - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a"
+    - echo y | version/bin/sdkmanager --install "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a"
     - echo y | version/bin/sdkmanager --update
-    - echo no | version/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" -n test
-    - ./emulator -list-avds
-    - ./emulator -avd test -no-window -no-audio &
+    - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" -tag "google_apis" --abi "arm64-v8a" -n test
+    - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
+#    - ./emulator -list-avds
+#    - ./emulator -avd test -no-window -no-audio &
     - adb devices
     - adb shell settings put global window_animation_scale 0 &
     - adb shell settings put global transition_animation_scale 0 &
