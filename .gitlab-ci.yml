@@ -98,7 +98,7 @@ qa_instrumentation_tests:
   script:
     - cd android-sdk-linux/cmdline-tools
     - echo y | version/bin/sdkmanager  "emulator" >/dev/null
-    - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis;x86"
+    - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
     - echo y | version/bin/sdkmanager create avd -f -n testAVD -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis;x86"
     - android-sdk-linux/emulator/emulator -avd testAVD -no-audio -no-window &
     - ./gradlew connectedAndroidTest
