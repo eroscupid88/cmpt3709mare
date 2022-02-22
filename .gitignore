@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 *.iml
 .gradle
 /local.properties
@@ -13,10 +15,16 @@
 .externalNativeBuild
 .cxx
 local.properties
+>>>>>>> 327f49f618364eaf3b98f51a6fb756d1b7591438
 # Gradle files
 .gradle/
 build/
 
+<<<<<<< HEAD
+# Local configuration file (sdk path, etc)
+local.properties
+=======
+>>>>>>> 327f49f618364eaf3b98f51a6fb756d1b7591438
 
 # Log/OS Files
 *.log
@@ -29,7 +37,11 @@ captures/
 output.json
 
 # IntelliJ
+<<<<<<< HEAD
+*.iml
+=======
 /.idea
+>>>>>>> 327f49f618364eaf3b98f51a6fb756d1b7591438
 .idea/
 misc.xml
 deploymentTargetDropDown.xml
@@ -42,5 +54,9 @@ render.experimental.xml
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 
+<<<<<<< HEAD
+# Android 
+=======
 # Android Profiling
 *.hprof
+>>>>>>> 327f49f618364eaf3b98f51a6fb756d1b7591438
