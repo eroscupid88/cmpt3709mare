@@ -136,9 +136,7 @@ static_analysis:
   stage: quality_assurance
   script:
     - ./gradlew lint
-    - ./gradlew checkstyle
-    - ./gradlew pmd
-    - ./gradlew findbugs
+    - ./gradlew check
   artifacts:
     name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
     when: on_failure
