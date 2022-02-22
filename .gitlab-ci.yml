@@ -104,7 +104,7 @@ qa_instrumentation_tests:
     - cd android-sdk-linux/cmdline-tools
     - echo y | apt-get install cpu-checker
     - egrep -c '(vmx|svm)' /proc/cpuinfo
-    - sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+    - echo y | sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
     - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
     - chmod +x android-wait-for-emulator
     - echo y | version/bin/sdkmanager --install "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64"
