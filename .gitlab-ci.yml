@@ -25,7 +25,7 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - apt-get --quiet update --yes
+  - apt-get --quiet update --yes && apt-get -y install sudo
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - mkdir -p android-sdk-linux/cmdline-tools
   - export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
