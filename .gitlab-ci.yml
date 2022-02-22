@@ -106,7 +106,7 @@ qa_instrumentation_tests:
     - chmod +x android-wait-for-emulator
     - echo y | version/bin/sdkmanager --install "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a"
     - echo y | version/bin/sdkmanager --update
-    - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" --tag "google_apis" --abi "arm64-v8a" -n test
+    - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" --tag "google_apis_playstore" --abi "arm64-v8a" -n test
     - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
 #    - ./emulator -list-avds
 #    - ./emulator -avd test -no-window -no-audio &
