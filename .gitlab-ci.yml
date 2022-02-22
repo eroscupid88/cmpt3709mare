@@ -96,6 +96,7 @@ qa_instrumentation_tests:
     - docker
   stage: test
   script:
+    - cd android-sdk-linux/cmdline-tools
     - echo y | version/bin/sdkmanager  "emulator" >/dev/null
     - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis;x86"
     - echo y | version/bin/sdkmanager create avd -f -n testAVD -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis;x86"
