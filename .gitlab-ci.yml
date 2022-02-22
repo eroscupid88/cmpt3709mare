@@ -99,8 +99,15 @@ qa_instrumentation_tests:
     - cd android-sdk-linux/cmdline-tools
     - echo y | version/bin/sdkmanager  "emulator" >/dev/null
     - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
-    - echo y | version/bin/sdkmanager create avd -f -n testAVD -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis;x86"
-    - android-sdk-linux/emulator/emulator -avd testAVD -no-audio -no-window &
+    - echo y | version/bin/sdkmanager --update
+    - echo no | version/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
+    - emulator -list-avds
+    - emulator -avd test -no-window -no-audio &
+    - adb devices
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &
+    - adb shell input keyevent 82 &
     - ./gradlew connectedAndroidTest
   artifacts:
     name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
