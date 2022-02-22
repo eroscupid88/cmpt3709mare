@@ -103,8 +103,8 @@ qa_instrumentation_tests:
     - echo y | version/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a"
     - echo y | version/bin/sdkmanager --update
     - echo no | version/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;arm64-v8a" -n test
-    - emulator -list-avds
-    - emulator -avd test -no-window -no-audio &
+    - ./emulator -list-avds
+    - ./emulator -avd test -no-window -no-audio &
     - adb devices
     - adb shell settings put global window_animation_scale 0 &
     - adb shell settings put global transition_animation_scale 0 &
