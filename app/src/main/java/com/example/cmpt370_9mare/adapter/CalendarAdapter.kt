@@ -1,7 +1,5 @@
 package com.example.cmpt370_9mare.adapter
 
-import android.app.ActionBar
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +20,7 @@ class CalendarAdapter(
         val view : View?= LayoutInflater.from(parent.context)
             .inflate(R.layout.calendar_cell,parent,false)
         val layoutPrams: ViewGroup.LayoutParams? = view!!.layoutParams
-        layoutPrams!!.height = (parent.height * 0.166666666).toInt()
+        layoutPrams!!.height = (parent.height * 0.1).toInt()
         return CalendarViewHolder(view)
     }
 

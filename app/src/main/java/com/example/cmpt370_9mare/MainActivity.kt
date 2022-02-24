@@ -16,13 +16,14 @@ import java.time.format.DateTimeFormatter
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), OnItemListener {
+@RequiresApi(Build.VERSION_CODES.O)
+class MainActivity : AppCompatActivity() {
     private var calendarRecycleView: RecyclerView? = null
     private var monthYearText: TextView? = null
     private var selectedDate: LocalDate? = null
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,15 +31,13 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         selectedDate = LocalDate.now()
         logging()
         setMonthView()
-
-
     }
 
     private fun logging(){
         Log.i(TAG, "INFO: calendar app up and running")
         Log.i(TAG, "INFO: current local date is : $selectedDate")
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun monthYearFromDate(date: LocalDate?): String? {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
         return date?.format(formatter)
@@ -49,7 +48,6 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         monthYearText = findViewById(R.id.month_year)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
 
     private fun setMonthView() {
         monthYearText!!.setText(monthYearFromDate(selectedDate).toString())
@@ -63,7 +61,6 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         Log.d(TAG,"DEBUG: calling MainActivity/setMonthView()")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun daysInMonthArray(date:LocalDate): ArrayList<String> {
         // maximum 31 days in month
         var daysInMonthArray: ArrayList<String> = ArrayList(35)
@@ -83,11 +80,19 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         return daysInMonthArray
     }
 
-    fun nextMonthAction(view: View) {}
-    fun previousMonthAction(view: View) {}
-    override fun onItemClick(position: Int, dayText: String) {
-        TODO("Not yet implemented")
+    fun nextMonthAction(view: View) {
+        selectedDate = selectedDate!!.plusMonths(1)
+        setMonthView()
     }
+    fun previousMonthAction(view: View) {
+        selectedDate = selectedDate!!.minusMonths(1)
+        setMonthView()
+    }
+    fun eventShowAction(view: View){
+        Log.i(TAG,"eventShowClick!!")
+        TODO("Need to implement click to show event ")
+    }
+
 }
 
 
