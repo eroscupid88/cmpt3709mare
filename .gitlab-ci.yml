@@ -38,7 +38,6 @@ before_script:
   - echo y | version/bin/sdkmanager "platform-tools" >/dev/null
   - echo y | version/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
   - echo y | version/bin/sdkmanager  "ndk-bundle" >/dev/null
-  - echo y | version/bin/sdkmanager  "emulator" >/dev/null
   - export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
   - export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
   - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
