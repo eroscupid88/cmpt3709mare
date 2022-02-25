@@ -32,7 +32,7 @@ before_script:
   - cd android-sdk-linux/cmdline-tools
   - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMAND_LINE_TOOLS}_latest.zip
   - unzip android-sdk.zip
-  - rm android-sdk.zip
+  # - rm android-sdk.zip
   - mv cmdline-tools version
   - echo y | version/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
   - echo y | version/bin/sdkmanager "platform-tools" >/dev/null
