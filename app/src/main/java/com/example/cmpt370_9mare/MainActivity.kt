@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG,"eventShowClick!!")
         TODO("Need to implement click to show event ")
     }
+    // add something to check
 
 }
 
