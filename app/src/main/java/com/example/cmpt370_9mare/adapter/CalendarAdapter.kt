@@ -17,9 +17,9 @@ class CalendarAdapter(
 ) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     class CalendarViewHolder(view: View?): RecyclerView.ViewHolder(view!!) {
-        val dayOfMonth: TextView = view!!.findViewById<TextView?>(R.id.cellDayText)
-        val previousMonthButton = view!!.findViewById<Button>(R.id.previous_month_button)
-        val nextMonthButton = view!!.findViewById<Button>(R.id.next_month_button)
+        val dayOfMonth: TextView? = view?.findViewById(R.id.cellDayText)
+        val previousMonthButton = view?.findViewById<Button>(R.id.previous_month_button)
+        val nextMonthButton = view?.findViewById<Button>(R.id.next_month_button)
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -33,15 +33,15 @@ class CalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.dayOfMonth.text = daysOfMonth[position]
-        holder.dayOfMonth.setOnClickListener {
+        holder.dayOfMonth?.text = daysOfMonth[position]
+        holder.dayOfMonth?.setOnClickListener {
 //            val action = LetterListFragmentDirections.actionLetterListFragmentToWordListFragment(letter= holder.button.text.toString())
 //            holder.view.findNavController().navigate(action)
         }
-        holder.previousMonthButton.setOnClickListener {
+        holder.previousMonthButton?.setOnClickListener {
 
         }
-        holder.nextMonthButton.setOnClickListener {  }
+        holder.nextMonthButton?.setOnClickListener {  }
     }
 
 

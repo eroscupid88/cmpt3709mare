@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
-    id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -41,8 +40,8 @@ android {
 dependencies {
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.1"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation "androidx.appcompat:appcompat:$appcompat_version"
