@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.R
 
@@ -18,6 +18,8 @@ class CalendarAdapter(
 
     class CalendarViewHolder(view: View?): RecyclerView.ViewHolder(view!!) {
         val dayOfMonth: TextView = view!!.findViewById<TextView?>(R.id.cellDayText)
+        val previousMonthButton = view!!.findViewById<Button>(R.id.previous_month_button)
+        val nextMonthButton = view!!.findViewById<Button>(R.id.next_month_button)
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -36,7 +38,12 @@ class CalendarAdapter(
 //            val action = LetterListFragmentDirections.actionLetterListFragmentToWordListFragment(letter= holder.button.text.toString())
 //            holder.view.findNavController().navigate(action)
         }
+        holder.previousMonthButton.setOnClickListener {
+
+        }
+        holder.nextMonthButton.setOnClickListener {  }
     }
+
 
     override fun getItemCount(): Int {
         return daysOfMonth.size

@@ -1,4 +1,4 @@
-package com.example.cmpt370_9mare
+package com.example.cmpt370_9mare.ui.calendar
 
 import android.os.Build
 import android.os.Bundle
@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.adapter.CalendarAdapter
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 import java.time.LocalDate
@@ -36,12 +36,11 @@ class CalendarFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var calendarRecycleView: RecyclerView
 
     // for calendar
-    private var calendarRecycleView: RecyclerView? = null
     private var monthYearText: TextView? = null
-    private var selectedDate: LocalDate? = null
+    private var selectedDate: LocalDate? = LocalDate.now()
 
 
     // Fragment cycle set up
@@ -53,7 +52,6 @@ class CalendarFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        selectedDate = LocalDate.now()
         logging()
 
 
@@ -61,7 +59,7 @@ class CalendarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCalendarBinding.inflate(inflater,container,false)
         return binding.root
@@ -79,8 +77,8 @@ class CalendarFragment : Fragment() {
 
 // set Icon
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.user_dropdown_menu,menu)
-        val layoutButton = menu.findItem(R.id.user_dropdown_menu)
+        inflater.inflate(R.menu.bottom_nav_menu,menu)
+        val layoutButton = menu.findItem(R.id.next_month_button)
         setIcon(layoutButton)
     }
     // setIcon menu
@@ -126,14 +124,14 @@ class CalendarFragment : Fragment() {
 
     private fun initWidgets() {
         calendarRecycleView = binding.calendarRecycleView
-        monthYearText = binding.showMonthYear
+//        monthYearText = binding.showMonthYear
     }
 
     private fun setMonthView() {
-        monthYearText!!.setText(monthYearFromDate(selectedDate).toString())
+//        monthYearText!!.setText(monthYearFromDate(selectedDate).toString())
         val daysInMonth: ArrayList<String> = daysInMonthArray(selectedDate!!)
-        calendarRecycleView!!.adapter = CalendarAdapter(daysInMonth)
-        calendarRecycleView!!.layoutManager= GridLayoutManager(context,7)
+        calendarRecycleView.adapter = CalendarAdapter(daysInMonth)
+        calendarRecycleView.layoutManager= GridLayoutManager(context,7)
         Log.d(TAG,"DEBUG/CalendarFragment: calling CalendarFragment/setMonthView")
     }
 
