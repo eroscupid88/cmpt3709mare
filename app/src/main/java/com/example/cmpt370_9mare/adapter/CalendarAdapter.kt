@@ -10,16 +10,16 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.R
+import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 class CalendarAdapter(
-    private var daysOfMonth: ArrayList<String>
+    private var calendarViewModel: CalendarViewModel
 ) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     class CalendarViewHolder(view: View?): RecyclerView.ViewHolder(view!!) {
         val dayOfMonth: TextView? = view?.findViewById(R.id.cellDayText)
-        val previousMonthButton = view?.findViewById<Button>(R.id.previous_month_button)
-        val nextMonthButton = view?.findViewById<Button>(R.id.next_month_button)
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -33,20 +33,15 @@ class CalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.dayOfMonth?.text = daysOfMonth[position]
+        holder.dayOfMonth?.text = calendarViewModel.dayOfTheMonth[position]
         holder.dayOfMonth?.setOnClickListener {
-//            val action = LetterListFragmentDirections.actionLetterListFragmentToWordListFragment(letter= holder.button.text.toString())
-//            holder.view.findNavController().navigate(action)
-        }
-        holder.previousMonthButton?.setOnClickListener {
+//            Todo("pre selected date to show event on that date and for create event")
 
         }
-        holder.nextMonthButton?.setOnClickListener {  }
+
     }
-
-
     override fun getItemCount(): Int {
-        return daysOfMonth.size
+        return calendarViewModel.dayOfTheMonth.size
     }
 
     // Setup custom accessibility delegate to set the text read with
