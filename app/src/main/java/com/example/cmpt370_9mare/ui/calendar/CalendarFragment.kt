@@ -2,28 +2,21 @@ package com.example.cmpt370_9mare.ui.calendar
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.adapter.CalendarAdapter
+import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
-
 
 private const val TAG = "CalendarFragment"
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
-    private lateinit var  manager: RecyclerView.LayoutManager
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -39,25 +32,20 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
+        binding.lifecycleOwner = this
+        // Giving the binding access to the OverviewViewModel
+        binding.viewModel = sharedViewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        manager = GridLayoutManager(context,7)
-        binding.calendarRecyclerView.apply {
-            adapter = CalendarAdapter(sharedViewModel)
-            layoutManager = manager
-        }
-
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = sharedViewModel
             // TODO: initialize the EntreeMenuFragment variables
             calendarFragment = this@CalendarFragment
         }
-//        setMonthView()
     }
 
     override fun onDestroyView() {
@@ -66,11 +54,13 @@ class CalendarFragment : Fragment() {
     }
 
     fun goToNextMonth() {
-        // TODO: Navigate to next month
+        sharedViewModel.nextMonthAction()
+
+
     }
 
     fun goToPreviousMonth() {
-        // TODO: Navigate to previous month
+        sharedViewModel.previousMonthAction()
     }
 
 
