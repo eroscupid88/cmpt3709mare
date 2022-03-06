@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.adapter.CalendarAdapter
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 
@@ -22,11 +23,10 @@ private const val TAG = "CalendarFragment"
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
-
+    private lateinit var  manager: RecyclerView.LayoutManager
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var calendarRecyclerView: RecyclerView
     private val sharedViewModel: CalendarViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,13 +44,20 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        manager = GridLayoutManager(context,7)
+        binding.calendarRecyclerView.apply {
+            adapter = CalendarAdapter(sharedViewModel)
+            layoutManager = manager
+        }
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
             // TODO: initialize the EntreeMenuFragment variables
             calendarFragment = this@CalendarFragment
         }
-        setMonthView()
+//        setMonthView()
     }
 
     override fun onDestroyView() {
@@ -66,11 +73,13 @@ class CalendarFragment : Fragment() {
         // TODO: Navigate to previous month
     }
 
-    private fun setMonthView() {
-        binding.calendarRecyclerView.adapter = CalendarAdapter(sharedViewModel)
-        binding.calendarRecyclerView.layoutManager= GridLayoutManager(context,7)
-        Log.d(TAG,"DEBUG/CalendarFragment: calling CalendarFragment/setMonthView")
-    }
+
+
+//    private fun setMonthView() {
+//        binding.calendarRecyclerView.adapter = CalendarAdapter(sharedViewModel)
+//        binding.calendarRecyclerView.layoutManager= GridLayoutManager(context,7)
+//        Log.d(TAG,"DEBUG/CalendarFragment: calling CalendarFragment/setMonthView")
+//    }
 
 }
 
@@ -79,27 +88,27 @@ class CalendarFragment : Fragment() {
 
 
 
-
-
-//package com.example.cmpt370_9mare.ui.calendar
 //
-//import android.os.Build
-//import android.os.Bundle
-//import android.util.Log
-//import android.view.*
-//import androidx.fragment.app.Fragment
-//import android.widget.TextView
-//import androidx.annotation.RequiresApi
-//import androidx.core.content.ContextCompat
-//import androidx.recyclerview.widget.GridLayoutManager
-//import androidx.recyclerview.widget.RecyclerView
-//import com.example.cmpt370_9mare.R
-//import com.example.cmpt370_9mare.adapter.CalendarAdapter
-//import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
-//import java.time.LocalDate
-//import java.time.YearMonth
-//import java.time.format.DateTimeFormatter
 //
+////package com.example.cmpt370_9mare.ui.calendar
+////
+////import android.os.Build
+////import android.os.Bundle
+////import android.util.Log
+////import android.view.*
+////import androidx.fragment.app.Fragment
+////import android.widget.TextView
+////import androidx.annotation.RequiresApi
+////import androidx.core.content.ContextCompat
+////import androidx.recyclerview.widget.GridLayoutManager
+////import androidx.recyclerview.widget.RecyclerView
+////import com.example.cmpt370_9mare.R
+////import com.example.cmpt370_9mare.adapter.CalendarAdapter
+////import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
+////import java.time.LocalDate
+////import java.time.YearMonth
+////import java.time.format.DateTimeFormatter
+////
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //private const val ARG_PARAM1 = "param1"
@@ -158,23 +167,8 @@ class CalendarFragment : Fragment() {
 //    }
 //
 //
-//// set Icon
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.bottom_nav_menu,menu)
-////        val layoutButton = menu.findItem(R.id.next_month_button)
-////        setIcon(layoutButton)
-//    }
-//    // setIcon menu
-//    private fun setIcon(menuItem: MenuItem?) {
-//        if (menuItem == null) {
-//            return
-//        }
-//        menuItem.icon = ContextCompat.getDrawable(this.requireContext(),R.drawable.person_menu)
-//    }
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        Log.i(TAG, "User drop down menu is pressed")
-//         return super.onOptionsItemSelected(item)
-//    }
+//
+//
 //
 //    companion object {
 //        /**
@@ -194,10 +188,6 @@ class CalendarFragment : Fragment() {
 //                    putString(ARG_PARAM2, param2)
 //                }
 //            }
-//    }
-//    private fun logging(){
-//        Log.i(TAG, "INFO/CalendarFragment: CalendarFragment up and running")
-//        Log.i(TAG, "INFO/CalendarFragment: current local date is : $selectedDate")
 //    }
 //
 //    private fun monthYearFromDate(date: LocalDate?): String? {
@@ -251,4 +241,4 @@ class CalendarFragment : Fragment() {
 ////    }
 ////    // add something to check
 //
-//}
+////}

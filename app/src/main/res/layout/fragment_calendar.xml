@@ -22,9 +22,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/side_margin"
-            android:paddingEnd="@dimen/side_margin"
-            android:paddingBottom="@dimen/side_margin"
             >
 
             <LinearLayout
@@ -36,8 +33,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
                     >
                     <ImageView
                         android:layout_width="wrap_content"
@@ -146,8 +141,8 @@
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/calendarRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:padding="16dp"
                     />
             </LinearLayout>
