@@ -51,7 +51,7 @@ class CalendarViewModel : ViewModel() {
     private fun daysInMonthArray(date: LocalDate): ArrayList<Day> {
 
         // maximum 31 days in month
-        var daysInMonthArray: ArrayList<Day> = arrayListOf()
+        var daysInMonthArray = arrayListOf<Day>()
 
         // current year month from chosen date
         var yearMonth: YearMonth = YearMonth.from(date)

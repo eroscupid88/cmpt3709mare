@@ -37,7 +37,7 @@ class MonthCalendarAdapter :
         }
 
         override fun areContentsTheSame(oldItem: Day, newItem: Day): Boolean {
-            return oldItem.day == newItem.day
+            return oldItem == newItem
         }
     }
 
