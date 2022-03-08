@@ -39,7 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:adjustViewBounds="true"
                         android:onClick="@{()-> calendarFragment.goToPreviousMonth()}"
                         android:maxHeight="30dp"
@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@{viewModel.monthYearText}"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -63,13 +63,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:adjustViewBounds="true"
                         android:onClick="@{()->calendarFragment.goToNextMonth()}"
                         android:maxHeight="30dp"
                         android:maxWidth="30dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                        android:contentDescription="@string/next_month_calendar" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/month_calendar"
@@ -152,8 +153,22 @@
                     tools:itemCount="35"
                     tools:listitem="@layout/calendar_cell_layout"
                     />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_between_elements"
+                    android:layout_marginBottom="@dimen/margin_between_elements"
+                    android:contentDescription="@string/add_new_item"
+                    android:src="@android:drawable/ic_input_add"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="@android:color/white" />
             </LinearLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
 </layout>

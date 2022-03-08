@@ -5,4 +5,5 @@ import com.example.cmpt370_9mare.data.EventRoomDatabase
 
 class ScheduleApplication: Application() {
     val database: EventRoomDatabase by lazy { EventRoomDatabase.getDatabase(this)}
+
 }

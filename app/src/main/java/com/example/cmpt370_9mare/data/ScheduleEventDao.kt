@@ -13,8 +13,8 @@ interface ScheduleEventDao  {
     @Delete
     suspend fun deleteEvent(scheduleEvent: ScheduleEvent)
     @Query("SELECT * FROM event WHERE id = :id")
-    suspend fun getScheduleEvent(id: Int) : Flow<ScheduleEvent>
+    fun getScheduleEvent(id: Int) : Flow<ScheduleEvent>
     @Query("SELECT * FROM event ORDER BY title ASC")
-    suspend fun getScheduleEvents(): Flow<List<ScheduleEvent>>
+    fun getScheduleEvents(): Flow<List<ScheduleEvent>>
 
 }
