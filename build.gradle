@@ -8,7 +8,6 @@ buildscript {
         material_version = "1.5.0"
         nav_version = "2.3.1"
         datastore_version = "1.0.0"
-        room_version = "2.4.1"
     }
     repositories {
         google()
