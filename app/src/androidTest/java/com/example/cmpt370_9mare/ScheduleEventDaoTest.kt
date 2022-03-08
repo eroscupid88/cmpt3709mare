@@ -29,7 +29,6 @@ class ScheduleEventDaoTest {
         return LocalDate.parse(someDate, formatter)
     }
 
-
     // create database
     @Before
     fun createDb() {
@@ -47,13 +46,23 @@ class ScheduleEventDaoTest {
         db.close()
     }
 
+    /**
+     * create first Event
+     */
     @Test
     @Throws(IOException::class)
     fun insertAndGetScheduleEvent():Unit = runBlocking {
-        val scheduleEvent = ScheduleEvent(0,"event1",convertDate("July 25, 2017"),"8:40 AM","10:40 AM","","event1 testing notes")
+        val scheduleEvent = ScheduleEvent(1,"event1","Saskatoon","July 25, 2017","July 25, 2017","10:40 AM","10:50 AM","","event1 testing notes")
         scheduleEventDao.insertEvent(scheduleEvent)
         val events:List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
         assertEquals(events[0].id,scheduleEvent.id)
+        assertEquals(events[0].date_from,scheduleEvent.date_from)
+        assertEquals(events[0].date_to,scheduleEvent.date_to)
+        assertEquals(events[0].time_from,scheduleEvent.time_from)
+        assertEquals(events[0].time_to,scheduleEvent.time_to)
+        assertEquals(events[0].location,scheduleEvent.location)
+        assertEquals(events[0].url,scheduleEvent.url)
+        assertEquals(events[0].notes,scheduleEvent.notes)
     }
 
 }
