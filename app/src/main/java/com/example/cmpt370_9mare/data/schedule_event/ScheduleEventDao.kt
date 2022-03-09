@@ -1,4 +1,4 @@
-package com.example.cmpt370_9mare.data
+package com.example.cmpt370_9mare.data.schedule_event
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

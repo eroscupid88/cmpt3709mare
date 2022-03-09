@@ -9,15 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.getSystemServiceName
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 
@@ -38,16 +35,23 @@ class CreateEventFragment : Fragment() {
     private var param2: String? = null
 
 
+    /**
+     * get Singleton scheduleEventViewModel shared throughout fragments
+     */
     private val scheduleEventShareViewModel: ScheduleEventViewModel by activityViewModels{
         ScheduleEventViewModelFactory(
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
     }
+
     private val calendarViewModel: CalendarViewModel by activityViewModels()
 
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * create CreateEventFragment instance and accept params argument from another fragment
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,6 +60,9 @@ class CreateEventFragment : Fragment() {
         }
     }
 
+    /**
+     * binding FragmentCreateEventBinding and inflate view
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,6 +82,10 @@ class CreateEventFragment : Fragment() {
 
     }
 
+    /**
+     * setInputBinding function to call handleKeyEvent if Enter button is clicked, it close down keyboard
+     * better for user experience
+     */
     private fun setInputBinding(){
         binding.inputTitle.setOnKeyListener(){ view, keyCode, _ ->
             handleKeyEvent(
@@ -88,13 +99,13 @@ class CreateEventFragment : Fragment() {
                 keyCode
             )
         }
-        binding.urlLayout.setOnKeyListener(){ view, keyCode, _ ->
+        binding.eventUrl.setOnKeyListener(){ view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventNotesLayout.setOnKeyListener(){ view, keyCode, _ ->
+        binding.eventNotes.setOnKeyListener(){ view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
@@ -103,6 +114,9 @@ class CreateEventFragment : Fragment() {
 
     }
 
+    /**
+     * companion object is Singleton object pass to Fragment and ViewModel
+     */
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -169,6 +183,10 @@ class CreateEventFragment : Fragment() {
     fun createEvent(){
         Log.i(TAG,"$TAG: add Event button was clicked")
         addNewEvent()
+    }
+    fun onSelectRepeat() {
+        val action = CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment()
+        findNavController().navigate(action)
     }
 
 

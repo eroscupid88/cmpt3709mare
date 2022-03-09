@@ -38,5 +38,11 @@
     <string name="URL">URL</string>
     <string name="notes">Notes</string>
     <string name="add_new_item">create_new_event</string>
+    <string name="never">Never</string>
+    <string name="everyday">Every Day</string>
+    <string name="everyweek">Every Week</string>
+    <string name="every2week">Every 2 Weeks</string>
+    <string name="everyyear">Every Year</string>
+    <string name="everymonth">Every Month</string>
 
 </resources>
