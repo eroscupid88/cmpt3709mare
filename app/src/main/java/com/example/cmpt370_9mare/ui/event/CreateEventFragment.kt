@@ -12,11 +12,13 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -182,6 +184,7 @@ class CreateEventFragment : Fragment() {
     }
     fun createEvent(){
         Log.i(TAG,"$TAG: add Event button was clicked")
+        Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
         addNewEvent()
     }
     fun onSelectRepeat() {
