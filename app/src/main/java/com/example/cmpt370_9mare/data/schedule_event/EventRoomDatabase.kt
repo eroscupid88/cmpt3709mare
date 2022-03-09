@@ -1,4 +1,4 @@
-package com.example.cmpt370_9mare.data
+package com.example.cmpt370_9mare.data.schedule_event
 
 import android.content.Context
 import androidx.room.Database
@@ -13,7 +13,7 @@ abstract class EventRoomDatabase: RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE : EventRoomDatabase? = null
-        fun getDatabase(context:Context) : EventRoomDatabase{
+        fun getDatabase(context:Context) : EventRoomDatabase {
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

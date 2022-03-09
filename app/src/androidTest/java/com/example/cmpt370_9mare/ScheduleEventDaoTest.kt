@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.cmpt370_9mare.data.EventRoomDatabase
-import com.example.cmpt370_9mare.data.ScheduleEvent
-import com.example.cmpt370_9mare.data.ScheduleEventDao
+import com.example.cmpt370_9mare.data.schedule_event.EventRoomDatabase
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -47,7 +48,7 @@ class ScheduleEventDaoTest {
     }
 
     /**
-     * create first Event
+     * create first Event with full input
      */
     @Test
     @Throws(IOException::class)
@@ -64,5 +65,33 @@ class ScheduleEventDaoTest {
         assertEquals(events[0].url,scheduleEvent.url)
         assertEquals(events[0].notes,scheduleEvent.notes)
     }
+
+    /**
+     * create first Event with full input
+     */
+    @Test
+    @Throws(IOException::class)
+    fun insertAndGetScheduleEvent1():Unit = runBlocking {
+        val scheduleEvent = ScheduleEvent(2,"event2","","","","","","","")
+        scheduleEventDao.insertEvent(scheduleEvent)
+        val events:List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().last()
+        assertEquals(2,scheduleEvent.id)
+        assertEquals(events[0].title,scheduleEvent.title)
+        assertEquals("",scheduleEvent.date_from)
+        assertEquals("",scheduleEvent.date_to)
+        assertEquals("",scheduleEvent.time_from)
+        assertEquals("",scheduleEvent.time_to)
+        assertEquals("",scheduleEvent.location)
+        assertEquals("",scheduleEvent.url)
+        assertEquals("",scheduleEvent.notes)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun getScheduleEventTest():Unit = runBlocking {
+
+
+    }
+
 
 }
