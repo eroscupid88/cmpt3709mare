@@ -44,5 +44,6 @@
     <string name="every2week">Every 2 Weeks</string>
     <string name="everyyear">Every Year</string>
     <string name="everymonth">Every Month</string>
+    <string name="Event_created">New Event has been created</string>
 
 </resources>
