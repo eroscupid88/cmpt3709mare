@@ -16,12 +16,12 @@ variables:
   SDK_TOOLS: "6858069" # from https://developer.android.com/studio/#command-tools
   EMULATOR_VERSION: "24"
 
-cache:
-  key: "$CI_JOB_NAME"
-  paths:
-    - ./m2/
-    - ./gradle/wrapper
-    - ./gradle/caches
+#cache:
+#  key: "$CI_JOB_NAME"
+#  paths:
+#    - ./m2/
+#    - ./gradle/wrapper
+#    - ./gradle/caches
 
 before_script:
   - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS}_latest.zip
