@@ -94,41 +94,41 @@ qa_unitTests:
     reports:
       junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
 
-#qa_instrumentation_tests:
-#  tags:
-#    - docker
-#  stage: test
-#  script:
-#    - cd android-sdk-linux/cmdline-tools
-#    - echo y | apt-get install cpu-checker
-#    - egrep -c '(vmx|svm)' /proc/cpuinfo
-#    - echo y | sudo apt-get install qemu-kvm
-#    - grep kvm /etc/group
-#    - sudo adduser $USER kvm
-#    - sudo chown $USER /dev/kvm
-#    - ls -al /dev/kvm
-#    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
-#    - chmod +x android-wait-for-emulator
-#    - echo y | version/bin/sdkmanager --install "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64"
-#    - echo y | version/bin/sdkmanager --update
-#    - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64" --tag "google_apis_playstore" --abi "x86_64" -n testdevice
-#    - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
-#    - emulator -list-avds
-#    - emulator -avd testdevice -gpu swiftshader_indirect -no-window -no-audio &
-#    - ./android-wait-for-emulator
-#    - adb devices
-#    - adb shell settings put global window_animation_scale 0 &
-#    - adb shell settings put global transition_animation_scale 0 &
-#    - adb shell settings put global animator_duration_scale 0 &
-#    - adb shell input keyevent 82
-#    - cd ../../
-#    - ./gradlew connectedAndroidTest
-#  artifacts:
-#    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
-#    when: on_failure
-#    expire_in: 4 days
-#    paths:
-#      - app/build/reports/androidTests/connected/
+qa_instrumentation_tests:
+  tags:
+    - docker
+  stage: test
+  script:
+    - cd android-sdk-linux/cmdline-tools
+    - echo y | apt-get install cpu-checker
+    - egrep -c '(vmx|svm)' /proc/cpuinfo
+    - echo y | sudo apt-get install qemu-kvm
+    - grep kvm /etc/group
+    - sudo adduser $USER kvm
+    - sudo chown $USER /dev/kvm
+    - ls -al /dev/kvm
+    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
+    - chmod +x android-wait-for-emulator
+    - echo y | version/bin/sdkmanager --install "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64"
+    - echo y | version/bin/sdkmanager --update
+    - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64" --tag "google_apis_playstore" --abi "x86_64" -n testdevice
+    - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
+    - emulator -list-avds
+    - emulator -avd testdevice -gpu swiftshader_indirect -no-window -no-audio &
+    - ./android-wait-for-emulator
+    - adb devices
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &
+    - adb shell input keyevent 82
+    - cd ../../
+    - ./gradlew connectedAndroidTest
+  artifacts:
+    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+    when: on_failure
+    expire_in: 4 days
+    paths:
+      - app/build/reports/androidTests/connected/
 
 static_analysis:
   stage: quality_assurance
