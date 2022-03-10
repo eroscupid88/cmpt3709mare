@@ -116,7 +116,7 @@ qa_instrumentation_tests:
     - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
     - sudo dpkg --add-architecture armhf
     - sudo apt update
-    - sudo apt install libx11-6:armhf
+    - echo y | sudo apt install libx11-6:armhf
     - emulator -list-avds
     - emulator -avd testdevice -gpu swiftshader_indirect -no-window -no-audio &
     - ./android-wait-for-emulator
