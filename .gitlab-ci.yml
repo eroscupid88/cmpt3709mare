@@ -54,15 +54,15 @@ stages:
 #  - quality_assurance
 #  - deploy
 
-qa_build:
-  tags:
-    - docker
-  stage: build
-  script:
-    - ./gradlew clean assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/
+#qa_build:
+#  tags:
+#    - docker
+#  stage: build
+#  script:
+#    - ./gradlew clean assembleDebug
+#  artifacts:
+#    paths:
+#      - app/build/outputs/
 
 #qa_lintDebug:
 #  tags:
@@ -131,17 +131,17 @@ qa_instrumentation_tests:
     paths:
       - app/build/reports/androidTests/connected/
 
-static_analysis:
-  stage: quality_assurance
-  script:
-    - ./gradlew lint
-    - ./gradlew check
-  artifacts:
-    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
-    when: on_failure
-    expire_in: 4 days
-    paths:
-      - app/build/reports/
+#static_analysis:
+#  stage: quality_assurance
+#  script:
+#    - ./gradlew lint
+#    - ./gradlew check
+#  artifacts:
+#    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+#    when: on_failure
+#    expire_in: 4 days
+#    paths:
+#      - app/build/reports/
 
 
 
