@@ -101,8 +101,8 @@ qa_instrumentation_tests:
     - cd android-sdk-linux/cmdline-tools
     - echo y | apt-get install cpu-checker
     - egrep -c '(vmx|svm)' /proc/cpuinfo
-    - echo y | sudo apt-get install qemu-kvm
-    - grep kvm /etc/group
+#    - echo y | sudo apt-get install qemu-kvm
+#    - grep kvm /etc/group
 #    - sudo adduser $USER kvm
 #    - sudo chown $USER /dev/kvm
 #    - ls -al /dev/kvm
@@ -126,7 +126,7 @@ qa_instrumentation_tests:
     - ./gradlew connectedAndroidTest
   artifacts:
     name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
-    when: on_failure
+#    when: on_failure
     expire_in: 4 days
     paths:
       - app/build/reports/androidTests/connected/
