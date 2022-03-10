@@ -114,9 +114,9 @@ qa_instrumentation_tests:
     - PATH=$ANDROID_HOME/emulator:$PATH
     - echo no | version/bin/avdmanager create avd --force --name "pixel_9.0" --device "pixel" --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86_64" --tag "google_apis_playstore" --abi "x86_64" -n testdevice
     - alias generic_9.0='emulator @generic_9.0 -no-boot-anim -netdelay none -no-snapshot -wipe-data -skin 768x1280 &'
-    - sudo dpkg --add-architecture armhf
-    - sudo apt update
-    - echo y | sudo apt install libx11-6:armhf
+    - sudo dpkg --add-architecture i386
+    - sudo apt-get update
+    - echo y | apt-get install libc6:i386
     - emulator -list-avds
     - emulator -avd testdevice -gpu swiftshader_indirect -no-window -no-audio &
 #    - ./android-wait-for-emulator
