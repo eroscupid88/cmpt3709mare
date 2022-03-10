@@ -43,7 +43,7 @@ class ContentTest {
      * and testing for all the input text and button
      * */
     @Test
-    fun create_fragment_content(){      // launch the entree menu fragment
+    fun create_event_fragment_content(){      // launch the entree menu fragment
         launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         // call all the instrument tests for create fragment content
         title_description_event_test()
@@ -77,11 +77,43 @@ class ContentTest {
             .check(matches(isNotClickable()))
     }
 
-    private fun all_day_option_test(){}
+    private fun all_day_option_test(){
+        onView(withId(R.id.all_day))
+            .check(matches(withText("All-day")))
+        onView(withId(R.id.all_day))
+            .check(matches(isChecked()))
+    }
 
-    private fun start_end_test(){}
+    private fun start_end_test(){
+        // check for start date and time
+        onView(withId(R.id.input_day_from))
+            .check(matches(withText("Mar 10,2022")))
+        onView(withId(R.id.chosen_day_start_layout))
+            .check(matches(isNotClickable()))
 
-    private fun repeat_event_button_test(){}
+        onView(withId(R.id.input_time_from))
+            .check(matches(withText("10:25 AM")))
+        onView(withId(R.id.chosen_time_start_layout))
+            .check(matches(isNotClickable()))
+
+        // check for end date and time
+        onView(withId(R.id.input_day_to))
+            .check(matches(withText("Mar 10,2022")))
+        onView(withId(R.id.chosen_day_end_layout))
+            .check(matches(isNotClickable()))
+
+        onView(withId(R.id.input_time_to))
+            .check(matches(withText("10:25 AM")))
+        onView(withId(R.id.chosen_time_end_layout))
+            .check(matches(isNotClickable()))
+    }
+
+    private fun repeat_event_button_test(){
+        onView(withId(R.id.repeat_button))
+            .check(matches(withText("Repeat")))
+        onView(withId(R.id.repeat_button))
+            .check(matches(isClickable()))
+    }
 
     private fun url_notes_test(){
 
@@ -98,5 +130,16 @@ class ContentTest {
             .check(matches(isNotClickable()))
     }
 
-    private fun cancel_create_button_test(){}
+    private fun cancel_create_button_test(){
+        onView(withId(R.id.cancel_create_event))
+            .check(matches(withText("Cancel")))
+        onView(withId(R.id.cancel_create_event))
+            .check(matches(isClickable()))
+
+        onView(withId(R.id.submit_create_event))
+            .check(matches(withText("Add")))
+        onView(withId(R.id.submit_create_event))
+            .check(matches(isClickable()))
+    }
+
 }
