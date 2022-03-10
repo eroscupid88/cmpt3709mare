@@ -41,8 +41,8 @@ class DashboardFragment : Fragment() {
 //                Dashboar.actionItemListFragmentToItemDetailFragment(it.id)
 //            this.findNavController().navigate(action)
         }
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        binding.recyclerView.adapter = adapter
+        binding.eventListRecyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.eventListRecyclerView.adapter = adapter
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
         viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
