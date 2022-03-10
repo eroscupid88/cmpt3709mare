@@ -37,7 +37,7 @@
     <string name="repeat">Repeat</string>
     <string name="URL">URL</string>
     <string name="notes">Notes</string>
-    <string name="add_new_item">create_new_event</string>
+    <string name="add_new_item">New Event</string>
     <string name="never">Never</string>
     <string name="everyday">Every Day</string>
     <string name="everyweek">Every Week</string>
