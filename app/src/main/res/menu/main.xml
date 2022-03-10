@@ -7,7 +7,7 @@
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/create_event_button"
+        android:id="@+id/user"
         android:title="@string/action_user_dropdown_menu"
         android:icon="@drawable/ic_person_black_24"
         app:showAsAction="ifRoom"
