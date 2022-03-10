@@ -120,7 +120,7 @@ qa_instrumentation_tests:
     - emulator -list-avds
     - emulator -avd testdevice -gpu swiftshader_indirect -no-window -no-audio &
 #    - ./android-wait-for-emulator
-    - adb wait-for-device
+#    - adb wait-for-device
     - adb devices
     - adb shell settings put global window_animation_scale 0 &
     - adb shell settings put global transition_animation_scale 0 &
