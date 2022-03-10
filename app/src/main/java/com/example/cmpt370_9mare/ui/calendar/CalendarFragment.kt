@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
@@ -32,10 +33,8 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-        binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
-        binding.lifecycleOwner = this
+
         // Giving the binding access to the OverviewViewModel
-        binding.viewModel = sharedViewModel
         return binding.root
     }
 
@@ -43,9 +42,15 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            // TODO: initialize the EntreeMenuFragment variables
+            viewModel = sharedViewModel
             calendarFragment = this@CalendarFragment
         }
+        binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
+        binding.floatingActionButton.setOnClickListener{
+            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment()
+            view.findNavController().navigate(action)
+        }
+
     }
 
     override fun onDestroyView() {

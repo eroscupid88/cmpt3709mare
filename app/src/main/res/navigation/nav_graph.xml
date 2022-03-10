@@ -15,7 +15,11 @@
         android:name="com.example.cmpt370_9mare.ui.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar"
-        />
+        >
+        <action
+            android:id="@+id/action_navigation_calendar_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.cmpt370_9mare.ui.dashboard.DashboardFragment"
@@ -28,8 +32,22 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
-        android:id="@+id/event"
-        android:name="com.example.cmpt370_9mare.Event"
-        android:label="event_fragment"
-        tools:layout="@layout/event_fragment" />
+        android:id="@+id/createEventFragment"
+        android:name="com.example.cmpt370_9mare.ui.event.CreateEventFragment"
+        android:label="CreateEventFragment" >
+        <action
+            android:id="@+id/action_createEventFragment_to_navigation_calendar"
+            app:destination="@id/navigation_calendar" />
+        <action
+            android:id="@+id/action_createEventFragment_to_newEventFragment"
+            app:destination="@id/newEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newEventFragment"
+        android:name="com.example.cmpt370_9mare.ui.event.NewEventFragment"
+        android:label="NewEventFragment" >
+        <action
+            android:id="@+id/action_newEventFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+    </fragment>
 </navigation>
