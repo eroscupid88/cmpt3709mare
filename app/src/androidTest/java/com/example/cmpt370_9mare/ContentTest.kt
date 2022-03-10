@@ -45,7 +45,7 @@ class ContentTest {
     @Test
     fun create_fragment_content(){      // launch the entree menu fragment
         launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-
+        // call all the instrument tests for create fragment content
         title_description_event_test()
         all_day_option_test()
         start_end_test()
