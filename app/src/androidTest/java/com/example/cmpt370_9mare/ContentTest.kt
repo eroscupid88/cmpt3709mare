@@ -16,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
+import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.*
@@ -29,10 +30,73 @@ class ContentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
+//    @Test
+//    fun schedule_fragment_content_test() {
+//        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
+//        onView(withId(R.id.previous_month_button)).perform(click())
+//        onView(withId(R.id.forward_month_button)).perform(click())
+//    }
+
+
+    /**
+     * Testing for create fragment content. In this function I will go to create fragment content
+     * and testing for all the input text and button
+     * */
     @Test
-    fun schedule_fragment_content_test() {
-        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
-        onView(withId(R.id.previous_month_button)).perform(click())
-        onView(withId(R.id.forward_month_button)).perform(click())
+    fun create_fragment_content(){      // launch the entree menu fragment
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+
+        title_description_event_test()
+        all_day_option_test()
+        start_end_test()
+        repeat_event_button_test()
+        url_notes_test()
+        cancel_create_button_test()
     }
+
+    /**
+     * This function will test for event, description and location inputs
+     * */
+    private fun title_description_event_test(){
+        // Check for the title event
+        onView(withId(R.id.input_title))
+            .check(matches(withHint("title")))
+        onView(withId(R.id.event_title))
+            .check(matches(isNotClickable()))
+
+        // Check for the event description
+        onView(withId(R.id.input_description))
+            .check(matches(withHint("description")))
+        onView(withId(R.id.event_description))
+            .check(matches(isNotClickable()))
+
+        // Check for the event location
+        onView(withId(R.id.input_location))
+            .check(matches(withHint("Location")))
+        onView(withId(R.id.event_location))
+            .check(matches(isNotClickable()))
+    }
+
+    private fun all_day_option_test(){}
+
+    private fun start_end_test(){}
+
+    private fun repeat_event_button_test(){}
+
+    private fun url_notes_test(){
+
+        // Check for the url
+        onView(withId(R.id.event_url))
+            .check(matches(withHint("URL")))
+        onView(withId(R.id.url_layout))
+            .check(matches(isNotClickable()))
+
+        // Check for the notes
+        onView(withId(R.id.event_notes))
+            .check(matches(withHint("Notes")))
+        onView(withId(R.id.event_notes_layout))
+            .check(matches(isNotClickable()))
+    }
+
+    private fun cancel_create_button_test(){}
 }
