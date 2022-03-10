@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cmpt370-9mare</string>
+    <string name="app_name">cmpt370–9mare</string>
     <string name="main_calendar">cmpt370-calendar</string>
     <string name="monday">MON</string>
     <string name="tuesday">TUE</string>
@@ -45,5 +45,6 @@
     <string name="everyyear">Every Year</string>
     <string name="everymonth">Every Month</string>
     <string name="Event_created">New Event has been created</string>
+    <string name="button_last_month">Last Month Button</string>
 
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <!-- TextView Style for Menu Item Info -->
+    <!-- TextView Style for Menu Item Info -->
     <style name="Widget.MenuItem.TextView.Info" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -10,6 +10,12 @@
         <item name="singleLine">false</item>
         <item name="android:scrollHorizontally">false</item>
         <item name="maxLines">5</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
 </resources>
