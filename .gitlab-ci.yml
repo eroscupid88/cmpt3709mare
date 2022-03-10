@@ -8,8 +8,14 @@
 # If you are interested in using Android with FastLane for publishing take a look at the Android-Fastlane template.
 
 
-
 image: openjdk:11-jdk
+
+variables:
+  ANDROID_COMPILE_SDK: "30"
+  ANDROID_BUILD_TOOLS: "30.0.3"
+  SDK_TOOLS: "6858069" # from https://developer.android.com/studio/#command-tools
+  EMULATOR_VERSION: "24"
+
 cache:
   key: "$CI_JOB_NAME"
   paths:
@@ -17,37 +23,55 @@ cache:
     - ./gradle/wrapper
     - ./gradle/caches
 
-variables:
-  ANDROID_COMPILE_SDK: "31"
-  ANDROID_BUILD_TOOLS: "32.0.0"
-  ANDROID_COMMAND_LINE_TOOLS: "7583922"
-  EMULATOR_VERSION: "24"
-
 before_script:
-  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS}_latest.zip
+  - unzip -q android-sdk.zip -d android-sdk-linux
+  - rm android-sdk.zip
+
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+
+  - android-sdk-linux/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --update > update.log
+  - echo y | android-sdk-linux/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" "extras;google;m2repository" "extras;android;m2repository" > installPlatform.log
+
   - chmod +x ./gradlew
-  - apt-get --quiet update --yes && apt-get -y install sudo
-  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-  - mkdir -p android-sdk-linux/cmdline-tools
-  - export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
-  - cd android-sdk-linux/cmdline-tools
-  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMAND_LINE_TOOLS}_latest.zip
-  - unzip android-sdk.zip
-  # - rm android-sdk.zip
-  - mv cmdline-tools version
-  - echo y | version/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
-  - echo y | version/bin/sdkmanager "platform-tools" >/dev/null
-  - echo y | version/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
-  - echo y | version/bin/sdkmanager  "ndk-bundle" >/dev/null
-  - export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
-  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
-  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/
-  # temporarily disable checking for EPIPE error and use yes to accept all licenses
-  - set +o pipefail
-  - yes | version/bin/sdkmanager --licenses
-  - set -o pipefail
-  - cd ../../
-  - chmod +x ./gradlew
+
+
+
+
+
+
+#variables:
+#  ANDROID_COMPILE_SDK: "31"
+#  ANDROID_BUILD_TOOLS: "32.0.0"
+#  ANDROID_COMMAND_LINE_TOOLS: "7583922"
+#  EMULATOR_VERSION: "24"
+#
+#before_script:
+#  - export GRADLE_USER_HOME=$(pwd)/.gradle
+#  - chmod +x ./gradlew
+#  - apt-get --quiet update --yes && apt-get -y install sudo
+#  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+#  - mkdir -p android-sdk-linux/cmdline-tools
+#  - export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
+#  - cd android-sdk-linux/cmdline-tools
+#  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMAND_LINE_TOOLS}_latest.zip
+#  - unzip android-sdk.zip
+#  # - rm android-sdk.zip
+#  - mv cmdline-tools version
+#  - echo y | version/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
+#  - echo y | version/bin/sdkmanager "platform-tools" >/dev/null
+#  - echo y | version/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
+#  - echo y | version/bin/sdkmanager  "ndk-bundle" >/dev/null
+#  - export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+#  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
+#  - export PATH=$PATH:$ANDROID_SDK_ROOT/tools/
+#  # temporarily disable checking for EPIPE error and use yes to accept all licenses
+#  - set +o pipefail
+#  - yes | version/bin/sdkmanager --licenses
+#  - set -o pipefail
+#  - cd ../../
+#  - chmod +x ./gradlew
 
 stages:
 #  - build
@@ -94,38 +118,63 @@ stages:
 #    reports:
 #      junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
 
-qa_instrumentation_tests:
-  tags:
-    - docker
+instrumentedTests:
   stage: test
+  tags:
+      - docker
   script:
-    - cd android-sdk-linux/cmdline-tools
     - apt-get --quiet update --yes
     - apt-get --quiet install --yes libx11-dev libpulse0 libgl1 libnss3 libxcomposite-dev libxcursor1 libasound2
     - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
     - chmod +x android-wait-for-emulator
-    - echo y | version/bin/sdkmanager --install "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
-    - echo y | version/bin/sdkmanager --update
-    - echo y | version/bin/sdkmanager "emulator" >/dev/null
-    - PATH=$ANDROID_HOME/emulator:$PATH
-    - echo no | version/bin/avdmanager create avd -n test -k "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
-    - emulator -list-avds
-    - emulator -avd test -gpu swiftshader_indirect -no-window -no-audio &
+    - android-sdk-linux/tools/bin/sdkmanager --update > update.log
+    - android-sdk-linux/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"  > installEmulator.log
+    - echo no | android-sdk-linux/tools/bin/avdmanager create avd -n test -k "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
+    - android-sdk-linux/emulator/emulator -avd test -no-window -no-audio &
     - ./android-wait-for-emulator
-#    - adb wait-for-device
-    - adb devices
-    - adb shell settings put global window_animation_scale 0 &
-    - adb shell settings put global transition_animation_scale 0 &
-    - adb shell settings put global animator_duration_scale 0 &
     - adb shell input keyevent 82
-    - cd ../../
-    - ./gradlew connectedAndroidTest
+    - ./gradlew connectedCheck
   artifacts:
     name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
-#    when: on_failure
+    when: on_failure
     expire_in: 4 days
     paths:
       - app/build/reports/androidTests/connected/
+
+
+
+#qa_instrumentation_tests:
+#  tags:
+#    - docker
+#  stage: test
+#  script:
+#    - cd android-sdk-linux/cmdline-tools
+#    - apt-get --quiet update --yes
+#    - apt-get --quiet install --yes libx11-dev libpulse0 libgl1 libnss3 libxcomposite-dev libxcursor1 libasound2
+#    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
+#    - chmod +x android-wait-for-emulator
+#    - echo y | version/bin/sdkmanager --install "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
+#    - echo y | version/bin/sdkmanager --update
+#    - echo y | version/bin/sdkmanager "emulator" >/dev/null
+#    - PATH=$ANDROID_HOME/emulator:$PATH
+#    - echo no | version/bin/avdmanager create avd -n test -k "system-images;android-${EMULATOR_VERSION};default;armeabi-v7a"
+#    - emulator -list-avds
+#    - emulator -avd test -gpu swiftshader_indirect -no-window -no-audio &
+#    - ./android-wait-for-emulator
+##    - adb wait-for-device
+#    - adb devices
+#    - adb shell settings put global window_animation_scale 0 &
+#    - adb shell settings put global transition_animation_scale 0 &
+#    - adb shell settings put global animator_duration_scale 0 &
+#    - adb shell input keyevent 82
+#    - cd ../../
+#    - ./gradlew connectedAndroidTest
+#  artifacts:
+#    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+##    when: on_failure
+#    expire_in: 4 days
+#    paths:
+#      - app/build/reports/androidTests/connected/
 
 #static_analysis:
 #  stage: quality_assurance
