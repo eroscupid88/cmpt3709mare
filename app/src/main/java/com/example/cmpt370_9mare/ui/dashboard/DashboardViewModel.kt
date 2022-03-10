@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 
-class DashboardViewModel(private val eventDao: ScheduleEventDao) : ViewModel() {
+class DashboardViewModel(eventDao: ScheduleEventDao) : ViewModel() {
 
     // Cache all events form the database using LiveData.
     val allEvents: LiveData<List<ScheduleEvent>> = eventDao.getAllEvents().asLiveData()
