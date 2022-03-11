@@ -1,6 +1,6 @@
 package com.example.cmpt370_9mare.data
 
-import com.example.cmpt370_9mare.data.date_picker.TimePicker
+import com.example.cmpt370_9mare.data.time_picker.TimePicker
 
 
 /**

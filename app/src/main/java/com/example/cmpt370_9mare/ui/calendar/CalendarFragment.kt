@@ -68,6 +68,7 @@ class CalendarFragment : Fragment() {
 
     fun setCurrentDateBackground() {
     }
+
 }
 
 
