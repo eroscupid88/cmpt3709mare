@@ -158,7 +158,7 @@ class ContentTest {
     @Test
     fun dashboard_fragment_test(){
         launchFragmentInContainer<DashboardFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        onView(withId(R.id.recycler_view)).check(matches(isNotClickable()))
-        onView(withId(R.id.recycler_view)).check(matches(notNullValue()))
+        onView(withId(R.id.event_list_recycler_view)).check(matches(isNotClickable()))
+        onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
     }
 }
