@@ -2,10 +2,7 @@ package com.example.cmpt370_9mare
 
 
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.test.core.app.launchActivity
-import androidx.test.filters.MediumTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -14,11 +11,9 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 import com.example.cmpt370_9mare.ui.dashboard.DashboardFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.*
 import org.junit.Rule
 import org.junit.Test
@@ -47,10 +42,10 @@ class ContentTest {
         onView(withId(R.id.floatingActionButton)).check(matches(withText("New Event")))
     }
 
-
     /**
      * This function will test for event, description and location inputs
      * */
+    @Test
      fun title_description_event_test(){
         // Check for the title event
         launchActivity<MainActivity>()
@@ -62,7 +57,7 @@ class ContentTest {
 
         // Check for the event description
         onView(withId(R.id.input_description))
-            .check(matches(withHint("description")))
+            .check(matches(withHint("Description")))
         onView(withId(R.id.event_description))
             .check(matches(isNotClickable()))
 
@@ -72,7 +67,7 @@ class ContentTest {
         onView(withId(R.id.event_location))
             .check(matches(isNotClickable()))
     }
-
+     @Test
      fun all_day_option_test(){
          launchActivity<MainActivity>()
          launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)

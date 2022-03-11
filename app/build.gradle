@@ -130,5 +130,6 @@ dependencies {
     implementation "androidx.room:room-paging:2.5.0-alpha01"
 
     testImplementation 'org.mockito:mockito-core:4.3.1'
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 
 }
