@@ -143,25 +143,4 @@ class ScheduleEventDaoTest {
         )
     }
 
-
-//    /**
-//     * Test updateEvent
-//     * create 2 events and check 2nd event
-//     */
-//    @Test
-//    @Throws(IOException::class)
-//    fun updateEventTest():Unit = runBlocking {
-//        val scheduleEvent1 = ScheduleEvent(1,"event1","","Mar 18,2022","Mar 20,2022","","","","")
-//        scheduleEventDao.insertEvent(scheduleEvent1)
-//        assertEquals(scheduleEvent1.date_from,scheduleEventDao.getScheduleEvent(2).first().date_from)
-//        assertEquals(scheduleEvent1.date_to,scheduleEventDao.getScheduleEvent(2).first().date_to)
-//        val newScheduleEvent1 = ScheduleEvent(1,"event1","","Mar 20,2022","Mar 21,2022","10:00 AM","11:00 AM","","")
-//        scheduleEventDao.updateEvent(newScheduleEvent1)
-//        assertEquals("Mar 21,2022",scheduleEventDao.getScheduleEvent(2).first().date_to)
-//        assertEquals("11:00 AM",scheduleEventDao.getScheduleEvent(2).first().time_to)
-
-
-//    }
-
-
 }

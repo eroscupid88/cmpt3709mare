@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
@@ -50,7 +51,6 @@ class CalendarFragment : Fragment() {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment()
             view.findNavController().navigate(action)
         }
-
     }
 
     override fun onDestroyView() {
@@ -60,27 +60,16 @@ class CalendarFragment : Fragment() {
 
     fun goToNextMonth() {
         sharedViewModel.nextMonthAction()
-
-
     }
 
     fun goToPreviousMonth() {
         sharedViewModel.previousMonthAction()
     }
 
-
-
-//    private fun setMonthView() {
-//        binding.calendarRecyclerView.adapter = CalendarAdapter(sharedViewModel)
-//        binding.calendarRecyclerView.layoutManager= GridLayoutManager(context,7)
-//        Log.d(TAG,"DEBUG/CalendarFragment: calling CalendarFragment/setMonthView")
-//    }
+    fun setCurrentDateBackground() {
+    }
 
 }
-
-
-
-
 
 
 //

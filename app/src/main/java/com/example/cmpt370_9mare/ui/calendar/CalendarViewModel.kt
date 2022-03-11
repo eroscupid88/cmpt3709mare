@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
@@ -16,16 +18,19 @@ private const val TAG = "CalendarViewModel"
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
+    private val _currentedDate = MutableLiveData<Int>()
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>>()
     private var _currentDate = LocalDate.now()
-    var selectDate: LocalDate? = null
+    private var selectDate: LocalDate? = null
 
-    val monthYearText: LiveData<String?> = _monthYearText
+    val monthYearText: LiveData<String> = _monthYearText
     val daysOfTheMonth: LiveData<ArrayList<Day>> = _daysOfTheMonth
+    val currentedDate: LiveData<Int> = _currentedDate
 
     init {
         logging()
         selectDate = LocalDate.now()
+        _currentedDate.value = getCurrentDate(LocalDate.now())
         setMonthYearText()
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
     }
@@ -44,6 +49,13 @@ class CalendarViewModel : ViewModel() {
         return date?.format(formatter)
     }
 
+
+    private fun getCurrentDate(date: LocalDate?): Int? {
+        val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+        val some = date?.format(formatter)
+        return some?.takeLast(2)?.toInt()
+    }
+
     fun setSelectedDate(date: LocalDate) {
         selectDate = date
     }
@@ -51,20 +63,20 @@ class CalendarViewModel : ViewModel() {
     private fun daysInMonthArray(date: LocalDate): ArrayList<Day> {
 
         // maximum 31 days in month
-        var daysInMonthArray = arrayListOf<Day>()
+        val daysInMonthArray = arrayListOf<Day>()
 
         // current year month from chosen date
-        var yearMonth: YearMonth = YearMonth.from(date)
+        val yearMonth: YearMonth = YearMonth.from(date)
 
         //number of days in a month
-        var daysInMonth: Int = yearMonth.lengthOfMonth()
+        val daysInMonth: Int = yearMonth.lengthOfMonth()
 
         // first date of the month
 
-        var firstOfMonth: LocalDate = date.withDayOfMonth(1)
+        val firstOfMonth: LocalDate = date.withDayOfMonth(1)
         // number days of week
 
-        var dayOfWeek: Int = firstOfMonth.dayOfWeek.value
+        val dayOfWeek: Int = firstOfMonth.dayOfWeek.value
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(

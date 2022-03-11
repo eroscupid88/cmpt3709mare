@@ -12,10 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
+import com.example.cmpt370_9mare.*
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -179,7 +176,6 @@ class CreateEventFragment : Fragment() {
 
     }
 
-
     fun cancelEvent() {
         Log.i(TAG, "$TAG: cancel Event button was clicked")
         val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
@@ -195,6 +191,13 @@ class CreateEventFragment : Fragment() {
     fun onSelectRepeat() {
         val action = CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment()
         findNavController().navigate(action)
+    }
+
+    fun showDatePicker(v: View) {
+        DatePickerFragment().show(childFragmentManager, "datePicker")
+    }
+    fun showTimePicker(v: View){
+        TimePickerFragment().show(childFragmentManager, "timePicker")
     }
 
 
