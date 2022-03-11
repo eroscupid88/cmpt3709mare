@@ -16,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
+import com.example.cmpt370_9mare.ui.dashboard.DashboardFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 
 import org.hamcrest.CoreMatchers
@@ -30,12 +31,20 @@ class ContentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-//    @Test
-//    fun schedule_fragment_content_test() {
-//        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
-//        onView(withId(R.id.previous_month_button)).perform(click())
-//        onView(withId(R.id.forward_month_button)).perform(click())
-//    }
+    @Test
+    fun schedule_fragment_content_test() {
+        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
+        onView(withId(R.id.next_month_calendar)).perform(click())
+        onView(withId(R.id.button_last_month)).perform(click())
+
+        // check for the content of the calender
+        onView(withId(R.id.month_calendar_grid)).check(matches(notNullValue()))
+        onView(withId(R.id.month_calendar_grid)).check(matches(isNotClickable()))
+
+        // check for create new event button
+        onView(withId(R.id.floatingActionButton)).check(matches(isClickable()))
+        onView(withId(R.id.floatingActionButton)).check(matches(withText("New Event")))
+    }
 
 
     /**
@@ -82,6 +91,7 @@ class ContentTest {
             .check(matches(withText("All-day")))
         onView(withId(R.id.all_day))
             .check(matches(isChecked()))
+        onView(withId(R.id.all_day)).perform(click())
     }
 
     private fun start_end_test(){
@@ -136,11 +146,20 @@ class ContentTest {
         onView(withId(R.id.cancel_create_event))
             .check(matches(isClickable()))
 
+        onView(withId(R.id.submit_create_event)).perform(click())
         onView(withId(R.id.submit_create_event))
             .check(matches(withText("Add")))
         onView(withId(R.id.submit_create_event))
             .check(matches(isClickable()))
     }
 
-
+    /**
+     * test for dashboard fragment
+     * */
+    @Test
+    fun dashboard_fragment_test(){
+        launchFragmentInContainer<DashboardFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+        onView(withId(R.id.recycler_view)).check(matches(isNotClickable()))
+        onView(withId(R.id.recycler_view)).check(matches(notNullValue()))
+    }
 }
