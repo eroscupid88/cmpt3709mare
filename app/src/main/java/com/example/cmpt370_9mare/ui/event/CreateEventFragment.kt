@@ -40,7 +40,7 @@ class CreateEventFragment : Fragment() {
     /**
      * get Singleton scheduleEventViewModel shared throughout fragments
      */
-    private val scheduleEventShareViewModel: ScheduleEventViewModel by activityViewModels{
+    private val scheduleEventShareViewModel: ScheduleEventViewModel by activityViewModels {
         ScheduleEventViewModelFactory(
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
@@ -78,7 +78,7 @@ class CreateEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             viewModel = scheduleEventShareViewModel
-            createEventFragment =this@CreateEventFragment
+            createEventFragment = this@CreateEventFragment
         }
         setInputBinding()
 
@@ -88,26 +88,26 @@ class CreateEventFragment : Fragment() {
      * setInputBinding function to call handleKeyEvent if Enter button is clicked, it close down keyboard
      * better for user experience
      */
-    private fun setInputBinding(){
-        binding.inputTitle.setOnKeyListener(){ view, keyCode, _ ->
+    private fun setInputBinding() {
+        binding.inputTitle.setOnKeyListener() { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.inputLocation.setOnKeyListener(){ view, keyCode, _ ->
+        binding.inputLocation.setOnKeyListener() { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventUrl.setOnKeyListener(){ view, keyCode, _ ->
+        binding.eventUrl.setOnKeyListener() { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventNotes.setOnKeyListener(){ view, keyCode, _ ->
+        binding.eventNotes.setOnKeyListener() { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
@@ -145,7 +145,8 @@ class CreateEventFragment : Fragment() {
     private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // Hide the keyboard
-            val inputMethodManager:InputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager: InputMethodManager =
+                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
             return true
         }
@@ -153,11 +154,12 @@ class CreateEventFragment : Fragment() {
     }
 
 
-    private fun isEntryValid():Boolean {
+    private fun isEntryValid(): Boolean {
         return scheduleEventShareViewModel.isEntryValid(
             binding.inputTitle.text.toString()
         )
     }
+
     private fun addNewEvent() {
         if (isEntryValid()) {
             scheduleEventShareViewModel.addNewItem(
@@ -170,28 +172,30 @@ class CreateEventFragment : Fragment() {
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
-            val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
+            val action =
+                CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
         }
 
     }
 
 
-    fun cancelEvent(){
-        Log.i(TAG,"$TAG: cancel Event button was clicked")
+    fun cancelEvent() {
+        Log.i(TAG, "$TAG: cancel Event button was clicked")
         val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
         findNavController().navigate(action)
     }
-    fun createEvent(){
-        Log.i(TAG,"$TAG: add Event button was clicked")
-        Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+
+    fun createEvent() {
+        Log.i(TAG, "$TAG: add Event button was clicked")
+        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
         addNewEvent()
     }
+
     fun onSelectRepeat() {
         val action = CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment()
         findNavController().navigate(action)
     }
-
 
 
 }

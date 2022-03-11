@@ -36,7 +36,7 @@ class NavigationTests: BaseTest() {
 
 
     @Test
-    fun `calendar_fragment_navigate_to_create_event_fragment`(){
+    fun calendar_fragment_navigate_to_create_event_fragment(){
         val navController = TestNavHostController(
             ApplicationProvider.getApplicationContext())
         val scenario = launchFragmentInContainer<CreateEventFragment>(themeResId=R.style.Theme)
