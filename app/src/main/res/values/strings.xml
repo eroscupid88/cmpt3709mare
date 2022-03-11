@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cmpt370-9mare</string>
+    <string name="app_name">cmpt370–9mare</string>
     <string name="main_calendar">cmpt370-calendar</string>
     <string name="monday">MON</string>
     <string name="tuesday">TUE</string>
@@ -37,7 +37,7 @@
     <string name="repeat">Repeat</string>
     <string name="URL">URL</string>
     <string name="notes">Notes</string>
-    <string name="add_new_item">create_new_event</string>
+    <string name="add_new_item">New Event</string>
     <string name="never">Never</string>
     <string name="everyday">Every Day</string>
     <string name="everyweek">Every Week</string>
@@ -59,5 +59,7 @@
     <string name="pick_time_from" >" "</string>
     <string name="pick_date_to" >" "</string>
     <string name="pick_time_to" >" "</string>
+    <string name="button_last_month">description</string>
+    <string name="description">some description</string>
 
 </resources>

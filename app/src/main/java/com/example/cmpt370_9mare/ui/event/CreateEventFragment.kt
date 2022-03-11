@@ -176,7 +176,6 @@ class CreateEventFragment : Fragment() {
 
     }
 
-
     fun cancelEvent() {
         Log.i(TAG, "$TAG: cancel Event button was clicked")
         val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
@@ -185,7 +184,7 @@ class CreateEventFragment : Fragment() {
 
     fun createEvent() {
         Log.i(TAG, "$TAG: add Event button was clicked")
-        Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
         addNewEvent()
     }
 
@@ -200,7 +199,6 @@ class CreateEventFragment : Fragment() {
     fun showTimePicker(v: View){
         TimePickerFragment().show(childFragmentManager, "timePicker")
     }
-
 
 
 }

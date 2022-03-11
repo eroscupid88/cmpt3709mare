@@ -4,17 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+    // to share the ViewModel across fragments.
+    private val viewModel: DashboardViewModel by activityViewModels {
+        DashboardViewModelFactory(
+            (activity?.application as ScheduleApplication).database.scheduleEventDao()
+        )
+    }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,17 +28,36 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = DashboardAdapter {
+            // TODO: move to a different fragment
+//            val action =
+//                Dashboar.actionItemListFragmentToItemDetailFragment(it.id)
+//            this.findNavController().navigate(action)
         }
-        return root
+        binding.eventListRecyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.eventListRecyclerView.adapter = adapter
+        // Attach an observer on the allItems list to update the UI automatically when the data
+        // changes.
+        viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
+            }
+        }
+
+        // TODO later
+//        binding.floatingActionButton.setOnClickListener {
+//            val action = ItemListFragmentDirections.actionItemListFragmentToAddItemFragment(
+//                getString(R.string.add_fragment_title)
+//            )
+//            this.findNavController().navigate(action)
+//        }
     }
 
     override fun onDestroyView() {
