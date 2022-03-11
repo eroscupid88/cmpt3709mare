@@ -4,6 +4,7 @@ package com.example.cmpt370_9mare
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.test.core.app.launchActivity
 import androidx.test.filters.MediumTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
 import androidx.test.espresso.Espresso.onView
@@ -32,6 +33,7 @@ class ContentTest {
 
     @Test
     fun schedule_fragment_content_test() {
+        launchActivity<MainActivity>()
         launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
         onView(withId(R.id.next_month_calendar)).perform(click())
         onView(withId(R.id.button_last_month)).perform(click())
@@ -47,26 +49,12 @@ class ContentTest {
 
 
     /**
-     * Testing for create fragment content. In this function I will go to create fragment content
-     * and testing for all the input text and button
-     * */
-    @Test
-    fun create_event_fragment_content(){      // launch the entree menu fragment
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        // call all the instrument tests for create fragment content
-        title_description_event_test()
-        all_day_option_test()
-        start_end_test()
-        repeat_event_button_test()
-        url_notes_test()
-        cancel_create_button_test()
-    }
-
-    /**
      * This function will test for event, description and location inputs
      * */
-    private fun title_description_event_test(){
+     fun title_description_event_test(){
         // Check for the title event
+        launchActivity<MainActivity>()
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         onView(withId(R.id.input_title))
             .check(matches(withHint("title")))
         onView(withId(R.id.event_title))
@@ -85,47 +73,57 @@ class ContentTest {
             .check(matches(isNotClickable()))
     }
 
-    private fun all_day_option_test(){
-        onView(withId(R.id.all_day))
+     fun all_day_option_test(){
+         launchActivity<MainActivity>()
+         launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+         onView(withId(R.id.all_day))
             .check(matches(withText("All-day")))
         onView(withId(R.id.all_day))
             .check(matches(isChecked()))
         onView(withId(R.id.all_day)).perform(click())
     }
 
-    private fun start_end_test(){
+    @Test
+     fun start_end_test(){
+        launchActivity<MainActivity>()
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         // check for start date and time
-        onView(withId(R.id.input_day_from))
-            .check(matches(withText("Mar 10,2022")))
-        onView(withId(R.id.chosen_day_start_layout))
-            .check(matches(isNotClickable()))
+//        onView(withId(R.id.inputTimeTo))
+//            .check(matches(withText("Mar 10,2022")))
+        onView(withId(R.id.inputTimeTo))
+            .check(matches(isClickable()))
 
-        onView(withId(R.id.input_time_from))
-            .check(matches(withText("10:25 AM")))
-        onView(withId(R.id.chosen_time_start_layout))
-            .check(matches(isNotClickable()))
+//        onView(withId(R.id.inputDayTo))
+//            .check(matches(withText("10:25 AM")))
+        onView(withId(R.id.inputDayTo))
+            .check(matches(isClickable()))
 
         // check for end date and time
-        onView(withId(R.id.input_day_to))
-            .check(matches(withText("Mar 10,2022")))
-        onView(withId(R.id.chosen_day_end_layout))
-            .check(matches(isNotClickable()))
+//        onView(withId(R.id.inputTimeFrom))
+//            .check(matches(withText("Mar 10,2022")))
+        onView(withId(R.id.inputTimeFrom))
+            .check(matches(isClickable()))
 
-        onView(withId(R.id.input_time_to))
-            .check(matches(withText("10:25 AM")))
-        onView(withId(R.id.chosen_time_end_layout))
-            .check(matches(isNotClickable()))
+//        onView(withId(R.id.inputDayFrom))
+//            .check(matches(withText("10:25 AM")))
+        onView(withId(R.id.inputDayFrom))
+            .check(matches(isClickable()))
     }
 
-    private fun repeat_event_button_test(){
+    @Test
+     fun repeat_event_button_test(){
+        launchActivity<MainActivity>()
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         onView(withId(R.id.repeat_button))
             .check(matches(withText("Repeat")))
         onView(withId(R.id.repeat_button))
             .check(matches(isClickable()))
     }
 
-    private fun url_notes_test(){
-
+    @Test
+     fun url_notes_test(){
+        launchActivity<MainActivity>()
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         // Check for the url
         onView(withId(R.id.event_url))
             .check(matches(withHint("URL")))
@@ -139,7 +137,10 @@ class ContentTest {
             .check(matches(isNotClickable()))
     }
 
-    private fun cancel_create_button_test(){
+    @Test
+     fun cancel_create_button_test(){
+        launchActivity<MainActivity>()
+        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         onView(withId(R.id.cancel_create_event))
             .check(matches(withText("Cancel")))
         onView(withId(R.id.cancel_create_event))
@@ -157,6 +158,7 @@ class ContentTest {
      * */
     @Test
     fun dashboard_fragment_test(){
+        launchActivity<MainActivity>()
         launchFragmentInContainer<DashboardFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         onView(withId(R.id.event_list_recycler_view)).check(matches(isNotClickable()))
         onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
