@@ -59,7 +59,7 @@
     <string name="pick_time_from" >" "</string>
     <string name="pick_date_to" >" "</string>
     <string name="pick_time_to" >" "</string>
-    <string name="button_last_month">description</string>
-    <string name="description">some description</string>
+    <string name="button_last_month">description last month</string>
+    <string name="description">Description</string>
 
 </resources>
