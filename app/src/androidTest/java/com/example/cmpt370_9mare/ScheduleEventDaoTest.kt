@@ -26,7 +26,7 @@ class ScheduleEventDaoTest {
     private lateinit var db: EventRoomDatabase
     private val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
 
-    private fun convertDate(someDate:String): LocalDate? {
+    private fun convertDate(someDate: String): LocalDate? {
         return LocalDate.parse(someDate, formatter)
     }
 
@@ -52,18 +52,28 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun insertAndGetScheduleEventTest1():Unit = runBlocking {
-        val scheduleEvent = ScheduleEvent(1,"event1","Saskatoon","July 25, 2017","July 25, 2017","10:40 AM","10:50 AM","","event1 testing notes")
+    fun insertAndGetScheduleEventTest1(): Unit = runBlocking {
+        val scheduleEvent = ScheduleEvent(
+            1,
+            "event1",
+            "Saskatoon",
+            "July 25, 2017",
+            "July 25, 2017",
+            "10:40 AM",
+            "10:50 AM",
+            "",
+            "event1 testing notes"
+        )
         scheduleEventDao.insertEvent(scheduleEvent)
-        val events:List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
-        assertEquals(events[0].id,scheduleEvent.id)
-        assertEquals(events[0].date_from,scheduleEvent.date_from)
-        assertEquals(events[0].date_to,scheduleEvent.date_to)
-        assertEquals(events[0].time_from,scheduleEvent.time_from)
-        assertEquals(events[0].time_to,scheduleEvent.time_to)
-        assertEquals(events[0].location,scheduleEvent.location)
-        assertEquals(events[0].url,scheduleEvent.url)
-        assertEquals(events[0].notes,scheduleEvent.notes)
+        val events: List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
+        assertEquals(events[0].id, scheduleEvent.id)
+        assertEquals(events[0].date_from, scheduleEvent.date_from)
+        assertEquals(events[0].date_to, scheduleEvent.date_to)
+        assertEquals(events[0].time_from, scheduleEvent.time_from)
+        assertEquals(events[0].time_to, scheduleEvent.time_to)
+        assertEquals(events[0].location, scheduleEvent.location)
+        assertEquals(events[0].url, scheduleEvent.url)
+        assertEquals(events[0].notes, scheduleEvent.notes)
     }
 
     /**
@@ -71,19 +81,19 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun insertAndGetScheduleEventTest2():Unit = runBlocking {
-        val scheduleEvent = ScheduleEvent(2,"event2","","","","","","","")
+    fun insertAndGetScheduleEventTest2(): Unit = runBlocking {
+        val scheduleEvent = ScheduleEvent(2, "event2", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent)
-        val events:List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
-        assertEquals(2,scheduleEvent.id)
-        assertEquals(events[0].title,scheduleEvent.title)
-        assertEquals("",scheduleEvent.date_from)
-        assertEquals("",scheduleEvent.date_to)
-        assertEquals("",scheduleEvent.time_from)
-        assertEquals("",scheduleEvent.time_to)
-        assertEquals("",scheduleEvent.location)
-        assertEquals("",scheduleEvent.url)
-        assertEquals("",scheduleEvent.notes)
+        val events: List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
+        assertEquals(2, scheduleEvent.id)
+        assertEquals(events[0].title, scheduleEvent.title)
+        assertEquals("", scheduleEvent.date_from)
+        assertEquals("", scheduleEvent.date_to)
+        assertEquals("", scheduleEvent.time_from)
+        assertEquals("", scheduleEvent.time_to)
+        assertEquals("", scheduleEvent.location)
+        assertEquals("", scheduleEvent.url)
+        assertEquals("", scheduleEvent.notes)
     }
 
 
@@ -92,15 +102,15 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun getScheduleEventsTest():Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1,"event1","","","","","","","")
-        val scheduleEvent2 = ScheduleEvent(2,"event2","","","","","","","")
-        val scheduleEvent3 = ScheduleEvent(3,"event3","","","","","","","")
+    fun getScheduleEventsTest(): Unit = runBlocking {
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
+        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "", "", "", "")
+        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent2)
         scheduleEventDao.insertEvent(scheduleEvent3)
-        assertEquals(3,scheduleEventDao.getScheduleEvents().first().size)
-        assertEquals(scheduleEvent2.title,scheduleEventDao.getScheduleEvent(2).first().title)
+        assertEquals(3, scheduleEventDao.getScheduleEvents().first().size)
+        assertEquals(scheduleEvent2.title, scheduleEventDao.getScheduleEvent(2).first().title)
     }
 
 
@@ -109,10 +119,10 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun getScheduleEventTest1():Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1,"event1","","","","","","","")
+    fun getScheduleEventTest1(): Unit = runBlocking {
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
-        assertEquals(scheduleEvent1.title,scheduleEventDao.getScheduleEvent(1).first().title)
+        assertEquals(scheduleEvent1.title, scheduleEventDao.getScheduleEvent(1).first().title)
     }
 
 
@@ -122,12 +132,15 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun getScheduleEventTest2():Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1,"event1","","","","","","","")
-        val scheduleEvent2 = ScheduleEvent(2,"event2","","","","10:20 AM","","","")
+    fun getScheduleEventTest2(): Unit = runBlocking {
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
+        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "10:20 AM", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent2)
-        assertEquals(scheduleEvent2.time_from,scheduleEventDao.getScheduleEvent(2).first().time_from)
+        assertEquals(
+            scheduleEvent2.time_from,
+            scheduleEventDao.getScheduleEvent(2).first().time_from
+        )
     }
 
 
