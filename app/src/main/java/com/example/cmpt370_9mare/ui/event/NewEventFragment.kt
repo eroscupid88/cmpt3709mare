@@ -42,7 +42,7 @@ class NewEventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentNewEventBinding.inflate(inflater,container,false)
+        _binding = FragmentNewEventBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -79,35 +79,40 @@ class NewEventFragment : Fragment() {
         findNavController().navigate(action)
 
     }
-     fun onSelectRepeatEveryDay() {
-            val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
-            )
-            findNavController().navigate(action)
 
-        }
+    fun onSelectRepeatEveryDay() {
+        val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
+        )
+        findNavController().navigate(action)
+
+    }
+
     fun onSelectRepeatEveryWeek() {
-            val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
-            )
-            findNavController().navigate(action)
+        val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
+        )
+        findNavController().navigate(action)
 
-        }
+    }
+
     fun onSelectRepeatEvery2Weeks() {
-            val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
-            )
-            findNavController().navigate(action)
+        val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
+        )
+        findNavController().navigate(action)
 
-        }
+    }
+
     fun onSelectRepeatEveryMonth() {
-            val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
-            )
-            findNavController().navigate(action)
+        val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
+        )
+        findNavController().navigate(action)
 
-        }
+    }
+
     fun onSelectRepeatEveryYear() {
-            val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
-            )
-            findNavController().navigate(action)
+        val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
+        )
+        findNavController().navigate(action)
 
-        }
+    }
 
 }
