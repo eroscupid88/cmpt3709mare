@@ -23,7 +23,7 @@ private const val TAG = "newEventFragment"
  */
 class NewEventFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var repeat: String? = "never"
+    private var repeat: String? = null
 
 
     private var _binding: FragmentNewEventBinding? = null
@@ -62,10 +62,10 @@ class NewEventFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String) =
+        fun newInstance(repeat: String) =
             NewEventFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_REPEAT, param1)
+                    putString(ARG_REPEAT, repeat)
                 }
             }
     }
