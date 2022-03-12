@@ -3,14 +3,8 @@ package com.example.cmpt370_9mare
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import com.example.cmpt370_9mare.data.DataSource
-import com.example.cmpt370_9mare.databinding.FragmentDatePickerBinding
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
