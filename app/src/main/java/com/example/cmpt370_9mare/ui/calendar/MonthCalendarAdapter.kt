@@ -1,5 +1,5 @@
 
-package com.example.cmpt370_9mare.adapter
+package com.example.cmpt370_9mare.ui.calendar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,22 +7,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.databinding.CalendarCellLayoutBinding
-import com.example.cmpt370_9mare.ui.calendar.Day
+import com.example.cmpt370_9mare.data.Day
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class MonthCalendarAdapter :
+class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
+
 
     class DayViewHolder(
         private var binding: CalendarCellLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(day: Day) {
             binding.day = day
-            // This is important, because it forces the data binding to execute immediately,
-            // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
         }
     }
@@ -40,7 +39,6 @@ class MonthCalendarAdapter :
             return oldItem == newItem
         }
     }
-
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
@@ -54,10 +52,14 @@ class MonthCalendarAdapter :
     }
 
     /**
+     *
      * Replaces the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
+        holder.itemView.setOnClickListener {
+            onItemClicked(day)
+        }
         holder.bind(day)
     }
 }

@@ -58,7 +58,7 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
         fun bind(event: ScheduleEvent) {
             binding.eventId.text = event.id.toString()
             binding.showEventName.text = event.title
-            binding.showEventTime.text = getFormattedTime(event.date, event.time_from)
+            binding.showEventTime.text = event.date?.let { getFormattedTime(it, event.time_from) }
         }
     }
 }
