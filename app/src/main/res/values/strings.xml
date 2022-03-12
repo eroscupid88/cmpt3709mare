@@ -59,6 +59,6 @@
     <string name="pick_time">Time:</string>
     <string name="button_last_month">description last month</string>
     <string name="description">Description</string>
-    <string name="delete_event">delete_event</string>
+    <string name="connecting_word">To</string>
 
 </resources>

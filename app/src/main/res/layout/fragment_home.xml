@@ -68,16 +68,15 @@
             android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/event_list_recycler_view"
+            android:id="@+id/home_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/current_day"
-            android:clickable="true"
-            android:clipToPadding="false"
             android:focusable="true"
             android:padding="16dp"
-            tools:clickable="true"
-            tools:listitem="@layout/event_view" />
+            tools:listitem="@layout/event_view"
+            app:layoutManager="LinearLayoutManager"/>
+
 
     </RelativeLayout>
 
