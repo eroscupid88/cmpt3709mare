@@ -8,7 +8,10 @@
 
         <variable
             name="day"
-            type="com.example.cmpt370_9mare.ui.calendar.Day" />
+            type="com.example.cmpt370_9mare.data.Day" />
+        <variable
+            name="calendarFragment"
+            type="com.example.cmpt370_9mare.ui.calendar.CalendarFragment" />
     </data>
 
 
@@ -26,6 +29,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/dot_day"
                     >
                         <ImageView
+                            android:id="@+id/date_background_id"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/date_background_current"
