@@ -100,6 +100,7 @@ class CalendarViewModel : ViewModel() {
         setMonthYearText()
         Log.d(TAG, "DEBUG: NextMonthAction selectedDate: $selectDate")
     }
+
     fun previousMonthAction() {
         selectDate = selectDate!!.minusMonths(1)
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
@@ -108,7 +109,6 @@ class CalendarViewModel : ViewModel() {
     }
 
 }
-
 
 
 //package com.example.cmpt370_9mare.ui.calendar
