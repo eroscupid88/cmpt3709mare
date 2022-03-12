@@ -61,5 +61,6 @@
     <string name="pick_time_to" >" "</string>
     <string name="button_last_month">description last month</string>
     <string name="description">Description</string>
+    <string name="delete_event">delete_event</string>
 
 </resources>

@@ -34,7 +34,6 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-
         // Giving the binding access to the OverviewViewModel
         return binding.root
     }

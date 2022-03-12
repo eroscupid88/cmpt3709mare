@@ -196,6 +196,8 @@ class CreateEventFragment : Fragment() {
     fun showDatePicker(v: View) {
         DatePickerFragment().show(childFragmentManager, "datePicker")
     }
+
+
     fun showTimePicker(v: View){
         TimePickerFragment().show(childFragmentManager, "timePicker")
     }
