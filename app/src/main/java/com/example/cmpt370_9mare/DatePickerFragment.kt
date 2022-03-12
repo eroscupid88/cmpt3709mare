@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import com.example.cmpt370_9mare.data.DataSource
+import androidx.fragment.app.activityViewModels
 import com.example.cmpt370_9mare.databinding.FragmentDatePickerBinding
 import java.util.*
 

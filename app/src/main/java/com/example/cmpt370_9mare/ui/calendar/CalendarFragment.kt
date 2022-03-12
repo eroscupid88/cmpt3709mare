@@ -15,10 +15,12 @@ import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 
 private const val TAG = "CalendarFragment"
+
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -47,8 +49,10 @@ class CalendarFragment : Fragment() {
             calendarFragment = this@CalendarFragment
         }
         binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
-        binding.floatingActionButton.setOnClickListener{
-            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment()
+        binding.floatingActionButton.setOnClickListener {
+            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
+                eventId = 0
+            )
             view.findNavController().navigate(action)
         }
     }

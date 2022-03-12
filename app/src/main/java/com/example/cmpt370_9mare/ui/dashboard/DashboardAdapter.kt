@@ -18,9 +18,7 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
         return DashboardViewHolder(
             EventViewBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
+                LayoutInflater.from(parent.context)
             )
         )
     }
@@ -37,6 +35,7 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(event: ScheduleEvent) {
+            binding.eventId.text = event.id.toString()
             binding.showEventName.text = event.title
             binding.showEventTime.text = event.getFormattedTime(event.date_from, event.time_from)
         }
