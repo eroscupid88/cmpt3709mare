@@ -92,7 +92,7 @@ class NavigationTests : BaseTest() {
         }
         // Click start order
         onView(withId(R.id.cancel_create_event)).perform(click())
-        verify(mockNavController).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar())
+        verify(mockNavController).navigateUp()
     }
 
 
