@@ -15,6 +15,21 @@ import com.example.cmpt370_9mare.databinding.EventViewBinding
 class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     ListAdapter<ScheduleEvent, DashboardAdapter.DashboardViewHolder>(DiffCallback) {
 
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<ScheduleEvent>() {
+            override fun areItemsTheSame(oldItem: ScheduleEvent, newItem: ScheduleEvent): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: ScheduleEvent,
+                newItem: ScheduleEvent
+            ): Boolean {
+                return oldItem.title == newItem.title
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
         return DashboardViewHolder(
             EventViewBinding.inflate(
@@ -31,28 +46,19 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
         holder.bind(current)
     }
 
+    /**
+     * ViewHolder to hold data of DashboardFragment
+     */
     class DashboardViewHolder(private var binding: EventViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * Bind views on DashboardFragment to the events' data
+         */
         fun bind(event: ScheduleEvent) {
             binding.eventId.text = event.id.toString()
             binding.showEventName.text = event.title
-            binding.showEventTime.text = event.getFormattedTime(event.date_from, event.time_from)
-        }
-    }
-
-    companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<ScheduleEvent>() {
-            override fun areItemsTheSame(oldItem: ScheduleEvent, newItem: ScheduleEvent): Boolean {
-                return oldItem === newItem
-            }
-
-            override fun areContentsTheSame(
-                oldItem: ScheduleEvent,
-                newItem: ScheduleEvent
-            ): Boolean {
-                return oldItem.title == newItem.title
-            }
+            binding.showEventTime.text = getFormattedTime(event.date, event.time_from)
         }
     }
 }

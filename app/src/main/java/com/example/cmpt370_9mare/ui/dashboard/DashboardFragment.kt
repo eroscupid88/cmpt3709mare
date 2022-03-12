@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,12 +13,8 @@ import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.databinding.FragmentDashboardBinding
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 
-@InternalCoroutinesApi
 class DashboardFragment : Fragment() {
 
     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
@@ -63,14 +58,6 @@ class DashboardFragment : Fragment() {
                 dashboardAdapter.submitList(it)
             }
         }
-
-        // TODO later
-//        binding.floatingActionButton.setOnClickListener {
-//            val action = ItemListFragmentDirections.actionItemListFragmentToAddItemFragment(
-//                getString(R.string.add_fragment_title)
-//            )
-//            this.findNavController().navigate(action)
-//        }
     }
 
     override fun onDestroyView() {

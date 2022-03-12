@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
