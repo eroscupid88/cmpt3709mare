@@ -51,7 +51,7 @@ class CalendarFragment : Fragment() {
         binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
-                eventId = 0
+                eventId = -1
             )
             view.findNavController().navigate(action)
         }

@@ -33,7 +33,6 @@ private const val TAG = "createEventFragment"
  * Use the [CreateEventFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@InternalCoroutinesApi
 class CreateEventFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -86,9 +85,7 @@ class CreateEventFragment : Fragment() {
         }
 
         val id = navigationArgs.eventId
-        Log.d("before", id.toString())
         if (id > 0) {
-            Log.d("after", id.toString())
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
                     currentEvent = selectedItem
@@ -180,8 +177,7 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
-                binding.inputDayFrom.text.toString(),
-                binding.inputDayTo.text.toString(),
+                binding.inputDate.text.toString(),
                 binding.inputTimeFrom.text.toString(),
                 binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
@@ -201,8 +197,7 @@ class CreateEventFragment : Fragment() {
         binding.apply {
             inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
             inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
-            inputDayFrom.text = event.date_from
-            inputDayTo.text = event.date_to
+            inputDate.text = event.date
             inputTimeFrom.text = event.time_from
             inputTimeTo.text = event.time_to
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)

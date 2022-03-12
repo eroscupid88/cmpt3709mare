@@ -26,8 +26,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     private fun getNewItemEntry(
         title: String,
         location: String,
-        date_from: String,
-        date_to: String,
+        date: String,
         time_from: String,
         time_to: String,
         url: String,
@@ -36,8 +35,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return ScheduleEvent(
             title = title,
             location = location,
-            date_from = date_from,
-            date_to = date_to,
+            date = date,
             time_from = time_from,
             time_to = time_to,
             url = url,
@@ -52,15 +50,14 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     fun addNewItem(
         title: String,
         location: String,
-        date_from: String,
-        date_to: String,
+        date: String,
         time_from: String,
         time_to: String,
         url: String,
         notes: String
     ) {
         val newItem =
-            getNewItemEntry(title, location, date_from, date_to, time_from, time_to, url, notes)
+            getNewItemEntry(title, location, date, time_from, time_to, url, notes)
         insertEvent(newItem)
     }
 
