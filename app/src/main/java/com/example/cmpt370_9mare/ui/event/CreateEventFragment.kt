@@ -212,8 +212,7 @@ class CreateEventFragment : Fragment() {
 
     fun cancelEvent() {
         Log.i(TAG, "$TAG: cancel Event button was clicked")
-        val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
-        findNavController().navigate(action)
+        findNavController().navigateUp()
     }
 
     fun createEvent() {
