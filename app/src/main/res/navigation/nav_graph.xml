@@ -24,7 +24,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.cmpt370_9mare.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -37,10 +41,16 @@
         android:label="CreateEventFragment" >
         <action
             android:id="@+id/action_createEventFragment_to_navigation_calendar"
-            app:destination="@id/navigation_calendar" />
+            app:destination="@id/navigation_calendar"
+            app:popUpTo="@id/navigation_calendar"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_createEventFragment_to_newEventFragment"
             app:destination="@id/newEventFragment" />
+        <argument
+            android:name="eventId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/newEventFragment"
@@ -48,6 +58,8 @@
         android:label="NewEventFragment" >
         <action
             android:id="@+id/action_newEventFragment_to_createEventFragment"
-            app:destination="@id/createEventFragment" />
+            app:destination="@id/createEventFragment"
+            app:popUpTo="@id/createEventFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

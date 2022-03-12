@@ -4,18 +4,22 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.cmpt370_9mare.*
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
-import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -197,8 +201,7 @@ class CreateEventFragment : Fragment() {
         DatePickerFragment().show(childFragmentManager, "datePicker")
     }
 
-
-    fun showTimePicker(v: View){
+    fun showTimePicker(v: View) {
         TimePickerFragment().show(childFragmentManager, "timePicker")
     }
 
