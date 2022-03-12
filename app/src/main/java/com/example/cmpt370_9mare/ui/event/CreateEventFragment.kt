@@ -1,5 +1,6 @@
 package com.example.cmpt370_9mare.ui.event
 
+import android.content.ClipData
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -35,8 +36,9 @@ private const val TAG = "createEventFragment"
 class CreateEventFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
 
+    private val navigationArgs: CreateEventFragmentArgs by navArgs()
+    private lateinit var currentEvent: ScheduleEvent
 
     /**
      * get Singleton scheduleEventViewModel shared throughout fragments
@@ -59,7 +61,6 @@ class CreateEventFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -67,7 +68,8 @@ class CreateEventFragment : Fragment() {
      * binding FragmentCreateEventBinding and inflate view
      */
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -81,8 +83,17 @@ class CreateEventFragment : Fragment() {
             viewModel = scheduleEventShareViewModel
             createEventFragment = this@CreateEventFragment
         }
-        setInputBinding()
 
+        val id = navigationArgs.eventId
+        if (id > 0) {
+            scheduleEventShareViewModel.eventFromId(id)
+                .observe(this.viewLifecycleOwner) { selectedItem ->
+                    currentEvent = selectedItem
+                    bind(currentEvent)
+                }
+        }
+
+        setInputBinding()
     }
 
     /**
@@ -90,25 +101,25 @@ class CreateEventFragment : Fragment() {
      * better for user experience
      */
     private fun setInputBinding() {
-        binding.inputTitle.setOnKeyListener() { view, keyCode, _ ->
+        binding.inputTitle.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.inputLocation.setOnKeyListener() { view, keyCode, _ ->
+        binding.inputLocation.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventUrl.setOnKeyListener() { view, keyCode, _ ->
+        binding.eventUrl.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventNotes.setOnKeyListener() { view, keyCode, _ ->
+        binding.eventNotes.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
@@ -166,8 +177,7 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
-                binding.inputDayFrom.text.toString(),
-                binding.inputDayTo.text.toString(),
+                binding.inputDate.text.toString(),
                 binding.inputTimeFrom.text.toString(),
                 binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
@@ -180,10 +190,24 @@ class CreateEventFragment : Fragment() {
 
     }
 
+    /**
+     * Binds views with the passed in item data.
+     */
+    private fun bind(event: ScheduleEvent) {
+        binding.apply {
+            inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
+            inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
+            inputDate.text = event.date
+            inputTimeFrom.text = event.time_from
+            inputTimeTo.text = event.time_to
+            eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
+            eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
+        }
+    }
+
     fun cancelEvent() {
         Log.i(TAG, "$TAG: cancel Event button was clicked")
-        val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
-        findNavController().navigate(action)
+        findNavController().navigateUp()
     }
 
     fun createEvent() {

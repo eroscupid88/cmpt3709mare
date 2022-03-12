@@ -49,16 +49,14 @@
     <string name="nothing">nothing</string>
 
 
-<!--    Timer picker-->
+    <!--    Timer picker-->
     <string name="time_picker_example">Time Picker Example</string>
     <string name="time_pick">Pick the time and press save button</string>
     <string name="time_save">Save</string>
     <string name="time_selected">" "</string>
     <string name="time_current">The Time is:</string>
-    <string name="pick_date_from" >" "</string>
-    <string name="pick_time_from" >" "</string>
-    <string name="pick_date_to" >" "</string>
-    <string name="pick_time_to" >" "</string>
+    <string name="pick_date">Date:</string>
+    <string name="pick_time">Time:</string>
     <string name="button_last_month">description last month</string>
     <string name="description">Description</string>
     <string name="delete_event">delete_event</string>
