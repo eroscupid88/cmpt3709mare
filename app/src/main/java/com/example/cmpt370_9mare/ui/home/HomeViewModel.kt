@@ -25,7 +25,7 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun stringFormatToday(today: LocalDate): String {
-        return today.format(DateTimeFormatter.ofPattern("yyyy MMM dd"))
+        return today.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))
     }
 
     fun getPreviousDay() {

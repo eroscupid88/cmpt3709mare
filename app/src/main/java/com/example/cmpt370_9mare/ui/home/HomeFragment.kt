@@ -42,11 +42,6 @@ class HomeFragment : Fragment() {
             viewModel = homeViewModel
             homeFragment = this@HomeFragment
         }
-        //binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
-//        binding.floatingActionButton.setOnClickListener{
-//            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment()
-//            view.findNavController().navigate(action)
-//        }
     }
 
     fun goToNextDay() {
