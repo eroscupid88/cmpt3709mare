@@ -154,11 +154,12 @@ class CreateEventFragment : Fragment() {
 
     private fun addNewEvent() {
         if (isEntryValid()) {
-            val test = arguments?.getString(ARG_REPEAT)
+            //TODO: Create Events for all repeat cases up to 1 year.
+            /*val test = arguments?.getString(ARG_REPEAT)
             Log.i(TAG, "$TAG: $test")
             when (test) {
-                //TODO: Create Events for all repeat cases up to 1 year.
-            }
+
+            }*/
 
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),

@@ -71,7 +71,6 @@ class NewEventFragment : Fragment() {
     }
 
     fun onSelectRepeatNever() {
-        arguments?.putString(ARG_REPEAT, "never")
         val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
         )
         findNavController().navigate(action)
@@ -79,8 +78,7 @@ class NewEventFragment : Fragment() {
     }
 
     fun onSelectRepeatEveryDay() {
-        arguments?.putString(ARG_REPEAT, "test")
-        Log.i(TAG, "$TAG: set repeat to 'test'")
+        /*CreateEventFragment.newInstance("every-day")*/
         val action = NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment(
         )
         findNavController().navigate(action)
