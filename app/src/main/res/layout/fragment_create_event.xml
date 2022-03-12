@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_create_event_fragment"
-    tools:context=".ui.event.CreateEventFragment"
-    >
+    tools:context=".ui.event.CreateEventFragment">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.example.cmpt370_9mare.ScheduleEventViewModel" />
+
         <variable
             name="createEventFragment"
             type="com.example.cmpt370_9mare.ui.event.CreateEventFragment" />
@@ -19,290 +20,285 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp">
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/cancel_create_event"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()-> createEventFragment.cancelEvent()}"
-                    android:text="@string/cancel"
-                    android:textSize="20sp"
-                    android:textAlignment="center"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="@dimen/base_margin" />
-                <TextView
-                    android:id="@+id/calendar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/new_event_title"
-                    android:layout_margin="@dimen/base_margin"
-                    android:textSize="20sp"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-                <TextView
-                    android:id="@+id/submit_create_event"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/add"
-                    android:onClick="@{()-> createEventFragment.createEvent()}"
-                    android:textAlignment="center"
-                    android:layout_margin="@dimen/base_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/event_title"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:hint="@string/title"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="#c0c0c0"/>
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/event_description"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/description"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/event_location"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/location"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/all_day"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/all_day"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="#c0c0c0"/>
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/cancel_create_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()-> createEventFragment.cancelEvent()}"
+                        android:text="@string/cancel"
+                        android:textAlignment="center"
                         android:textSize="20sp"
-                        android:layout_marginStart="20dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/Start"/>
-                    <Button
-                        android:id="@+id/inputDayFrom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/pick_date_from"
-                        android:background="@color/picker_orange"
-                        android:layout_marginEnd="30dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/inputTimeFrom"
-                        android:onClick="@{()->createEventFragment.showDatePicker(createEventFragment.view)}"
-                        />
-                    <Button
-                        android:id="@+id/inputTimeFrom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/pick_time_from"
-                        android:background="@color/picker_orange"
-                        android:layout_marginEnd="30dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:onClick="@{()->createEventFragment.showTimePicker(createEventFragment.view)}"
-                        />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="#c0c0c0"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/calendar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_weight="2"
+                        android:text="@string/new_event_title"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/submit_create_event"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()-> createEventFragment.createEvent()}"
+                        android:text="@string/add"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/event_title"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginStart="20dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/title"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:textSize="20sp"
-                        android:text="@string/end"/>
-                    <Button
-                        android:id="@+id/inputDayTo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginEnd="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/inputTimeTo"
-                        android:text="@string/pick_date_to"
-                        android:background="@color/picker_orange"
-                        android:onClick="@{()->createEventFragment.showDatePicker(createEventFragment.view)}"
-                        />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        android:id="@+id/inputTimeTo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/pick_time_to"
-                        android:background="@color/picker_orange"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="30dp"
-                        android:onClick="@{()->createEventFragment.showTimePicker(createEventFragment.view)}"
-                        />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="#c0c0c0"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/repeat_button"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="#c0c0c0" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/event_description"
+                        android:layout_width="360dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/description">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/event_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/location">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/repeat"
-                    android:onClick="@{()->createEventFragment.onSelectRepeat()}"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    />
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/url_layout"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/URL"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/event_url"
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/all_day"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-                <View
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:checked="true"
+                        android:text="@string/all_day"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="#c0c0c0" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/pick_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/pick_date"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="@id/inputDate"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/inputDate" />
+
+                        <Button
+                            android:id="@+id/inputDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="30dp"
+                            android:background="@color/picker_orange"
+                            android:onClick="@{()->createEventFragment.showDatePicker(createEventFragment.view)}"
+                            app:layout_constraintBottom_toTopOf="@id/pick_date_time_separator"
+                            app:layout_constraintStart_toStartOf="@id/inputTimeFrom"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/pick_date_time_separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_margin="10dp"
+                            android:background="#c0c0c0"
+                            app:layout_constraintBottom_toTopOf="@id/inputTimeFrom"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/inputDate" />
+
+                        <TextView
+                            android:id="@+id/pick_time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/pick_time"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="@id/inputTimeFrom"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/inputTimeFrom" />
+
+                        <Button
+                            android:id="@+id/inputTimeFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="30dp"
+                            android:background="@color/picker_orange"
+                            android:onClick="@{()->createEventFragment.showTimePicker(createEventFragment.view)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/inputTimeTo"
+                            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
+
+                        <Button
+                            android:id="@+id/inputTimeTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="30dp"
+                            android:background="@color/picker_orange"
+                            android:onClick="@{()->createEventFragment.showTimePicker(createEventFragment.view)}"
+                            app:layout_constraintBottom_toBottomOf="@id/inputTimeFrom"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/inputTimeFrom" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="#c0c0c0" />
+
+                    <Button
+                        android:id="@+id/repeat_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onClick="@{()->createEventFragment.onSelectRepeat()}"
+                        android:text="@string/repeat" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="#c0c0c0"/>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/event_notes_layout"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/notes"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/event_notes"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/url_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/URL">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/event_url"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="#c0c0c0" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/event_notes_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/notes">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/event_notes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
             </LinearLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</ScrollView>
+    </ScrollView>
 </layout>
