@@ -2,23 +2,22 @@ package com.example.cmpt370_9mare.ui.calendar
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
+import androidx.navigation.fragment.navArgs
+import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 
 private const val TAG = "CalendarFragment"
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
-
     private var _binding: FragmentCalendarBinding? = null
 
     // This property is only valid between onCreateView and
@@ -47,7 +46,11 @@ class CalendarFragment : Fragment() {
             viewModel = sharedViewModel
             calendarFragment = this@CalendarFragment
         }
-        binding.monthCalendarGrid.adapter = MonthCalendarAdapter()
+        binding.monthCalendarGrid.adapter = MonthCalendarAdapter{
+            sharedViewModel.setCurrentedDate(it.date.toString())
+            Log.d(TAG,"clicked: ${sharedViewModel.currentedDate}")
+            Log.d(TAG,"clicked: ${it.date.toString()}")
+        }
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
                 eventId = -1
@@ -61,15 +64,25 @@ class CalendarFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * goToNextMonth function call next month action which is load next month calendar
+     */
     fun goToNextMonth() {
         sharedViewModel.nextMonthAction()
     }
 
+    /**
+     * goToPreviousMonth function call previous month action which is load previous month calendar
+     */
     fun goToPreviousMonth() {
         sharedViewModel.previousMonthAction()
     }
 
     fun setCurrentDateBackground() {
+
+    }
+    fun setCurrentedDate(day: Day) {
+
     }
 
 }
