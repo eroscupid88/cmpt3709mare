@@ -85,6 +85,10 @@ class CreateEventFragment : Fragment() {
 
         val id = navigationArgs.eventId
         if (id > 0) {
+            binding.apply {
+                calendarTitle.text = getString(R.string.modify_event_title)
+                submitCreateEvent.text = getString(R.string.update_button_text)
+            }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
                     currentEvent = selectedItem
@@ -169,6 +173,24 @@ class CreateEventFragment : Fragment() {
         )
     }
 
+    private fun updateEvent() {
+        if (isEntryValid()) {
+            // TODO: Find a better way to update event without manipulating vars?
+            currentEvent.apply {
+                title = binding.inputTitle.text.toString()
+                location = binding.inputLocation.text.toString()
+                date = binding.inputDate.text.toString()
+                time_from = binding.inputTimeFrom.text.toString()
+                time_to = binding.inputTimeTo.text.toString()
+                url = binding.eventUrl.text.toString()
+                notes = binding.eventNotes.text.toString()
+            }
+            scheduleEventShareViewModel.updateItem(currentEvent)
+            findNavController().navigateUp()
+        }
+
+    }
+
     private fun addNewEvent() {
         if (isEntryValid()) {
             //TODO: Create Events for all repeat cases up to 1 year.
@@ -214,10 +236,16 @@ class CreateEventFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-    fun createEvent() {
-        Log.i(TAG, "$TAG: add Event button was clicked")
-        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-        addNewEvent()
+    fun createmodifyEvent() {
+        if (navigationArgs.eventId > 0) {
+            Log.i(TAG, "$TAG: update Event button was clicked")
+            updateEvent()
+        }
+        else {
+            Log.i(TAG, "$TAG: add Event button was clicked")
+            //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+            addNewEvent()
+        }
     }
 
     fun onSelectRepeat() {

@@ -21,6 +21,15 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     /**
+     * insertEvent function insert new event into EventRoomDatabase
+     */
+    private fun updateEvent(scheduleEvent: ScheduleEvent) {
+        viewModelScope.launch {
+            scheduleEventDao.updateEvent(scheduleEvent)
+        }
+    }
+
+    /**
      * private function getNewItemEntry take variables and return new ScheduleEvent
      */
     private fun getNewItemEntry(
@@ -59,6 +68,12 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         val newItem =
             getNewItemEntry(title, location, date, time_from, time_to, url, notes)
         insertEvent(newItem)
+    }
+
+    fun updateItem(
+        event: ScheduleEvent
+    ) {
+        updateEvent(event)
     }
 
     /**
