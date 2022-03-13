@@ -2,6 +2,7 @@ package com.example.cmpt370_9mare.data.schedule_event
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface ScheduleEventDao {
@@ -23,4 +24,8 @@ interface ScheduleEventDao {
 
     @Query("SELECT * FROM event ORDER BY id")
     fun getAllEvents(): Flow<List<ScheduleEvent>>
+
+    @Query ("SELECT * FROM event WHERE date = :date ORDER BY date ASC")
+    fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
+
 }

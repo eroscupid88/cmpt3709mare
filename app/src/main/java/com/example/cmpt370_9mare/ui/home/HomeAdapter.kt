@@ -12,8 +12,8 @@ import com.example.cmpt370_9mare.databinding.EventViewBinding
 /**
  * [ListAdapter] implementation for the recyclerview.
  */
-class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
-    ListAdapter<ScheduleEvent, DashboardAdapter.DashboardViewHolder>(DiffCallback) {
+class HomeAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
+    ListAdapter<ScheduleEvent, HomeAdapter.HomeViewHolder>(DiffCallback) {
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<ScheduleEvent>() {
@@ -30,15 +30,15 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
-        return DashboardViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdapter.HomeViewHolder {
+        return HomeAdapter.HomeViewHolder(
             EventViewBinding.inflate(
                 LayoutInflater.from(parent.context)
             )
         )
     }
 
-    override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeAdapter.HomeViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
             onItemClicked(current)
@@ -49,16 +49,15 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     /**
      * ViewHolder to hold data of DashboardFragment
      */
-    class DashboardViewHolder(private var binding: EventViewBinding) :
+    class HomeViewHolder(private var binding: EventViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         /**
          * Bind views on DashboardFragment to the events' data
          */
         fun bind(event: ScheduleEvent) {
-            binding.eventId.text = event.id.toString()
             binding.showEventName.text = event.title
-            binding.showEventTime.text = event.date?.let { getFormattedTime(it, event.time_from) }
+            binding.showEventTime.text = getFormattedTime(event.date, event.time_from)
         }
     }
 }

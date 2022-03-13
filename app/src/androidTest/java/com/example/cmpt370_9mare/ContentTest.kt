@@ -1,9 +1,8 @@
 package com.example.cmpt370_9mare
 
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.core.app.launchActivity
-import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,10 +10,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
 import com.example.cmpt370_9mare.ui.dashboard.DashboardFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragment
-
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +27,6 @@ class ContentTest {
 
     @Test
     fun schedule_fragment_content_test() {
-        launchActivity<MainActivity>()
         launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
         onView(withId(R.id.next_month_calendar)).perform(click())
         onView(withId(R.id.button_last_month)).perform(click())
@@ -46,10 +44,12 @@ class ContentTest {
      * This function will test for event, description and location inputs
      * */
     @Test
-     fun title_description_event_test(){
+    fun title_description_event_test() {
         // Check for the title event
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
         onView(withId(R.id.input_title))
             .check(matches(withHint("title")))
         onView(withId(R.id.event_title))
@@ -67,11 +67,14 @@ class ContentTest {
         onView(withId(R.id.event_location))
             .check(matches(isNotClickable()))
     }
-     @Test
-     fun all_day_option_test(){
-         launchActivity<MainActivity>()
-         launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-         onView(withId(R.id.all_day))
+
+    @Test
+    fun all_day_option_test() {
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
+        onView(withId(R.id.all_day))
             .check(matches(withText("All-day")))
         onView(withId(R.id.all_day))
             .check(matches(isChecked()))
@@ -79,9 +82,11 @@ class ContentTest {
     }
 
     @Test
-     fun start_end_test(){
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+    fun start_end_test() {
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
         // check for start date and time
 //        onView(withId(R.id.inputTimeTo))
 //            .check(matches(withText("Mar 10,2022")))
@@ -90,7 +95,7 @@ class ContentTest {
 
 //        onView(withId(R.id.inputDayTo))
 //            .check(matches(withText("10:25 AM")))
-        onView(withId(R.id.inputDayTo))
+        onView(withId(R.id.inputDate))
             .check(matches(isClickable()))
 
         // check for end date and time
@@ -101,14 +106,16 @@ class ContentTest {
 
 //        onView(withId(R.id.inputDayFrom))
 //            .check(matches(withText("10:25 AM")))
-        onView(withId(R.id.inputDayFrom))
+        onView(withId(R.id.inputDate))
             .check(matches(isClickable()))
     }
 
     @Test
-     fun repeat_event_button_test(){
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+    fun repeat_event_button_test() {
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
         onView(withId(R.id.repeat_button))
             .check(matches(withText("Repeat")))
         onView(withId(R.id.repeat_button))
@@ -116,9 +123,11 @@ class ContentTest {
     }
 
     @Test
-     fun url_notes_test(){
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+    fun url_notes_test() {
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
         // Check for the url
         onView(withId(R.id.event_url))
             .check(matches(withHint("URL")))
@@ -133,9 +142,11 @@ class ContentTest {
     }
 
     @Test
-     fun cancel_create_button_test(){
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<CreateEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
+    fun cancel_create_button_test() {
+        launchFragmentInContainer<CreateEventFragment>(
+            bundleOf("eventID" to -1),
+            themeResId = R.style.Theme_Cmpt3709mare
+        )
         onView(withId(R.id.cancel_create_event))
             .check(matches(withText("Cancel")))
         onView(withId(R.id.cancel_create_event))
@@ -152,10 +163,9 @@ class ContentTest {
      * test for dashboard fragment
      * */
     @Test
-    fun dashboard_fragment_test(){
-        launchActivity<MainActivity>()
-        launchFragmentInContainer<DashboardFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        onView(withId(R.id.event_list_recycler_view)).check(matches(isNotClickable()))
+    fun dashboard_fragment_test() {
+
+        onView(withId(R.id.event_list_recycler_view)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
     }
 }

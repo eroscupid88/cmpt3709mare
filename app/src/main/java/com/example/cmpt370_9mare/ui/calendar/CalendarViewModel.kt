@@ -6,6 +6,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.example.cmpt370_9mare.data.Day
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -18,22 +22,28 @@ private const val TAG = "CalendarViewModel"
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
-    private val _currentedDate = MutableLiveData<Int>()
-    private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>>()
+    private val _currentedDate = MutableLiveData<String>()
+    private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
     private var _currentDate = LocalDate.now()
     private var selectDate: LocalDate? = null
 
     val monthYearText: LiveData<String> = _monthYearText
-    val daysOfTheMonth: LiveData<ArrayList<Day>> = _daysOfTheMonth
-    val currentedDate: LiveData<Int> = _currentedDate
+    val daysOfTheMonth: MutableLiveData<ArrayList<Day>?> = _daysOfTheMonth
+    val currentedDate: LiveData<String> = _currentedDate
+
+
+    fun setCurrentedDate(date: String) {
+        _currentedDate.value = date
+    }
 
     init {
         logging()
         selectDate = LocalDate.now()
-        _currentedDate.value = getCurrentDate(LocalDate.now())
+        _currentedDate.value = getCurrentDate(LocalDate.now()).toString()
         setMonthYearText()
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
     }
+
 
     private fun setMonthYearText() {
         _monthYearText.value = monthYearFromDate(selectDate!!).toString()
@@ -77,18 +87,21 @@ class CalendarViewModel : ViewModel() {
         // number days of week
 
         val dayOfWeek: Int = firstOfMonth.dayOfWeek.value
+        var y = 0
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(
-                    Day(
-                        ""
-                    )
+                    Day(null,null)
                 )
-                else -> daysInMonthArray.add(Day((x - dayOfWeek).toString()))
+                else -> {
+                    daysInMonthArray.add(Day((x - dayOfWeek).toString(),firstOfMonth.plusDays(y.toLong())))
+                    y ++
+                }
             }
+
         }
         Log.d(TAG, "DEBUG: $yearMonth, $daysInMonth,$firstOfMonth,$dayOfWeek,$selectDate")
-        Log.d(TAG, "DEBUG: testing $daysInMonthArray")
+        Log.d(TAG, "DEBUG: $daysInMonthArray")
 
         return daysInMonthArray
     }
@@ -100,6 +113,7 @@ class CalendarViewModel : ViewModel() {
         setMonthYearText()
         Log.d(TAG, "DEBUG: NextMonthAction selectedDate: $selectDate")
     }
+
     fun previousMonthAction() {
         selectDate = selectDate!!.minusMonths(1)
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
@@ -107,8 +121,9 @@ class CalendarViewModel : ViewModel() {
         Log.d(TAG, "DEBUG: previousMonthAction selectedDate: $selectDate")
     }
 
-}
 
+
+}
 
 
 //package com.example.cmpt370_9mare.ui.calendar

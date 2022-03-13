@@ -4,22 +4,24 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.cmpt370_9mare.*
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
-import com.google.android.material.snackbar.Snackbar
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_REPEAT = "repeat"
+private const val ARG_PARAM1 = "param1"
 private const val TAG = "createEventFragment"
 
 /**
@@ -28,9 +30,10 @@ private const val TAG = "createEventFragment"
  * create an instance of this fragment.
  */
 class CreateEventFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var repeat: String? = null
+    private var param1: String? = null
 
+    private val navigationArgs: CreateEventFragmentArgs by navArgs()
+    private lateinit var currentEvent: ScheduleEvent
 
     /**
      * get Singleton scheduleEventViewModel shared throughout fragments
@@ -52,15 +55,18 @@ class CreateEventFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            repeat = it.getString(ARG_REPEAT)
+            param1 = it.getString(ARG_PARAM1)
         }
+
+        scheduleEventShareViewModel.pickDate("")
     }
 
     /**
      * binding FragmentCreateEventBinding and inflate view
      */
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -70,12 +76,40 @@ class CreateEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("abc", "created")
+
         binding.apply {
             viewModel = scheduleEventShareViewModel
             createEventFragment = this@CreateEventFragment
         }
-        setInputBinding()
 
+        val id = navigationArgs.eventId
+        if (id > 0) {
+            binding.apply {
+                calendarTitle.text = getString(R.string.modify_event_title)
+                submitCreateEvent.text = getString(R.string.update_button_text)
+            }
+            scheduleEventShareViewModel.eventFromId(id)
+                .observe(this.viewLifecycleOwner) { selectedItem ->
+                    currentEvent = selectedItem
+                    bind(currentEvent)
+                }
+        }
+
+        setInputBinding()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        scheduleEventShareViewModel.pickedDate.observe(
+            this
+        ) { binding.inputDate.text = it }
+        scheduleEventShareViewModel.pickedTimeFrom.observe(
+            this
+        ) { binding.inputTimeFrom.text = it }
+        scheduleEventShareViewModel.pickedTimeTo.observe(
+            this
+        ) { binding.inputTimeTo.text = it }
     }
 
     /**
@@ -83,25 +117,25 @@ class CreateEventFragment : Fragment() {
      * better for user experience
      */
     private fun setInputBinding() {
-        binding.inputTitle.setOnKeyListener() { view, keyCode, _ ->
+        binding.inputTitle.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.inputLocation.setOnKeyListener() { view, keyCode, _ ->
+        binding.inputLocation.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventUrl.setOnKeyListener() { view, keyCode, _ ->
+        binding.eventUrl.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
             )
         }
-        binding.eventNotes.setOnKeyListener() { view, keyCode, _ ->
+        binding.eventNotes.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(
                 view,
                 keyCode
@@ -126,7 +160,7 @@ class CreateEventFragment : Fragment() {
         fun newInstance(repeat: String) =
             CreateEventFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_REPEAT, repeat)
+                    putString(ARG_PARAM1, repeat)
                 }
             }
     }
@@ -152,19 +186,37 @@ class CreateEventFragment : Fragment() {
         )
     }
 
+    private fun updateEvent() {
+        if (isEntryValid()) {
+            // TODO: Find a better way to update event without manipulating vars?
+            currentEvent.apply {
+                title = binding.inputTitle.text.toString()
+                location = binding.inputLocation.text.toString()
+                date = binding.inputDate.text.toString()
+                time_from = binding.inputTimeFrom.text.toString()
+                time_to = binding.inputTimeTo.text.toString()
+                url = binding.eventUrl.text.toString()
+                notes = binding.eventNotes.text.toString()
+            }
+            scheduleEventShareViewModel.updateItem(currentEvent)
+            findNavController().navigateUp()
+        }
+
+    }
+
     private fun addNewEvent() {
         if (isEntryValid()) {
-            val test = arguments?.getString(ARG_REPEAT)
+            //TODO: Create Events for all repeat cases up to 1 year.
+            /*val test = arguments?.getString(ARG_REPEAT)
             Log.i(TAG, "$TAG: $test")
             when (test) {
-                //TODO: Create Events for all repeat cases up to 1 year.
-            }
+
+            }*/
 
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
-                binding.inputDayFrom.text.toString(),
-                binding.inputDayTo.text.toString(),
+                binding.inputDate.text.toString(),
                 binding.inputTimeFrom.text.toString(),
                 binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
@@ -177,16 +229,36 @@ class CreateEventFragment : Fragment() {
 
     }
 
-    fun cancelEvent() {
-        Log.i(TAG, "$TAG: cancel Event button was clicked")
-        val action = CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
-        findNavController().navigate(action)
+    /**
+     * Binds views with the passed in item data.
+     */
+    private fun bind(event: ScheduleEvent) {
+        binding.apply {
+            inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
+            inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
+            inputDate.text = event.date
+            inputTimeFrom.text = event.time_from
+            inputTimeTo.text = event.time_to
+            eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
+            eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
+        }
     }
 
-    fun createEvent() {
-        Log.i(TAG, "$TAG: add Event button was clicked")
-        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-        addNewEvent()
+    fun cancelEvent() {
+        Log.i(TAG, "$TAG: cancel Event button was clicked")
+        findNavController().navigateUp()
+    }
+
+    fun createmodifyEvent() {
+        if (navigationArgs.eventId > 0) {
+            Log.i(TAG, "$TAG: update Event button was clicked")
+            updateEvent()
+        }
+        else {
+            Log.i(TAG, "$TAG: add Event button was clicked")
+            //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+            addNewEvent()
+        }
     }
 
     fun onSelectRepeat() {
@@ -194,12 +266,15 @@ class CreateEventFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    fun showDatePicker(v: View) {
-        DatePickerFragment().show(childFragmentManager, "datePicker")
-    }
-    fun showTimePicker(v: View){
-        TimePickerFragment().show(childFragmentManager, "timePicker")
+    fun showDatePicker() {
+        DatePickerFragment().show(childFragmentManager, DatePickerFragment.DATE_PICKER)
     }
 
+    fun showTimeFromPicker() {
+        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
+    }
 
+    fun showTimeToPicker() {
+        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
+    }
 }
