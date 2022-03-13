@@ -244,15 +244,23 @@
                     android:layout_marginEnd="30dp"
                     android:background="#c0c0c0"/>
 
-                <Button
-                    android:id="@+id/repeat_button"
-                    android:layout_width="match_parent"
+                    <Spinner
+                        android:id ="@+id/spRepeatEvery"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:entries="@array/RepeatEvery"/>
+
+                <Spinner
+                    android:id ="@+id/spRepetitionInterval"
                     android:layout_height="match_parent"
-                    android:text="@string/repeat"
-                    android:onClick="@{()->createEventFragment.onSelectRepeat()}"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    />
+                    android:layout_width="match_parent"
+                    android:entries="@array/RepetitionInterval"/>
+
+
+
+
+
+
 
             </LinearLayout>
             <LinearLayout
