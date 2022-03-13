@@ -62,5 +62,8 @@
     <string name="update_button_text">Update</string>
     <string name="modify_event_title">Modify Event</string>
     <string name="connecting_word">To</string>
+    <string name="future_events">Future Events</string>
+    <string name="past_events">Past Events</string>
+    <string name="all_events">All Events</string>
 
 </resources>
