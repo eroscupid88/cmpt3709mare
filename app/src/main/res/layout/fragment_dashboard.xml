@@ -11,12 +11,12 @@
         android:id="@+id/event_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="16dp"
-        tools:listitem="@layout/event_view"
         android:clickable="true"
+        android:clipToPadding="false"
         android:focusable="true"
-        tools:clickable="true"/>
+        android:padding="16dp"
+        tools:clickable="true"
+        tools:listitem="@layout/event_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
