@@ -19,7 +19,7 @@ import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
+
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 
 import com.example.cmpt370_9mare.databinding.FragmentHomeBinding
@@ -64,17 +64,22 @@ class HomeFragment : Fragment() {
 
         recyclerView = binding.homeListRecyclerView
 
-        val homeAdapter = HomeAdapter{ }
+        var homeAdapter = HomeAdapter { }
 
         recyclerView.adapter = homeAdapter
         // Attach an observer on the allItems list to update the UI automatically when the data changes.
         viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                var list = it
-                for(event in it ) {
-                    Log.i("it", event.date)
-                    Log.i("it", event.title)
-                    Log.i("home", homeViewModel.getToday())
+                var fake: ScheduleEvent = ScheduleEvent(
+                    -1, "fake", "fake",
+                    "fake", "fake", "fake", "fake", "fake"
+                )
+                var list: MutableList<ScheduleEvent> = mutableListOf<ScheduleEvent>()
+                var i: Int = 1
+                for (event in it) {
+                    if (event.date == homeViewModel.getToday()) {
+                        list.add(event)
+                    }
                 }
                 homeAdapter.submitList(list)
             }
@@ -83,12 +88,26 @@ class HomeFragment : Fragment() {
     }
 
 
+    private fun updateEvent() {
+        recyclerView = binding.homeListRecyclerView
+        var list: MutableList<ScheduleEvent> = mutableListOf<ScheduleEvent>()
+        val homeAdapter = HomeAdapter { }
+        for (event in homeAdapter.currentList) {
+            if (event.date == homeViewModel.getToday()) {
+                //list.add(event)
+            }
+        }
+        homeAdapter.submitList(list)
+    }
+
     fun goToNextDay() {
         homeViewModel.getNextDay()
+        updateEvent()
     }
 
     fun gotoPreviousDay() {
         homeViewModel.getPreviousDay()
+        updateEvent()
     }
 
     override fun onDestroyView() {

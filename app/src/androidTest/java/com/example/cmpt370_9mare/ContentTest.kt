@@ -162,10 +162,10 @@ class ContentTest {
     /**
      * test for dashboard fragment
      * */
-    @Test
-    fun dashboard_fragment_test() {
-
-        onView(withId(R.id.event_list_recycler_view)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
-    }
+//    @Test
+//    fun dashboard_fragment_test() {
+//
+//        onView(withId(R.id.event_list_recycler_view)).perform(click())
+//        onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
+//    }
 }

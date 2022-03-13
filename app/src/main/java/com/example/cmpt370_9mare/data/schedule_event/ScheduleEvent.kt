@@ -16,7 +16,7 @@ data class ScheduleEvent(
     @ColumnInfo(name = "location")
     val location: String,
     @ColumnInfo(name = "date")
-    val date: String?,
+    val date: String,
     @ColumnInfo(name = "time_from")
     val time_from: String,
     @ColumnInfo(name = "time_to")
