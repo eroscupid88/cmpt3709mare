@@ -143,7 +143,7 @@ class CreateEventFragment : Fragment() {
         fun newInstance(repeat: String) =
             CreateEventFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_REPEAT, repeat)
+                    putString(ARG_PARAM1, repeat)
                 }
             }
     }
