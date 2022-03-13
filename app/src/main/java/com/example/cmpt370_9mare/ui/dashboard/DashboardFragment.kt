@@ -1,14 +1,13 @@
 package com.example.cmpt370_9mare.ui.dashboard
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
@@ -35,6 +34,7 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -59,6 +59,34 @@ class DashboardFragment : Fragment() {
             }
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    /**
+     * Determines how to handle interactions with the selected [MenuItem]
+     */
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_switch_layout -> {
+//                // Sets isLinearLayoutManager (a Boolean) to the opposite value
+//                isLinearLayoutManager = !isLinearLayoutManager
+//                // Sets layout and icon
+//                chooseLayout()
+//                setIcon(item)
+//
+//                return true
+//            }
+//            //  Otherwise, do nothing and use the core event handling
+//
+//            // when clauses require that all possible paths be accounted for explicitly,
+//            //  for instance both the true and false cases if the value is a Boolean,
+//            //  or an else to catch all unhandled cases.
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

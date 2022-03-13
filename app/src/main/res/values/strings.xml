@@ -60,5 +60,8 @@
     <string name="button_last_month">description last month</string>
     <string name="description">Description</string>
     <string name="connecting_word">To</string>
+    <string name="future_events">Future Events</string>
+    <string name="past_events">Past Events</string>
+    <string name="all_events">All Events</string>
 
 </resources>
