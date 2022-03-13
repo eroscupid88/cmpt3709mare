@@ -11,6 +11,10 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     // Cache all events form the database using LiveData.
     val allEvents: LiveData<List<ScheduleEvent>> = scheduleEventDao.getAllEvents().asLiveData()
 
+    val pickedDate = MutableLiveData<String>()
+    val pickedTimeFrom = MutableLiveData<String>()
+    val pickedTimeTo = MutableLiveData<String>()
+
     /**
      * insertEvent function insert new event into EventRoomDatabase
      */
@@ -87,8 +91,23 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return true
     }
 
+    /**
+     * Return an event which has the given ID
+     */
     fun eventFromId(id: Int): LiveData<ScheduleEvent> =
         scheduleEventDao.getScheduleEvent(id).asLiveData()
+
+    fun pickDate(date: String) {
+        pickedDate.value = date
+    }
+
+    fun pickTimeFrom(time: String) {
+        pickedTimeFrom.value = time
+    }
+
+    fun pickTimeTo(time: String) {
+        pickedTimeTo.value = time
+    }
 }
 
 /**

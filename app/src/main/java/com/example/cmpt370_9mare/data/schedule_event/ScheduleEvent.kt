@@ -1,8 +1,10 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 
 @Entity(tableName = "event")
@@ -14,7 +16,7 @@ data class ScheduleEvent(
     @ColumnInfo(name = "location")
     var location: String,
     @ColumnInfo(name = "date")
-    var date: String,
+    var date: String?,
     @ColumnInfo(name = "time_from")
     var time_from: String,
     @ColumnInfo(name = "time_to")

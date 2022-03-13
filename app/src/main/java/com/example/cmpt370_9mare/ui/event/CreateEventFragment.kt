@@ -1,6 +1,5 @@
 package com.example.cmpt370_9mare.ui.event
 
-import android.content.ClipData
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +17,6 @@ import com.example.cmpt370_9mare.*
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,7 +30,6 @@ private const val TAG = "createEventFragment"
  * create an instance of this fragment.
  */
 class CreateEventFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
 
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
@@ -61,6 +57,8 @@ class CreateEventFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
         }
+
+        scheduleEventShareViewModel.pickDate("")
     }
 
     /**
@@ -78,6 +76,8 @@ class CreateEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("abc", "created")
+
         binding.apply {
             viewModel = scheduleEventShareViewModel
             createEventFragment = this@CreateEventFragment
@@ -97,6 +97,19 @@ class CreateEventFragment : Fragment() {
         }
 
         setInputBinding()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        scheduleEventShareViewModel.pickedDate.observe(
+            this
+        ) { binding.inputDate.text = it }
+        scheduleEventShareViewModel.pickedTimeFrom.observe(
+            this
+        ) { binding.inputTimeFrom.text = it }
+        scheduleEventShareViewModel.pickedTimeTo.observe(
+            this
+        ) { binding.inputTimeTo.text = it }
     }
 
     /**
@@ -253,13 +266,15 @@ class CreateEventFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    fun showDatePicker(v: View) {
-        DatePickerFragment().show(childFragmentManager, "datePicker")
+    fun showDatePicker() {
+        DatePickerFragment().show(childFragmentManager, DatePickerFragment.DATE_PICKER)
     }
 
-    fun showTimePicker(v: View) {
-        TimePickerFragment().show(childFragmentManager, "timePicker")
+    fun showTimeFromPicker() {
+        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
     }
 
-
+    fun showTimeToPicker() {
+        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
+    }
 }
