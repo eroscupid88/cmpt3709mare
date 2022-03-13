@@ -59,7 +59,7 @@ class CreateEventFragment : Fragment() {
         }
 
         // Clear the date and time variables in viewModel
-        scheduleEventShareViewModel.pickDate("")
+        scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
         scheduleEventShareViewModel.pickTimeFrom("")
         scheduleEventShareViewModel.pickTimeTo("")
     }

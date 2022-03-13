@@ -72,7 +72,6 @@ class NavigationTests : BaseTest() {
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
         }
         // Click start order
-        onView(withId(R.id.repeat_button)).perform(click())
         verify(mockNavController).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment())
     }
 
