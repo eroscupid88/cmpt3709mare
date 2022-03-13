@@ -60,12 +60,7 @@ class HomeFragment : Fragment() {
         // Attach an observer on the allItems list to update the UI automatically when the data changes.
         viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                var fake: ScheduleEvent = ScheduleEvent(
-                    -1, "fake", "fake",
-                    "fake", "fake", "fake", "fake", "fake"
-                )
                 var list: MutableList<ScheduleEvent> = mutableListOf<ScheduleEvent>()
-                var i: Int = 1
                 for (event in it) {
                     if (event.date == homeViewModel.getToday()) {
                         list.add(event)

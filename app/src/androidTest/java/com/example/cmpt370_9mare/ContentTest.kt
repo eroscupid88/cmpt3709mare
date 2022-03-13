@@ -4,6 +4,7 @@ package com.example.cmpt370_9mare
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -110,17 +111,7 @@ class ContentTest {
             .check(matches(isClickable()))
     }
 
-    @Test
-    fun repeat_event_button_test() {
-        launchFragmentInContainer<CreateEventFragment>(
-            bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
-        )
-        onView(withId(R.id.repeat_button))
-            .check(matches(withText("Repeat")))
-        onView(withId(R.id.repeat_button))
-            .check(matches(isClickable()))
-    }
+
 
     @Test
     fun url_notes_test() {
@@ -168,4 +159,16 @@ class ContentTest {
 //        onView(withId(R.id.event_list_recycler_view)).perform(click())
 //        onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
 //    }
+
+    @Test
+    fun TC1_Test_title_pickDate_pickTime(){
+        onView(withId(R.id.navigation_calendar)).perform(click())
+        onView(withId(R.id.floatingActionButton)).perform(click())
+        onView(withId(R.id.input_title)).perform(ViewActions.typeText("TC1"))
+//        onView(withId(R.id.input_title)).perform(ViewActions.typeText("TC1"))
+//        onView(withId(R.id.input_title)).perform(ViewActions.typeText("TC1"))
+        onView(withId(R.id.submit_create_event)).perform(click())
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        onView(withId(R.id.show_past_events)).perform(click())
+    }
 }
