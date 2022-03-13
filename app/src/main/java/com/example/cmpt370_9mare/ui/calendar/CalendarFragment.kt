@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
@@ -66,7 +65,9 @@ class CalendarFragment : Fragment() {
         }
         binding.dailyEventList.adapter = dailyEventAdapter
         binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
-        sharedScheduleEvent.eventFromDate(sharedViewModel.currentedDate.toString()).observe(this.viewLifecycleOwner){items->
+        sharedScheduleEvent.eventFromDate(sharedViewModel.currentedDate).observe(this.viewLifecycleOwner){items->
+            Log.d(TAG,"clicked: ${sharedViewModel.currentedDate}")
+
             items.let{
                 dailyEventAdapter.submitList(it)
             }

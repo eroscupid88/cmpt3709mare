@@ -22,24 +22,24 @@ private const val TAG = "CalendarViewModel"
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
-    private val _currentedDate = MutableLiveData<String>()
+    private var _currentedDate : String = ""
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
     private var _currentDate = LocalDate.now()
     private var selectDate: LocalDate? = null
 
     val monthYearText: LiveData<String> = _monthYearText
     val daysOfTheMonth: MutableLiveData<ArrayList<Day>?> = _daysOfTheMonth
-    val currentedDate: LiveData<String> = _currentedDate
+    val currentedDate: String get() = _currentedDate
 
 
     fun setCurrentedDate(date: String) {
-        _currentedDate.value = date
+        _currentedDate = date
     }
 
     init {
         logging()
         selectDate = LocalDate.now()
-        _currentedDate.value = getCurrentDate(LocalDate.now()).toString()
+        _currentedDate = LocalDate.now().toString()
         setMonthYearText()
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
     }
