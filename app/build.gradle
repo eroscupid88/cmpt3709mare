@@ -7,6 +7,10 @@ plugins {
 }
 
 android {
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     compileSdk 31
 
     defaultConfig {
