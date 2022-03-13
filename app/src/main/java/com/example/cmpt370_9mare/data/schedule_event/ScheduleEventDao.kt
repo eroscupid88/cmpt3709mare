@@ -22,11 +22,11 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event ORDER BY title ASC")
     fun getScheduleEvents(): Flow<List<ScheduleEvent>>
 
-    @Query("SELECT * FROM event WHERE date >= :currentDate and time_from >= :currentTime ORDER by date")
-    fun getFutureEvents(currentDate: String, currentTime: String): Flow<List<ScheduleEvent>>
+    @Query("SELECT * FROM event WHERE date >= :currentDate ORDER by date")
+    fun getFutureEvents(currentDate: String): Flow<List<ScheduleEvent>>
 
-    @Query("SELECT * FROM event WHERE date <= :currentDate and time_from < :currentTime ORDER by date")
-    fun getPastEvents(currentDate: String, currentTime: String): Flow<List<ScheduleEvent>>
+    @Query("SELECT * FROM event WHERE date < :currentDate ORDER by date")
+    fun getPastEvents(currentDate: String): Flow<List<ScheduleEvent>>
 
     @Query("SELECT * FROM event ORDER BY id")
     fun getAllEvents(): Flow<List<ScheduleEvent>>
