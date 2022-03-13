@@ -1,5 +1,6 @@
 package com.example.cmpt370_9mare
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
@@ -12,10 +13,11 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     val allEvents: LiveData<List<ScheduleEvent>> = scheduleEventDao.getAllEvents().asLiveData()
 
     // Cache future/past events from the database by comparing with current date
+    val today = getCurrentDate()
     val futureEvents: LiveData<List<ScheduleEvent>> =
-        scheduleEventDao.getFutureEvents(getCurrentDate()).asLiveData()
+        scheduleEventDao.getFutureEvents(today).asLiveData()
     val pastEvent: LiveData<List<ScheduleEvent>> =
-        scheduleEventDao.getPastEvents(getCurrentDate()).asLiveData()
+        scheduleEventDao.getPastEvents(today).asLiveData()
 
     // Searched Events
     lateinit var searchedEvents: LiveData<List<ScheduleEvent>>
@@ -65,7 +67,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         )
     }
 
-    private fun getCurrentDate(): String {
+    fun getCurrentDate(): String {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1

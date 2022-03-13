@@ -251,21 +251,16 @@
                         android:background="#c0c0c0" />
 
                     <Spinner
-                        android:id ="@+id/spRepeatEvery"
-                        android:layout_height="match_parent"
+                        android:id="@+id/spRepeatEvery"
                         android:layout_width="match_parent"
-                        android:entries="@array/RepeatEvery"/>
+                        android:layout_height="match_parent"
+                        android:entries="@array/RepeatEvery" />
 
-                <Spinner
-                    android:id ="@+id/spRepetitionInterval"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:entries="@array/RepetitionInterval"/>
-
-
-
-
-
+                    <Spinner
+                        android:id="@+id/spRepetitionInterval"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:entries="@array/RepetitionInterval" />
 
 
                 </LinearLayout>

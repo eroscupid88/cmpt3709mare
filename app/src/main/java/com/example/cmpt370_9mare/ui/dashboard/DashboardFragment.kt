@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -112,12 +113,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showEvents(type: String): Boolean {
-        if (type == FUTURE) {
-            initializeDashboardAdapter(viewModel.futureEvents)
-        } else if (type == PAST) {
-            initializeDashboardAdapter(viewModel.pastEvent)
-        } else {
-            initializeDashboardAdapter(viewModel.searchedEvents)
+        when (type) {
+            FUTURE -> initializeDashboardAdapter(viewModel.futureEvents)
+            PAST -> initializeDashboardAdapter(viewModel.pastEvent)
+            else -> initializeDashboardAdapter(viewModel.searchedEvents)
         }
 
         return true
@@ -126,7 +125,6 @@ class DashboardFragment : Fragment() {
     private fun showSearchDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         builder.setTitle("Search for Events by Name")
-
         // Set up the input
         val input = EditText(this.context)
         // Specify the type of input expected
@@ -136,8 +134,14 @@ class DashboardFragment : Fragment() {
 
         // Set up the buttons
         builder.setPositiveButton("Search") { _, _ ->
-            viewModel.searchEvent(String.format("%%${input.text}%%"))
-            showEvents(SEARCH)
+            val eventName = String.format("%%${input.text}%%")
+            if (eventName != "%%") {
+                viewModel.searchEvent(eventName)
+                showEvents(SEARCH)
+            } else {
+                initializeDashboardAdapter(MutableLiveData<List<ScheduleEvent>>())
+            }
+
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
 
