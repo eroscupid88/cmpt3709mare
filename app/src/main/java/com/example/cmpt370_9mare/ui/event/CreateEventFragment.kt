@@ -58,7 +58,10 @@ class CreateEventFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
         }
 
+        // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate("")
+        scheduleEventShareViewModel.pickTimeFrom("")
+        scheduleEventShareViewModel.pickTimeTo("")
     }
 
     /**
@@ -76,7 +79,6 @@ class CreateEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("abc", "created")
 
         binding.apply {
             viewModel = scheduleEventShareViewModel
@@ -253,8 +255,7 @@ class CreateEventFragment : Fragment() {
         if (navigationArgs.eventId > 0) {
             Log.i(TAG, "$TAG: update Event button was clicked")
             updateEvent()
-        }
-        else {
+        } else {
             Log.i(TAG, "$TAG: add Event button was clicked")
             //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
             addNewEvent()
