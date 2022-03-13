@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 
 import com.example.cmpt370_9mare.databinding.FragmentHomeBinding
 import com.example.cmpt370_9mare.ui.dashboard.HomeAdapter

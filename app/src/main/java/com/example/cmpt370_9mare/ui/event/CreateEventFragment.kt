@@ -22,7 +22,6 @@ import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 private const val TAG = "createEventFragment"
 
 /**
@@ -86,6 +85,10 @@ class CreateEventFragment : Fragment() {
 
         val id = navigationArgs.eventId
         if (id > 0) {
+            binding.apply {
+                calendarTitle.text = getString(R.string.modify_event_title)
+                submitCreateEvent.text = getString(R.string.update_button_text)
+            }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
                     currentEvent = selectedItem
@@ -149,17 +152,15 @@ class CreateEventFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
+         * @param repeat Parameter 1.
          * @return A new instance of fragment CreateEventFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(repeat: String) =
             CreateEventFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, repeat)
                 }
             }
     }
@@ -185,8 +186,33 @@ class CreateEventFragment : Fragment() {
         )
     }
 
+    private fun updateEvent() {
+        if (isEntryValid()) {
+            // TODO: Find a better way to update event without manipulating vars?
+            currentEvent.apply {
+                title = binding.inputTitle.text.toString()
+                location = binding.inputLocation.text.toString()
+                date = binding.inputDate.text.toString()
+                time_from = binding.inputTimeFrom.text.toString()
+                time_to = binding.inputTimeTo.text.toString()
+                url = binding.eventUrl.text.toString()
+                notes = binding.eventNotes.text.toString()
+            }
+            scheduleEventShareViewModel.updateItem(currentEvent)
+            findNavController().navigateUp()
+        }
+
+    }
+
     private fun addNewEvent() {
         if (isEntryValid()) {
+            //TODO: Create Events for all repeat cases up to 1 year.
+            /*val test = arguments?.getString(ARG_REPEAT)
+            Log.i(TAG, "$TAG: $test")
+            when (test) {
+
+            }*/
+
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
@@ -223,10 +249,16 @@ class CreateEventFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-    fun createEvent() {
-        Log.i(TAG, "$TAG: add Event button was clicked")
-        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-        addNewEvent()
+    fun createmodifyEvent() {
+        if (navigationArgs.eventId > 0) {
+            Log.i(TAG, "$TAG: update Event button was clicked")
+            updateEvent()
+        }
+        else {
+            Log.i(TAG, "$TAG: add Event button was clicked")
+            //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+            addNewEvent()
+        }
     }
 
     fun onSelectRepeat() {
