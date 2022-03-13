@@ -172,7 +172,7 @@
             android:scrollbars="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/month_calendar_grid"
-            tools:listitem="@layout/event_view" />
+            tools:listitem="@layout/daily_event_view" />
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
