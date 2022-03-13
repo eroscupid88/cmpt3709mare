@@ -16,7 +16,7 @@ data class ScheduleEvent(
     @ColumnInfo(name = "location")
     var location: String,
     @ColumnInfo(name = "date")
-    var date: String?,
+    var date: String,
     @ColumnInfo(name = "time_from")
     var time_from: String,
     @ColumnInfo(name = "time_to")

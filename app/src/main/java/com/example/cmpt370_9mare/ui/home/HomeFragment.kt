@@ -19,7 +19,6 @@ import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.adapter.MonthCalendarAdapter
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 
 import com.example.cmpt370_9mare.databinding.FragmentHomeBinding
