@@ -1,8 +1,12 @@
 package com.example.cmpt370_9mare.ui.dashboard
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -19,6 +23,7 @@ import com.example.cmpt370_9mare.databinding.FragmentDashboardBinding
 private const val TAG = "dashboard"
 private const val FUTURE = "future"
 private const val PAST = "past"
+private const val SEARCH = "search"
 
 class DashboardFragment : Fragment() {
 
@@ -29,6 +34,8 @@ class DashboardFragment : Fragment() {
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
     }
+
+    private lateinit var searchedName: String
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
@@ -67,6 +74,7 @@ class DashboardFragment : Fragment() {
         return when (item.itemId) {
             R.id.search_event -> {
                 Log.d(TAG, "searchEvent button clicked")
+                showSearchDialog()
                 return true
             }
             R.id.show_future_events -> {
@@ -106,10 +114,33 @@ class DashboardFragment : Fragment() {
     private fun showEvents(type: String): Boolean {
         if (type == FUTURE) {
             initializeDashboardAdapter(viewModel.futureEvents)
-        } else {
+        } else if (type == PAST) {
             initializeDashboardAdapter(viewModel.pastEvent)
+        } else {
+            initializeDashboardAdapter(viewModel.searchedEvents)
         }
 
         return true
+    }
+
+    private fun showSearchDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        builder.setTitle("Search for Events by Name")
+
+        // Set up the input
+        val input = EditText(this.context)
+        // Specify the type of input expected
+        input.hint = "Enter Event Name"
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+        // Set up the buttons
+        builder.setPositiveButton("Search") { _, _ ->
+            viewModel.searchEvent(String.format("%%${input.text}%%"))
+            showEvents(SEARCH)
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+
+        builder.show()
     }
 }

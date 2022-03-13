@@ -34,4 +34,7 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event WHERE date = :date ORDER BY date ASC")
     fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
 
+    @Query("SELECT * FROM event WHERE title LIKE :name ORDER by date")
+    fun searchEventByName(name: String): Flow<List<ScheduleEvent>>
+
 }
