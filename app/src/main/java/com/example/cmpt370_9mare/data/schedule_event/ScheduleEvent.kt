@@ -12,15 +12,15 @@ data class ScheduleEvent(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "title")
-    val title: String,
+    var title: String,
     @ColumnInfo(name = "location")
     val location: String,
     @ColumnInfo(name = "date")
     val date: String?,
     @ColumnInfo(name = "time_from")
-    val time_from: String,
+    var time_from: String,
     @ColumnInfo(name = "time_to")
-    val time_to: String,
+    var time_to: String,
     @ColumnInfo(name = "url")
     val url: String,
     @ColumnInfo(name = "notes")

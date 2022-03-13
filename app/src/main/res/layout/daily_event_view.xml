@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="scheduleEvent"
+            type="com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent" />
+        <variable
+            name="calendarFragment"
+            type="com.example.cmpt370_9mare.ui.calendar.CalendarFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:onClick="@{()->calendarFragment.goToNextMonth()}"
+        >
+        <TextView
+            android:id="@+id/daily_event_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Title" />
+        <TextView
+            android:id="@+id/daily_event_time_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/forward_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/daily_event_time_end"
+            tools:text="3:00 AM" />
+        <TextView
+            android:id="@+id/daily_event_time_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/forward_image"
+            app:layout_constraintTop_toBottomOf="@+id/daily_event_time_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3:00 AM" />
+        <ImageView
+            android:id="@+id/forward_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/forward_button"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

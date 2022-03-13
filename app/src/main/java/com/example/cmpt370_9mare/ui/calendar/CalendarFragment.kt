@@ -10,7 +10,12 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cmpt370_9mare.ScheduleApplication
+import com.example.cmpt370_9mare.ScheduleEventViewModel
+import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 
@@ -24,6 +29,9 @@ class CalendarFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val sharedViewModel: CalendarViewModel by activityViewModels()
+    private val sharedScheduleEvent: ScheduleEventViewModel by activityViewModels{
+        ScheduleEventViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +60,19 @@ class CalendarFragment : Fragment() {
             Log.d(TAG,"clicked: ${sharedViewModel.currentedDate}")
             Log.d(TAG,"clicked: ${it.date.toString()}")
         }
+
+        val dailyEventAdapter = DailyEventCalendarAdapter{
+            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(it.id)
+            this.findNavController().navigate(action)
+        }
+        binding.dailyEventList.adapter = dailyEventAdapter
+        binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
+        sharedScheduleEvent.eventFromDate(sharedViewModel.currentedDate.toString()).observe(this.viewLifecycleOwner){items->
+            items.let{
+                dailyEventAdapter.submitList(it)
+            }
+        }
+
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
                 eventId = -1
