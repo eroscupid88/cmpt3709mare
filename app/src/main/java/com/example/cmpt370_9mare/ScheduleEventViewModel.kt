@@ -17,6 +17,9 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     val pastEvent: LiveData<List<ScheduleEvent>> =
         scheduleEventDao.getPastEvents(getCurrentDate()).asLiveData()
 
+    // Searched Events
+    lateinit var searchedEvents: LiveData<List<ScheduleEvent>>
+
     val pickedDate = MutableLiveData<String>()
     val pickedTimeFrom = MutableLiveData<String>()
     val pickedTimeTo = MutableLiveData<String>()
@@ -122,6 +125,10 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     fun pickTimeTo(time: String) {
         pickedTimeTo.value = time
+    }
+
+    fun searchEvent(name: String) {
+        searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 }
 
