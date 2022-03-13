@@ -1,10 +1,8 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
-import android.content.ClipData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.text.NumberFormat
 
 
 @Entity(tableName = "event")
@@ -15,10 +13,8 @@ data class ScheduleEvent(
     val title: String,
     @ColumnInfo(name = "location")
     val location: String,
-    @ColumnInfo(name = "date_from")
-    val date_from: String,
-    @ColumnInfo(name = "date_to")
-    val date_to: String,
+    @ColumnInfo(name = "date")
+    val date: String,
     @ColumnInfo(name = "time_from")
     val time_from: String,
     @ColumnInfo(name = "time_to")
@@ -32,5 +28,5 @@ data class ScheduleEvent(
 /**
  * Returns the passed in price in currency format.
  */
-fun ScheduleEvent.getFormattedTime(dayFrom: String, timeFrom: String): String =
+fun getFormattedTime(dayFrom: String, timeFrom: String): String =
     "At $dayFrom, $timeFrom"
