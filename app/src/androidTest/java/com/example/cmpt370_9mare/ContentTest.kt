@@ -1,6 +1,5 @@
 package com.example.cmpt370_9mare
 
-
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
@@ -11,7 +10,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
-import com.example.cmpt370_9mare.ui.dashboard.DashboardFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Rule
