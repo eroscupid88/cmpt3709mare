@@ -171,9 +171,10 @@
             android:padding="@dimen/base_margin"
             android:scrollbars="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/month_calendar_grid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator"
             tools:listitem="@layout/daily_event_view" />
-
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton"
