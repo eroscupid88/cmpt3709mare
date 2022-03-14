@@ -1,7 +1,6 @@
 package com.example.cmpt370_9mare.ui.dashboard
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -35,8 +34,6 @@ class DashboardFragment : Fragment() {
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
     }
-
-    private lateinit var searchedName: String
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
@@ -139,7 +136,7 @@ class DashboardFragment : Fragment() {
                 viewModel.searchEvent(eventName)
                 showEvents(SEARCH)
             } else {
-                initializeDashboardAdapter(MutableLiveData<List<ScheduleEvent>>())
+                initializeDashboardAdapter(MutableLiveData())
             }
 
         }

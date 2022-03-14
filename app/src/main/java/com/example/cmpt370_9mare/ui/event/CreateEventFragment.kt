@@ -44,8 +44,6 @@ class CreateEventFragment : Fragment() {
         )
     }
 
-    private val calendarViewModel: CalendarViewModel by activityViewModels()
-
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
 

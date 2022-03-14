@@ -32,10 +32,6 @@ class CalendarFragment : Fragment() {
         ScheduleEventViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
