@@ -159,14 +159,4 @@ class ContentTest {
         onView(withId(R.id.submit_create_event))
             .check(matches(isClickable()))
     }
-
-    /**
-     * test for dashboard fragment
-     * */
-    @Test
-    fun dashboard_fragment_test() {
-
-        onView(withId(R.id.event_list_recycler_view)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).check(matches(notNullValue()))
-    }
 }
