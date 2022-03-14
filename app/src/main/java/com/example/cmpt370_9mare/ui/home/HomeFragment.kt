@@ -54,17 +54,17 @@ class HomeFragment : Fragment() {
 
         recyclerView = binding.homeListRecyclerView
 
-        val homeAdapter = HomeAdapter{ }
+        var homeAdapter = HomeAdapter { }
 
         recyclerView.adapter = homeAdapter
         // Attach an observer on the allItems list to update the UI automatically when the data changes.
         viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
-                var list = it
-                for(event in it ) {
-                    Log.i("it", event.date)
-                    Log.i("it", event.title)
-                    Log.i("home", homeViewModel.getToday())
+                var list: MutableList<ScheduleEvent> = mutableListOf<ScheduleEvent>()
+                for (event in it) {
+                    if (event.date == homeViewModel.getToday()) {
+                        list.add(event)
+                    }
                 }
                 homeAdapter.submitList(list)
             }

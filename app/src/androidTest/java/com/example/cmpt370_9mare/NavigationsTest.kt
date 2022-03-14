@@ -58,6 +58,25 @@ class NavigationTests : BaseTest() {
 
 
     /**
+     * Testing action fragment from calendar fragment to create event fragment using repeat button
+     */
+    @Test
+    fun create_event_fragment_navigate_to_new_event_fragment() {
+        val mockNavController = mock(NavController::class.java)
+        val scenario =
+            launchFragmentInContainer<CreateEventFragment>(
+                bundleOf("eventID" to -1),
+                themeResId = R.style.Theme_Cmpt3709mare
+            )
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), mockNavController)
+        }
+        // Click start order
+        //onView(withId(R.id.repeat_button)).perform(click())
+        verify(mockNavController).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment())
+    }
+
+    /**
      * Testing action fragment from create event fragment to calendar using cancel button
      */
     @Test

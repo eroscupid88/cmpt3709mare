@@ -22,12 +22,16 @@ class HomeViewModel() : ViewModel() {
     private var today: LocalDate = LocalDate.now()
 
     init {
-        _currentDay.value = stringFormatToday(today)
+        _currentDay.value = stringDisplayToday(today)
 
 
     }
 
     private fun stringFormatToday(today: LocalDate): String {
+        return today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
+
+    private fun stringDisplayToday(today: LocalDate): String{
         return today.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))
     }
 
@@ -36,11 +40,11 @@ class HomeViewModel() : ViewModel() {
     }
     fun getPreviousDay() {
         today = today.plusDays(-1)
-        _currentDay.value = stringFormatToday(today)
+        _currentDay.value = stringDisplayToday(today)
     }
 
     fun getNextDay() {
         today = today.plusDays(1)
-        _currentDay.value = stringFormatToday(today)
+        _currentDay.value = stringDisplayToday(today)
     }
 }

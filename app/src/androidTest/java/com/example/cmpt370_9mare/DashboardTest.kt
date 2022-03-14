@@ -1,26 +1,20 @@
 package com.example.cmpt370_9mare
 
-import android.app.DatePickerDialog
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
-import android.widget.DatePicker
-import android.widget.TextView
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 
 
 @RunWith(AndroidJUnit4::class)
@@ -107,4 +101,5 @@ class DashboardTest {
         onView(withText("SEARCH")).perform(click())
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
+
 }
