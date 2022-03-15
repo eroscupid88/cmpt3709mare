@@ -147,7 +147,6 @@
             android:layout_marginTop="@dimen/margin"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/month_calendar"
             app:listData="@{viewModel.daysOfTheMonth}"
             app:spanCount="7"
@@ -158,23 +157,27 @@
             android:id="@+id/pick_date_time_separator"
             android:layout_width="match_parent"
             android:layout_height="4dp"
+            android:layout_margin="10dp"
             android:background="#c0c0c0"
-            app:layout_constraintTop_toBottomOf="@id/month_calendar_grid"
-            app:layout_constraintBottom_toTopOf="@id/daily_event_list"
-            />
+            app:layout_constraintTop_toBottomOf="@id/month_calendar_grid" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/daily_event_list"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:padding="@dimen/base_margin"
-            android:scrollbars="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator"
-            tools:listitem="@layout/daily_event_view" />
+            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/daily_event_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:padding="@dimen/base_margin"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/daily_event_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton"

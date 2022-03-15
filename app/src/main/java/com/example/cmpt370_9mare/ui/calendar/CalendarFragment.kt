@@ -28,7 +28,7 @@ class CalendarFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val sharedViewModel: CalendarViewModel by activityViewModels()
-    private val sharedScheduleEvent: ScheduleEventViewModel by activityViewModels{
+    private val sharedScheduleEvent: ScheduleEventViewModel by activityViewModels {
         ScheduleEventViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
     }
 
@@ -49,25 +49,27 @@ class CalendarFragment : Fragment() {
             viewModel = sharedViewModel
             calendarFragment = this@CalendarFragment
         }
-        binding.monthCalendarGrid.adapter = MonthCalendarAdapter{
+        binding.monthCalendarGrid.adapter = MonthCalendarAdapter {
             sharedViewModel.setCurrentedDate(it.date.toString())
-            Log.d(TAG,"clicked: ${sharedViewModel.currentedDate}")
-            Log.d(TAG,"clicked: ${it.date.toString()}")
+            Log.d(TAG, "clicked: ${sharedViewModel.currentedDate}")
+            Log.d(TAG, "clicked: ${it.date.toString()}")
         }
 
-        val dailyEventAdapter = DailyEventCalendarAdapter{
-            val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(it.id)
+        val dailyEventAdapter = DailyEventCalendarAdapter {
+            val action =
+                CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(it.id)
             this.findNavController().navigate(action)
         }
         binding.dailyEventList.adapter = dailyEventAdapter
         binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
-        sharedScheduleEvent.eventFromDate(sharedViewModel.currentedDate).observe(this.viewLifecycleOwner){items->
-            Log.d(TAG,"clicked: ${sharedViewModel.currentedDate}")
+        sharedScheduleEvent.eventFromDate(sharedViewModel.currentedDate)
+            .observe(this.viewLifecycleOwner) { items ->
+                Log.d(TAG, "clicked: ${sharedViewModel.currentedDate}")
 
-            items.let{
-                dailyEventAdapter.submitList(it)
+                items.let {
+                    dailyEventAdapter.submitList(it)
+                }
             }
-        }
 
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
@@ -99,6 +101,7 @@ class CalendarFragment : Fragment() {
     fun setCurrentDateBackground() {
 
     }
+
     fun setCurrentedDate(day: Day) {
 
     }
