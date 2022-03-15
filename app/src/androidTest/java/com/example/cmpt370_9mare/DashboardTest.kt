@@ -101,4 +101,5 @@ class DashboardTest {
         onView(withText("SEARCH")).perform(click())
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
+
 }
