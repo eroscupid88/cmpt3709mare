@@ -33,7 +33,9 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
         return DashboardViewHolder(
             EventViewBinding.inflate(
-                LayoutInflater.from(parent.context)
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
@@ -56,9 +58,11 @@ class DashboardAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
          * Bind views on DashboardFragment to the events' data
          */
         fun bind(event: ScheduleEvent) {
-            binding.eventId.text = event.id.toString()
-            binding.showEventName.text = event.title
-            binding.showEventTime.text = getFormattedTime(event.date, event.time_from)
+            binding.apply {
+                eventId.text = event.id.toString()
+                showEventName.text = event.title
+                showEventTime.text = getFormattedTime(event.date, event.time_from)
+            }
         }
     }
 }

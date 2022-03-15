@@ -2,10 +2,9 @@ package com.example.cmpt370_9mare.ui.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.*
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

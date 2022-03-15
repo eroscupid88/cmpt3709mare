@@ -1,6 +1,5 @@
 package com.example.cmpt370_9mare
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao

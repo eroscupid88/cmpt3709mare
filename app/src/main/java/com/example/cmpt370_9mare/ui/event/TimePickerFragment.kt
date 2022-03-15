@@ -3,12 +3,6 @@ package com.example.cmpt370_9mare.ui.event
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.text.format.DateFormat
-import android.text.format.DateFormat.is24HourFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -16,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.databinding.FragmentTimePickerBinding
 import java.util.*
 
 

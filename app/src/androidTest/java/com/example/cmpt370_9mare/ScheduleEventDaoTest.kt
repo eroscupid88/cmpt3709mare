@@ -8,7 +8,6 @@ import com.example.cmpt370_9mare.data.schedule_event.EventRoomDatabase
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals

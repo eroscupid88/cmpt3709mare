@@ -1,9 +1,7 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 
 @Dao
 interface ScheduleEventDao {

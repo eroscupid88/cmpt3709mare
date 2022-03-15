@@ -6,15 +6,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import com.example.cmpt370_9mare.data.Day
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
