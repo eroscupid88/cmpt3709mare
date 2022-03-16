@@ -10,6 +10,8 @@ import com.example.cmpt370_9mare.data.Day
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
@@ -17,24 +19,16 @@ private const val TAG = "CalendarViewModel"
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
-    private var _currentedDate : String = ""
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
     private var _currentDate = LocalDate.now()
     private var selectDate: LocalDate? = null
 
     val monthYearText: LiveData<String> = _monthYearText
     val daysOfTheMonth: MutableLiveData<ArrayList<Day>?> = _daysOfTheMonth
-    val currentedDate: String get() = _currentedDate
-
-
-    fun setCurrentedDate(date: String) {
-        _currentedDate = date
-    }
 
     init {
         logging()
         selectDate = LocalDate.now()
-        _currentedDate = LocalDate.now().toString()
         setMonthYearText()
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
     }
@@ -52,13 +46,6 @@ class CalendarViewModel : ViewModel() {
     private fun monthYearFromDate(date: LocalDate?): String? {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
         return date?.format(formatter)
-    }
-
-
-    private fun getCurrentDate(date: LocalDate?): Int? {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
-        val some = date?.format(formatter)
-        return some?.takeLast(2)?.toInt()
     }
 
     fun setSelectedDate(date: LocalDate) {
@@ -86,11 +73,16 @@ class CalendarViewModel : ViewModel() {
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(
-                    Day(null,null)
+                    Day(null, null)
                 )
                 else -> {
-                    daysInMonthArray.add(Day((x - dayOfWeek).toString(),firstOfMonth.plusDays(y.toLong())))
-                    y ++
+                    daysInMonthArray.add(
+                        Day(
+                            (x - dayOfWeek).toString(),
+                            firstOfMonth.plusDays(y.toLong())
+                        )
+                    )
+                    y++
                 }
             }
 
@@ -115,9 +107,6 @@ class CalendarViewModel : ViewModel() {
         setMonthYearText()
         Log.d(TAG, "DEBUG: previousMonthAction selectedDate: $selectDate")
     }
-
-
-
 }
 
 
