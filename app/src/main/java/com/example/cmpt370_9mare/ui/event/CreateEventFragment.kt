@@ -188,7 +188,6 @@ class CreateEventFragment : Fragment() {
 
     private fun updateEvent() {
         if (isEntryValid()) {
-            // TODO: Find a better way to update event without manipulating vars?
             currentEvent.apply {
                 title = binding.inputTitle.text.toString()
                 location = binding.inputLocation.text.toString()
@@ -244,19 +243,31 @@ class CreateEventFragment : Fragment() {
         }
     }
 
+    private fun checkConflicts(date: String, timeFrom: String, timeTo: String): Boolean {
+        //TODO: Check for time conflicts
+        return false
+    }
+
     fun cancelEvent() {
         Log.i(TAG, "$TAG: cancel Event button was clicked")
         findNavController().navigateUp()
     }
 
     fun createmodifyEvent() {
-        if (navigationArgs.eventId > 0) {
-            Log.i(TAG, "$TAG: update Event button was clicked")
-            updateEvent()
-        } else {
-            Log.i(TAG, "$TAG: add Event button was clicked")
-            //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-            addNewEvent()
+        if (checkConflicts( binding.inputDate.text.toString(),
+            binding.inputTimeFrom.text.toString(),
+            binding.inputTimeTo.text.toString())) {
+            if (navigationArgs.eventId > 0) {
+                Log.i(TAG, "$TAG: update Event button was clicked")
+                updateEvent()
+            } else {
+                Log.i(TAG, "$TAG: add Event button was clicked")
+                //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+                addNewEvent()
+            }
+        }
+        else {
+            //TODO: Make Alert for conflicting times
         }
     }
 
