@@ -107,6 +107,16 @@ class CalendarViewModel : ViewModel() {
         setMonthYearText()
         Log.d(TAG, "DEBUG: previousMonthAction selectedDate: $selectDate")
     }
+
+    fun dailyRepeat(event_date :String){
+        var formatter :DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+        val dt:LocalDate = LocalDate.parse(event_date, formatter)
+        val lastDate = dt.plusMonths(4)
+        var anotherDate:LocalDate = dt.plusDays(1)
+    }
+
+
+
 }
 
 
