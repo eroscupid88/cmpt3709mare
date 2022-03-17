@@ -1,7 +1,6 @@
 package com.example.cmpt370_9mare
 
 
-
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -79,12 +78,6 @@ class ContentTest {
         onView(withId(R.id.event_title))
             .check(matches(isNotClickable()))
 
-        // Check for the event description
-        onView(withId(R.id.input_description))
-            .check(matches(withHint("Description")))
-        onView(withId(R.id.event_description))
-            .check(matches(isNotClickable()))
-
         // Check for the event location
         onView(withId(R.id.input_location))
             .check(matches(withHint("Location")))
@@ -135,7 +128,6 @@ class ContentTest {
     }
 
 
-
     @Test
     fun url_notes_test() {
         launchFragmentInContainer<CreateEventFragment>(
@@ -184,7 +176,7 @@ class ContentTest {
 //    }
 
     @Test
-    fun TC1_Test_title_pickDate_pickTime(){
+    fun TC1_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.submit_create_event)).perform(click())
@@ -193,7 +185,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC2_Test_title_pickDate_pickTime(){
+    fun TC2_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.input_title)).perform(typeText("TC2")).perform(
@@ -207,7 +199,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC3_Test_title_pickDate_pickTime(){
+    fun TC3_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.inputDate)).perform(setDate("2021-03-13"))
@@ -217,7 +209,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC4_Test_title_pickDate_pickTime(){
+    fun TC4_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
 //        onView(withId(R.id.input_title)).perform(ViewActions.typeText("TC2")).perform(
@@ -234,11 +226,11 @@ class ContentTest {
     }
 
     @Test
-    fun TC5_Test_title_pickDate_pickTime(){
+    fun TC5_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.input_title)).perform(typeText("TC5")).perform(
-          pressKey(
+            pressKey(
                 KeyEvent.KEYCODE_ENTER
             )
         )
@@ -251,7 +243,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC6_Test_title_pickDate_pickTime(){
+    fun TC6_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.input_title)).perform(typeText("TC6")).perform(
@@ -268,7 +260,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC7_Test_title_pickDate_pickTime(){
+    fun TC7_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
 //        onView(withId(R.id.input_title)).perform(ViewActions.typeText("TC6")).perform(
@@ -285,7 +277,7 @@ class ContentTest {
     }
 
     @Test
-    fun TC8_Test_title_pickDate_pickTime(){
+    fun TC8_Test_title_pickDate_pickTime() {
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.input_title)).perform(typeText("TC8")).perform(
