@@ -1,10 +1,8 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
-import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDate
 
 
 @Entity(tableName = "event")
