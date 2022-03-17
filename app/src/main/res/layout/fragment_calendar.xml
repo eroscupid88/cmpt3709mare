@@ -18,7 +18,6 @@
 
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -161,7 +160,7 @@
             android:background="#c0c0c0"
             app:layout_constraintTop_toBottomOf="@id/month_calendar_grid" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator">
@@ -175,9 +174,8 @@
                 android:focusable="true"
                 android:padding="@dimen/base_margin"
                 android:scrollbars="vertical"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/daily_event_view" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton"
@@ -190,9 +188,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@android:color/white" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
 
 
