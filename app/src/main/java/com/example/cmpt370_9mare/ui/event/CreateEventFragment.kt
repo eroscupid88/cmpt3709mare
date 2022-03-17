@@ -263,7 +263,7 @@ class CreateEventFragment : Fragment() {
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo")
 
         lifecycle.coroutineScope.launch {
-            scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo).collect {
+            scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo, navigationArgs.eventId).collect {
                 when {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")

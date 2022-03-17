@@ -137,8 +137,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 
-    fun eventConflicts(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>> {
-        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo)
+    fun eventConflicts(date: String, timeFrom: String, timeTo: String, id: Int): Flow<List<ScheduleEvent>> {
+        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo, id)
     }
 }
 
