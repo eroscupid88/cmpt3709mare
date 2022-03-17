@@ -3,6 +3,7 @@ package com.example.cmpt370_9mare
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -12,6 +13,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,8 +49,7 @@ class DashboardTest {
             .perform(pressKey(KeyEvent.KEYCODE_ENTER))
         onView(withId(R.id.submit_create_event)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
 
@@ -63,8 +64,7 @@ class DashboardTest {
         onView(withId(R.id.submit_create_event)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
 
@@ -81,8 +81,7 @@ class DashboardTest {
         onView(withId(R.id.submit_create_event)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
 
@@ -102,4 +101,22 @@ class DashboardTest {
         onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
     }
 
+}
+
+class ScrollToBottom : ViewAction {
+    override fun getDescription(): String {
+        return "scroll RecyclerView to bottom"
+    }
+
+    override fun getConstraints(): Matcher<View> {
+        return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+    }
+
+    override fun perform(uiController: UiController?, view: View?) {
+        val recyclerView = view as RecyclerView
+        val itemCount = recyclerView.adapter?.itemCount
+        val position = itemCount?.minus(1) ?: 0
+        recyclerView.scrollToPosition(position)
+        uiController?.loopMainThreadUntilIdle()
+    }
 }
