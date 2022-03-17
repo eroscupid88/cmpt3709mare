@@ -138,7 +138,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     fun eventConflicts(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>> {
-        return scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo)
+        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo)
     }
 }
 
