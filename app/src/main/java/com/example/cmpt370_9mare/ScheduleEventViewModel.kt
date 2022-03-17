@@ -1,8 +1,13 @@
 package com.example.cmpt370_9mare
 
+import android.util.Log
 import androidx.lifecycle.*
+import androidx.fragment.app.Fragment
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -20,6 +25,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     // Searched Events
     lateinit var searchedEvents: LiveData<List<ScheduleEvent>>
+
+    lateinit var conflictEvents: LiveData<List<ScheduleEvent>>
 
     val pickedDate = MutableLiveData<String>()
     val pickedTimeFrom = MutableLiveData<String>()
@@ -134,6 +141,10 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     fun searchEvent(name: String) {
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
+    }
+
+    fun eventConflicts(date: String, timeFrom: String, timeTo: String) {
+        conflictEvents = scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo).asLiveData()
     }
 }
 
