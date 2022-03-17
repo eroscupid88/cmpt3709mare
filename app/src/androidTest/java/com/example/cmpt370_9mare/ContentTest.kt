@@ -79,12 +79,6 @@ class ContentTest {
         onView(withId(R.id.event_title))
             .check(matches(isNotClickable()))
 
-        // Check for the event description
-        onView(withId(R.id.input_description))
-            .check(matches(withHint("Description")))
-        onView(withId(R.id.event_description))
-            .check(matches(isNotClickable()))
-
         // Check for the event location
         onView(withId(R.id.input_location))
             .check(matches(withHint("Location")))
