@@ -15,6 +15,7 @@
         android:clipToPadding="false"
         android:focusable="true"
         android:padding="16dp"
+        android:scrollbars="vertical"
         tools:clickable="true"
         tools:listitem="@layout/event_view" />
 

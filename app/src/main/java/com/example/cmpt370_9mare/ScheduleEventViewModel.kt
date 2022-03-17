@@ -72,7 +72,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         )
     }
 
-    fun getCurrentDate(): String {
+    private fun getCurrentDate(): String {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1
