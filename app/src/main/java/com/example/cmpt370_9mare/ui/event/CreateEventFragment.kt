@@ -11,14 +11,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.cmpt370_9mare.*
+import com.example.cmpt370_9mare.R
+import com.example.cmpt370_9mare.ScheduleApplication
+import com.example.cmpt370_9mare.ScheduleEventViewModel
+import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
-import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -190,11 +191,6 @@ class CreateEventFragment : Fragment() {
         )
     }
 
-    private fun isConflicting(date: String, timeFrom: String, timeTo: String): Boolean {
-        Log.d(TAG, "$TAG: ${scheduleEventShareViewModel.conflictEvents.value?.isEmpty()}")
-        return false
-    }
-
     private fun updateEvent() {
         if (isEntryValid()) {
             currentEvent.apply {
@@ -257,26 +253,32 @@ class CreateEventFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-    fun createmodifyEvent() {
-        Log.d(TAG, "$TAG: ${binding.inputDate.text}, ${binding.inputTimeFrom.text}, ${binding.inputTimeTo.text}")
-        if (
-            isConflicting(
-                binding.inputDate.text.toString(),
-                binding.inputTimeFrom.text.toString(),
-                binding.inputTimeTo.text.toString()
-            )
-        ) {
-            //TODO: Make Alert for conflicting times
-            Log.i(TAG, "$TAG: Conflicts!")
-        }
-        else {
-            if (navigationArgs.eventId > 0) {
-                Log.i(TAG, "$TAG: update Event button was clicked")
-                updateEvent()
-            } else {
-                Log.i(TAG, "$TAG: add Event button was clicked")
-                //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-                addNewEvent()
+    fun createModifyEvent() {
+        val (date, timeFrom, timeTo) = Triple(
+            binding.inputDate.text.toString(),
+            binding.inputTimeFrom.text.toString(),
+            binding.inputTimeTo.text.toString()
+        )
+
+        Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo")
+
+        lifecycle.coroutineScope.launch {
+            scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo).collect {
+                when {
+                    it.isNotEmpty() -> {
+                        Log.i(TAG, "$TAG: Conflicts!")
+                        //TODO: Make Alert for conflicting times
+                    }
+                    navigationArgs.eventId > 0 -> {
+                        Log.i(TAG, "$TAG: update Event button was clicked")
+                        updateEvent()
+                    }
+                    else -> {
+                        Log.i(TAG, "$TAG: add Event button was clicked")
+                        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+                        addNewEvent()
+                    }
+                }
             }
         }
     }

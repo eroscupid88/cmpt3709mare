@@ -26,9 +26,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     // Searched Events
     lateinit var searchedEvents: LiveData<List<ScheduleEvent>>
-
-    lateinit var conflictEvents: LiveData<List<ScheduleEvent>>
-
+    
     val pickedDate = MutableLiveData<String>()
     val pickedTimeFrom = MutableLiveData<String>()
     val pickedTimeTo = MutableLiveData<String>()
