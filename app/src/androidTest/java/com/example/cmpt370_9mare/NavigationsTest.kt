@@ -21,8 +21,7 @@ import com.example.cmpt370_9mare.ui.event.NewEventFragmentDirections
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 
 
 /**
@@ -55,7 +54,7 @@ class NavigationTests : BaseTest() {
         onView(withId(R.id.floatingActionButton)).perform(click())
         verify(mockNavController).navigate(CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment())
     }
-    
+
 
     /**
      * Testing action fragment from create event fragment to calendar using cancel button
@@ -95,7 +94,10 @@ class NavigationTests : BaseTest() {
         onView(withId(R.id.input_title)).perform(ViewActions.typeText("Test Event "))
         // Click start order
         onView(withId(R.id.submit_create_event)).perform(click())
-        verify(mockNavController).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar())
+        verify(
+            mockNavController,
+            atLeastOnce()
+        ).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar())
     }
 
 
