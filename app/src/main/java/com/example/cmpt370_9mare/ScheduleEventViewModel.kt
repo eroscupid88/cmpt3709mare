@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
@@ -143,8 +144,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 
-    fun eventConflicts(date: String, timeFrom: String, timeTo: String) {
-        conflictEvents = scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo).asLiveData()
+    fun eventConflicts(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>> {
+        return scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo)
     }
 }
 

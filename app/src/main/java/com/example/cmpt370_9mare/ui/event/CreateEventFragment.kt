@@ -191,7 +191,6 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun isConflicting(date: String, timeFrom: String, timeTo: String): Boolean {
-        scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo)
         Log.d(TAG, "$TAG: ${scheduleEventShareViewModel.conflictEvents.value?.isEmpty()}")
         return false
     }
