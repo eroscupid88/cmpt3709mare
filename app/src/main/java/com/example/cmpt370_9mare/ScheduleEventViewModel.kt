@@ -121,6 +121,11 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
+    fun eventFromDateAndTime(currentTime: String,date:String):LiveData<List<ScheduleEvent>> {
+        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime,date).asLiveData()
+
+    }
+
     fun pickDate(date: String) {
         pickedDate.value = date
     }

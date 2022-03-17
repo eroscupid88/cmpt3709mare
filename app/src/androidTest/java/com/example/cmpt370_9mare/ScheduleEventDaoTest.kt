@@ -140,4 +140,34 @@ class ScheduleEventDaoTest {
         )
     }
 
+    /**
+     * getDailyEventByTimeAndDate test
+     * create 3 events and insert them into database,check only 2 of them were query
+     */
+    @Test
+    @Throws(IOException::class)
+    fun getDailyEventByTimeAndDateTest():Unit = runBlocking{
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "2022-06-06", "10:15:31", "", "", "")
+        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "2022-06-06", "14:15:14","15:15:14" , "", "")
+        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "2022-06-06", "15:15:14","16:15:14" , "", "")
+        scheduleEventDao.insertEvent(scheduleEvent2)
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        scheduleEventDao.insertEvent(scheduleEvent3)
+        val currentTime = "11:15:15"
+        val currentDate = "2022-06-06"
+        assertEquals(
+            scheduleEvent1.id,
+            scheduleEventDao.getEventByDate(currentDate).first()[0].id
+        )
+        assertEquals(
+            scheduleEvent2.id,
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[0].id
+        )
+        assertEquals(
+            scheduleEvent3.id,
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[1].id
+        )
+
+    }
+
 }
