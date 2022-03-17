@@ -67,30 +67,30 @@ class ContentTest {
     /**
      * This function will test for event, description and location inputs
      * */
-    @Test
-    fun title_description_event_test() {
-        // Check for the title event
-        launchFragmentInContainer<CreateEventFragment>(
-            bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
-        )
-        onView(withId(R.id.input_title))
-            .check(matches(withHint("title")))
-        onView(withId(R.id.event_title))
-            .check(matches(isNotClickable()))
-
-        // Check for the event description
-        onView(withId(R.id.input_description))
-            .check(matches(withHint("Description")))
-        onView(withId(R.id.event_description))
-            .check(matches(isNotClickable()))
-
-        // Check for the event location
-        onView(withId(R.id.input_location))
-            .check(matches(withHint("Location")))
-        onView(withId(R.id.event_location))
-            .check(matches(isNotClickable()))
-    }
+//    @Test
+//    fun title_description_event_test() {
+//        // Check for the title event
+//        launchFragmentInContainer<CreateEventFragment>(
+//            bundleOf("eventID" to -1),
+//            themeResId = R.style.Theme_Cmpt3709mare
+//        )
+//        onView(withId(R.id.input_title))
+//            .check(matches(withHint("title")))
+//        onView(withId(R.id.event_title))
+//            .check(matches(isNotClickable()))
+//
+//        // Check for the event description
+//        onView(withId(R.id.input_description))
+//            .check(matches(withHint("Description")))
+//        onView(withId(R.id.event_description))
+//            .check(matches(isNotClickable()))
+//
+//        // Check for the event location
+//        onView(withId(R.id.input_location))
+//            .check(matches(withHint("Location")))
+//        onView(withId(R.id.event_location))
+//            .check(matches(isNotClickable()))
+//    }
 
     @Test
     fun all_day_option_test() {

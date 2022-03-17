@@ -66,6 +66,10 @@
     <string name="past_events">Past Events</string>
     <string name="all_events">All Events</string>
     <string name="forward_button">forward_button</string>
+    <string name="today_event">Today Event</string>
+    <string name="next_event">next event</string>
+    <string name="Next_event">Next event</string>
+    <string name="Notification">Notification</string>
 
 
     <string-array name="RepeatEvery">
