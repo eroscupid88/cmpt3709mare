@@ -1,5 +1,6 @@
 package com.example.cmpt370_9mare.ui.event
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -260,13 +261,14 @@ class CreateEventFragment : Fragment() {
             binding.inputTimeTo.text.toString()
         )
 
-        Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo")
+        Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
         lifecycle.coroutineScope.launch {
             scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo, navigationArgs.eventId).collect {
                 when {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
+                        showConflictDialog()
                         //TODO: Make Alert for conflicting times
                     }
                     navigationArgs.eventId > 0 -> {
@@ -298,5 +300,12 @@ class CreateEventFragment : Fragment() {
 
     fun showTimeToPicker() {
         TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
+    }
+
+    private fun showConflictDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        builder.setTitle("Conflict Found")
+        builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
+        builder.show()
     }
 }
