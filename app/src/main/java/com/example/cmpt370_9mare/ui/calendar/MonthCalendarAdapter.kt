@@ -31,16 +31,7 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(day: Day) {
-            binding.dateBackgroundId.setImageResource(android.R.color.transparent)
-            binding.dotDay.setImageResource(android.R.color.transparent)
-            if (day.day != null) {
-                if (day.date == LocalDate.now()) {
-                    binding.dateBackgroundId.setImageResource(
-                        R.drawable.date_background_current
-                    )
-                }
-                binding.day = day
-            }
+            binding.day = day
             binding.executePendingBindings()
         }
     }
@@ -78,10 +69,9 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
         val day = getItem(position)
         holder.itemView.setOnClickListener {
             onItemClicked(day)
-            holder.binding.dateBackgroundId.setImageResource(
-                R.drawable.date_background_current
-            )
-
+//            holder.binding.dateBackgroundId.setImageResource(
+//                R.drawable.date_background_current
+//            )
         }
         holder.bind(day)
     }
