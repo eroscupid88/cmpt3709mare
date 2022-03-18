@@ -12,7 +12,6 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 import org.junit.Test
@@ -25,7 +24,7 @@ class DashboardTest {
     private fun setPastDate(): ViewAction {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {
-                return CoreMatchers.allOf(isDisplayed(), isAssignableFrom(Button::class.java))
+                return allOf(isDisplayed(), isAssignableFrom(Button::class.java))
             }
 
             override fun perform(uiController: UiController, view: View) {
