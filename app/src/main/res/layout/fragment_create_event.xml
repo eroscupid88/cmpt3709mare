@@ -25,10 +25,10 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/input_box_create_event_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
-                android:id="@+id/input_box_create_event_linearlayout"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -47,6 +47,7 @@
                         android:text="@string/cancel"
                         android:textAlignment="center"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
@@ -190,7 +191,6 @@
                             app:layout_constraintTop_toBottomOf="@id/inputDate" />
 
 
-
                         <TextView
                             android:id="@+id/pick_time_text"
                             android:layout_width="wrap_content"
@@ -225,6 +225,7 @@
                             app:layout_constraintEnd_toStartOf="@id/inputTimeTo"
                             app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator"
                             tools:text="To" />
+
                         <Button
                             android:id="@+id/inputTimeTo"
                             android:layout_width="wrap_content"
@@ -237,6 +238,7 @@
                             app:layout_constraintBottom_toTopOf="@id/date_time_layout"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/date_time_layout"
                             android:layout_width="match_parent"
@@ -244,10 +246,9 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             app:errorEnabled="true"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent">
-                        </com.google.android.material.textfield.TextInputLayout>
+                            app:layout_constraintStart_toStartOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -285,9 +286,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:hint="@string/URL"
                         app:endIconMode="clear_text"
-                        app:errorEnabled="true"
-                        android:hint="@string/URL">
+                        app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/event_url"
@@ -320,20 +321,21 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/delete_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:onClick="@{()->createEventFragment.deleteEvent()}"
                 android:text="@null"
-                android:textStyle="bold"
                 android:textColor="@color/red"
                 android:textSize="30sp"
-                android:onClick="@{()->createEventFragment.deleteEvent()}"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_box_create_event_linearlayout"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/input_box_create_event_linearlayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

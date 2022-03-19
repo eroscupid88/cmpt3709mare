@@ -94,10 +94,24 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         insertEvent(newItem)
     }
 
+
+
+
+    /**
+     * Update event function
+     */
     fun updateItem(
         event: ScheduleEvent
     ) {
         updateEvent(event)
+    }
+
+
+    /**
+     *  DeleteEvent
+     */
+    fun deleteEvent(event:ScheduleEvent) {
+        deleteEvent(event)
     }
 
     /**

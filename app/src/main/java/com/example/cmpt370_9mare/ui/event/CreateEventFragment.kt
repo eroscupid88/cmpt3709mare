@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -73,10 +72,15 @@ class CreateEventFragment : Fragment() {
         }
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
-        scheduleEventShareViewModel.pickTimeFrom(LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
-        scheduleEventShareViewModel.pickTimeTo(LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
+        scheduleEventShareViewModel.pickTimeFrom(
+            LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+        scheduleEventShareViewModel.pickTimeTo(
+            LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
 
     }
+
     /**
      * binding FragmentCreateEventBinding and inflate view
      */
@@ -265,7 +269,6 @@ class CreateEventFragment : Fragment() {
     }
 
 
-
     fun createModifyEvent() {
         val (date, timeFrom, timeTo) = Triple(
             binding.inputDate.text.toString(),
@@ -341,7 +344,7 @@ class CreateEventFragment : Fragment() {
             when (view.id) {
                 R.id.input_title -> validateTitle()
                 R.id.inputTimeFrom -> validateTimeInput()
-                R.id.inputTimeTo ->validateTimeInput()
+                R.id.inputTimeTo -> validateTimeInput()
             }
         }
     }
@@ -353,7 +356,6 @@ class CreateEventFragment : Fragment() {
     }
 
 
-
     private fun isValidate(): Boolean = validateTitle() && validateTimeInput()
 
     private fun validateTitle(): Boolean {
@@ -361,21 +363,18 @@ class CreateEventFragment : Fragment() {
             binding.eventTitle.error = "Required Title"
             binding.eventTitle.requestFocus()
             return false
-        }
-        else if (binding.inputTitle.text.toString().length > 30) {
+        } else if (binding.inputTitle.text.toString().length > 30) {
             binding.eventTitle.error = "Title cannot exceeding 30 letters "
-        }
-        else {
+        } else {
             binding.eventTitle.isErrorEnabled = false
         }
         return true
     }
 
 
-    private fun validateTimeInput():Boolean {
+    private fun validateTimeInput(): Boolean {
         if (binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
-            if (LocalTime.parse(binding.inputTimeFrom.text.toString())
-                    .compareTo(LocalTime.parse(binding.inputTimeTo.text.toString())) >= 0
+            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())
             ) {
                 binding.dateTimeLayout.error = "TimeTo much later than timeFrom"
             } else {
@@ -390,11 +389,9 @@ class CreateEventFragment : Fragment() {
      * Delete Event
      */
     fun deleteEvent() {
-
+        scheduleEventShareViewModel.deleteEvent(currentEvent)
         findNavController().navigateUp()
     }
-
-
 
 
 }
