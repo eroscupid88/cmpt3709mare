@@ -66,6 +66,7 @@
     <string name="past_events">Past</string>
     <string name="all_events">All Events</string>
     <string name="forward_button">forward_button</string>
+    <string name="delete">Delete</string>
 
 
     <string-array name="RepeatEvery">

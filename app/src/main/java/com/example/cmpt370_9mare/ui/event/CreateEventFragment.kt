@@ -1,8 +1,12 @@
 package com.example.cmpt370_9mare.ui.event
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -10,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -23,6 +29,8 @@ import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +43,7 @@ private const val TAG = "createEventFragment"
  * Use the [CreateEventFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
     private var param1: String? = null
 
@@ -61,11 +70,15 @@ class CreateEventFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
         }
-
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
-        scheduleEventShareViewModel.pickTimeFrom("")
-        scheduleEventShareViewModel.pickTimeTo("")
+        scheduleEventShareViewModel.pickTimeFrom(
+            LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+        scheduleEventShareViewModel.pickTimeTo(
+            LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+
     }
 
     /**
@@ -81,9 +94,9 @@ class CreateEventFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             viewModel = scheduleEventShareViewModel
             createEventFragment = this@CreateEventFragment
@@ -94,6 +107,7 @@ class CreateEventFragment : Fragment() {
             binding.apply {
                 calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
+                deleteEvent.text = getString(R.string.delete)
             }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
@@ -102,6 +116,7 @@ class CreateEventFragment : Fragment() {
                 }
         }
 
+        setupListeners()
         setInputBinding()
     }
 
@@ -206,7 +221,6 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.updateItem(currentEvent)
             findNavController().navigateUp()
         }
-
     }
 
     private fun addNewEvent() {
@@ -254,6 +268,7 @@ class CreateEventFragment : Fragment() {
         findNavController().navigateUp()
     }
 
+
     fun createModifyEvent() {
         val (date, timeFrom, timeTo) = Triple(
             binding.inputDate.text.toString(),
@@ -261,10 +276,18 @@ class CreateEventFragment : Fragment() {
             binding.inputTimeTo.text.toString()
         )
 
+        if (isValidate()) {
+            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
+        }
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
         lifecycle.coroutineScope.launch {
-            scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo, navigationArgs.eventId).collect {
+            scheduleEventShareViewModel.eventConflicts(
+                date,
+                timeFrom,
+                timeTo,
+                navigationArgs.eventId
+            ).collect {
                 when {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
@@ -309,4 +332,66 @@ class CreateEventFragment : Fragment() {
         builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
+
+    /*
+    * applying text watcher on each text field
+    */
+    inner class TextFieldValidation(private val view: View) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // checking ids of each text field and applying functions accordingly.
+            when (view.id) {
+                R.id.input_title -> validateTitle()
+                R.id.inputTimeFrom -> validateTimeInput()
+                R.id.inputTimeTo -> validateTimeInput()
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.inputTitle.addTextChangedListener(TextFieldValidation(binding.inputTitle))
+        binding.inputTimeFrom.addTextChangedListener(TextFieldValidation(binding.inputTimeFrom))
+        binding.inputTimeTo.addTextChangedListener(TextFieldValidation(binding.inputTimeTo))
+    }
+
+
+    private fun isValidate(): Boolean = validateTitle() && validateTimeInput()
+
+    private fun validateTitle(): Boolean {
+        if (binding.inputTitle.text.toString().trim().isEmpty()) {
+            binding.eventTitle.error = "Required Title"
+            binding.eventTitle.requestFocus()
+            return false
+        } else if (binding.inputTitle.text.toString().length > 30) {
+            binding.eventTitle.error = "Title cannot exceeding 30 letters "
+        } else {
+            binding.eventTitle.isErrorEnabled = false
+        }
+        return true
+    }
+
+
+    private fun validateTimeInput(): Boolean {
+        if (binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())
+            ) {
+                binding.dateTimeLayout.error = "TimeTo much later than timeFrom"
+            } else {
+                binding.dateTimeLayout.isErrorEnabled = false
+            }
+        }
+        return true
+    }
+
+
+    /**
+     * Delete Event
+     */
+    fun deleteEvent() {
+        scheduleEventShareViewModel.deleteEvent(currentEvent)
+        findNavController().navigateUp()
+    }
+
+
 }
