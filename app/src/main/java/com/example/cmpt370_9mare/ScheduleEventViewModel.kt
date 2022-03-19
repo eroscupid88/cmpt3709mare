@@ -121,6 +121,11 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
+    fun eventFromDateAndTime(currentTime: String,date:String):LiveData<List<ScheduleEvent>> {
+        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime,date).asLiveData()
+
+    }
+
     fun pickDate(date: String) {
         pickedDate.value = date
     }
@@ -137,8 +142,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 
-    fun eventConflicts(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>> {
-        return scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo)
+    fun eventConflicts(date: String, timeFrom: String, timeTo: String, eventId: Int): Flow<List<ScheduleEvent>> {
+        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo, eventId)
     }
 }
 

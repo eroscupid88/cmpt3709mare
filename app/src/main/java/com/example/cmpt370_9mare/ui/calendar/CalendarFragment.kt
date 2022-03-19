@@ -19,6 +19,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 private const val TAG = "CalendarFragment"
 
@@ -54,13 +56,13 @@ class CalendarFragment : Fragment() {
         // Initialize the monthCalendarGrid adapter
         binding.monthCalendarGrid.adapter = MonthCalendarAdapter {
 //            sharedViewModel.setCurrentedDate(it.date.toString())
-            initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(it.date.toString()))
+            initializeDailyEventAdapter(sharedScheduleEvent.eventFromDateAndTime(LocalTime.now().toString(),it.date.toString()))
             Log.d(TAG, "clicked: ${it.date.toString()}")
         }
 
         binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
 
-        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedScheduleEvent.today))
+        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDateAndTime(LocalTime.now().toString(),sharedScheduleEvent.today))
 
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
@@ -106,13 +108,7 @@ class CalendarFragment : Fragment() {
         sharedViewModel.previousMonthAction()
     }
 
-    fun setCurrentDateBackground() {
-
-    }
-
-    fun setCurrentedDate(day: Day) {
-
-    }
+    val currentTime :LocalDateTime = LocalDateTime.now()
 
 }
 
