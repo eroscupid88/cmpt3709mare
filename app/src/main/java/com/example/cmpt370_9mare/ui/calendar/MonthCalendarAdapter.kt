@@ -26,11 +26,18 @@ import java.util.*
 class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
 
+
     class DayViewHolder(
         var binding: CalendarCellLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(day: Day) {
+            binding.dotDay.setImageResource(android.R.color.transparent)
+            if (day.day != null) {
+                if (day.date == LocalDate.now()) {
+                    binding.dateBackgroundId.setImageResource(R.drawable.date_background_current)
+                }
+            }
             binding.day = day
             binding.executePendingBindings()
         }
@@ -67,12 +74,15 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
      */
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.itemView.setOnClickListener {
-            onItemClicked(day)
-//            holder.binding.dateBackgroundId.setImageResource(
-//                R.drawable.date_background_current
-//            )
+        if (day.day != null) {
+            holder.itemView.setOnClickListener {
+                onItemClicked(day)
+            }
+            holder.bind(day)
+        } else {
+            holder.bind(day)
         }
-        holder.bind(day)
+
+
     }
 }

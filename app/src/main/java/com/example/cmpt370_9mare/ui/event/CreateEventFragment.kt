@@ -1,5 +1,6 @@
 package com.example.cmpt370_9mare.ui.event
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
@@ -70,14 +71,12 @@ class CreateEventFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
         }
-
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
         scheduleEventShareViewModel.pickTimeFrom(LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
         scheduleEventShareViewModel.pickTimeTo(LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
 
     }
-
     /**
      * binding FragmentCreateEventBinding and inflate view
      */
@@ -91,6 +90,7 @@ class CreateEventFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -103,6 +103,7 @@ class CreateEventFragment : Fragment() {
             binding.apply {
                 calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
+                deleteEvent.text = getString(R.string.delete)
             }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
@@ -216,7 +217,6 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.updateItem(currentEvent)
             findNavController().navigateUp()
         }
-
     }
 
     private fun addNewEvent() {
@@ -382,10 +382,17 @@ class CreateEventFragment : Fragment() {
                 binding.dateTimeLayout.isErrorEnabled = false
             }
         }
-
         return true
     }
 
+
+    /**
+     * Delete Event
+     */
+    fun deleteEvent() {
+
+        findNavController().navigateUp()
+    }
 
 
 
