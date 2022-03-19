@@ -73,8 +73,8 @@ class CreateEventFragment : Fragment() {
 
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
-        scheduleEventShareViewModel.pickTimeFrom(LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME))
-        scheduleEventShareViewModel.pickTimeTo(LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME))
+        scheduleEventShareViewModel.pickTimeFrom(LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
+        scheduleEventShareViewModel.pickTimeTo(LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0,5))
 
     }
 
