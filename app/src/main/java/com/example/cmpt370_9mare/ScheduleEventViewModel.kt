@@ -45,6 +45,15 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     /**
+     * insertEvent function insert new event into EventRoomDatabase
+     */
+    private fun deleteEvent(scheduleEvent: ScheduleEvent) {
+        viewModelScope.launch {
+            scheduleEventDao.deleteEvent(scheduleEvent)
+        }
+    }
+
+    /**
      * private function getNewItemEntry take variables and return new ScheduleEvent
      */
     private fun getNewItemEntry(
@@ -94,10 +103,22 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         insertEvent(newItem)
     }
 
+
+    /**
+     * Update event function
+     */
     fun updateItem(
         event: ScheduleEvent
     ) {
         updateEvent(event)
+    }
+
+
+    /**
+     *  DeleteEvent
+     */
+    fun deleteItem(event: ScheduleEvent) {
+        deleteEvent(event)
     }
 
     /**
@@ -121,6 +142,11 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
+    fun eventFromDateAndTime(currentTime: String, date: String): LiveData<List<ScheduleEvent>> {
+        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime, date).asLiveData()
+
+    }
+
     fun pickDate(date: String) {
         pickedDate.value = date
     }
@@ -137,8 +163,13 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 
-    fun eventConflicts(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>> {
-        return scheduleEventDao.getEventByDateTime(date, timeFrom, timeTo)
+    fun eventConflicts(
+        date: String,
+        timeFrom: String,
+        timeTo: String,
+        eventId: Int
+    ): Flow<List<ScheduleEvent>> {
+        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo, eventId)
     }
 }
 

@@ -24,7 +24,7 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event WHERE date >= :currentDate ORDER by date")
     fun getFutureEvents(currentDate: String): Flow<List<ScheduleEvent>>
 
-    @Query("SELECT * FROM event WHERE date < :currentDate ORDER by date")
+    @Query("SELECT * FROM event WHERE date < :currentDate ORDER by date DESC")
     fun getPastEvents(currentDate: String): Flow<List<ScheduleEvent>>
 
     @Query("SELECT * FROM event ORDER BY id")
@@ -33,9 +33,23 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event WHERE date = :date ORDER BY time_from")
     fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
 
-    @Query("SELECT * FROM event WHERE date = :date AND ((:timeFrom <= time_from AND time_from < :timeTo) OR (:timeFrom < time_to AND time_to <= :timeTo))")
-    fun getEventByDateTime(date: String, timeFrom: String, timeTo: String): Flow<List<ScheduleEvent>>
+    @Query(
+        "SELECT * FROM event WHERE date = :date AND NOT id = :eventId AND ((:timeTo BETWEEN time_from AND time_to)" +
+                "OR (:timeFrom BETWEEN time_from AND time_to) OR (time_from BETWEEN :timeFrom AND :timeTo) OR" +
+                " (time_to BETWEEN :timeFrom AND :timeTo))"
+    )
+    fun getConflictEvent(
+        date: String,
+        timeFrom: String,
+        timeTo: String,
+        eventId: Int
+    ): Flow<List<ScheduleEvent>>
+
+    @Query("SELECT * FROM event WHERE time_to >= :currentTime AND date = :date ORDER BY time_from")
+    fun getDailyEventByTimeAndDate(currentTime: String, date: String): Flow<List<ScheduleEvent>>
 
     @Query("SELECT * FROM event WHERE title LIKE :name ORDER by date")
     fun searchEventByName(name: String): Flow<List<ScheduleEvent>>
+
+
 }

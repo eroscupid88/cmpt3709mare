@@ -7,5 +7,6 @@ import java.time.LocalDate
 data class Day(
     @Nullable
     val day: String?,
-    val date: LocalDate?
+    val date: LocalDate?,
+    val selected: Boolean
     )
