@@ -389,7 +389,7 @@ class CreateEventFragment : Fragment() {
      * Delete Event
      */
     fun deleteEvent() {
-        scheduleEventShareViewModel.deleteEvent(currentEvent)
+        scheduleEventShareViewModel.deleteItem(currentEvent)
         findNavController().navigateUp()
     }
 

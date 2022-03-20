@@ -45,6 +45,15 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     /**
+     * insertEvent function insert new event into EventRoomDatabase
+     */
+    private fun deleteEvent(scheduleEvent: ScheduleEvent) {
+        viewModelScope.launch {
+            scheduleEventDao.deleteEvent(scheduleEvent)
+        }
+    }
+
+    /**
      * private function getNewItemEntry take variables and return new ScheduleEvent
      */
     private fun getNewItemEntry(
@@ -95,8 +104,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
 
-
-
     /**
      * Update event function
      */
@@ -110,7 +117,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     /**
      *  DeleteEvent
      */
-    fun deleteEvent(event:ScheduleEvent) {
+    fun deleteItem(event: ScheduleEvent) {
         deleteEvent(event)
     }
 
@@ -135,8 +142,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
-    fun eventFromDateAndTime(currentTime: String,date:String):LiveData<List<ScheduleEvent>> {
-        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime,date).asLiveData()
+    fun eventFromDateAndTime(currentTime: String, date: String): LiveData<List<ScheduleEvent>> {
+        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime, date).asLiveData()
 
     }
 
@@ -156,7 +163,12 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
     }
 
-    fun eventConflicts(date: String, timeFrom: String, timeTo: String, eventId: Int): Flow<List<ScheduleEvent>> {
+    fun eventConflicts(
+        date: String,
+        timeFrom: String,
+        timeTo: String,
+        eventId: Int
+    ): Flow<List<ScheduleEvent>> {
         return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo, eventId)
     }
 }

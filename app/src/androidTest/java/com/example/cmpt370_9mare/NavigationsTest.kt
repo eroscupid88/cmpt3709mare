@@ -5,9 +5,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,11 +32,6 @@ import org.mockito.Mockito.*
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class NavigationTests : BaseTest() {
-
-
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
-
 
     /**
      * Testing action fragment from calendar fragment to create event fragment
@@ -91,13 +87,19 @@ class NavigationTests : BaseTest() {
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
         }
         // perform input
-        onView(withId(R.id.input_title)).perform(ViewActions.typeText("Test Event "))
+        onView(withId(R.id.input_title)).perform(typeText("Test Event"))
         // Click start order
         onView(withId(R.id.submit_create_event)).perform(click())
         verify(
             mockNavController,
             atLeastOnce()
         ).navigate(CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar())
+
+        // Remove Test Event
+        launchActivity<MainActivity>()
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        onView(withId(R.id.show_future_events)).perform(click())
+        deleteEvent("Test Event")
     }
 
 
