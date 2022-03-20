@@ -17,7 +17,9 @@
         android:padding="16dp"
         android:scrollbars="vertical"
         tools:clickable="true"
-        tools:listitem="@layout/event_view" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-223dp"
+        tools:listitem="@layout/group_events_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
