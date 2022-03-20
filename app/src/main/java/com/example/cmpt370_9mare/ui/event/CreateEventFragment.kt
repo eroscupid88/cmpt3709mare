@@ -111,8 +111,10 @@ class CreateEventFragment : Fragment() {
             }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
-                    currentEvent = selectedItem
-                    bind(currentEvent)
+                    if (selectedItem != null) {
+                        currentEvent = selectedItem
+                        bind(currentEvent)
+                    }
                 }
         }
 
@@ -276,9 +278,9 @@ class CreateEventFragment : Fragment() {
             binding.inputTimeTo.text.toString()
         )
 
-        if (isValidate()) {
-            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
-        }
+//        if (isValidate()) {
+//            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
+//        }
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
         lifecycle.coroutineScope.launch {

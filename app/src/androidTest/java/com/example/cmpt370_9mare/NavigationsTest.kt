@@ -10,7 +10,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
@@ -19,7 +18,6 @@ import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragmentDirections
 import com.example.cmpt370_9mare.ui.event.NewEventFragment
 import com.example.cmpt370_9mare.ui.event.NewEventFragmentDirections
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
