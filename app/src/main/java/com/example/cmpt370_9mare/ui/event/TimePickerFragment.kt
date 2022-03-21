@@ -7,6 +7,7 @@ import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
@@ -15,10 +16,11 @@ import java.util.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [TimePickerFragment.newInstance] factory method to
+ * Use the [TimePickerFragment] factory method to
  * create an instance of this fragment.
  */
-class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
+class TimePickerFragment(private val time: String) : DialogFragment(),
+    TimePickerDialog.OnTimeSetListener {
 
     companion object {
         const val TIME_FROM_PICKER = "timeFromPicker_tag"
@@ -35,12 +37,11 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the current time as the default values for the picker
-        val c = Calendar.getInstance()
-        val hour = c.get(Calendar.HOUR_OF_DAY)
-        val minute = c.get(Calendar.MINUTE)
+        val hour = time.slice(0..1).toInt()
+        val minute = time.slice(3..4).toInt()
 
         // Create a new instance of TimePickerDialog and return it
-        return TimePickerDialog(activity, this, hour, minute, true)
+        return TimePickerDialog(requireActivity(), R.style.PickerStyle, this, hour, minute, true)
     }
 
     override fun onTimeSet(view: TimePicker, hour: Int, time: Int) {

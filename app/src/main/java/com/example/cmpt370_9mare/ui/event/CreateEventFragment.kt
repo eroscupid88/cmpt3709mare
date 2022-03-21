@@ -1,13 +1,8 @@
 package com.example.cmpt370_9mare.ui.event
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -19,9 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -33,8 +27,6 @@ import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
-import com.example.cmpt370_9mare.receiver.AlarmReceiver
-import com.example.cmpt370_9mare.util.sendNotification
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalTime
@@ -54,11 +46,6 @@ private const val TAG = "createEventFragment"
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
     private var param1: String? = null
-    private val app = activity?.applicationContext
-    private val alarmManager = app?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-
-    private val notifyIntent = Intent(app, AlarmReceiver::class.java)
 
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
     private lateinit var currentEvent: ScheduleEvent
@@ -85,13 +72,7 @@ class CreateEventFragment : Fragment() {
         }
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
-        scheduleEventShareViewModel.pickTimeFrom(
-            LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
-        scheduleEventShareViewModel.pickTimeTo(
-            LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
-
+        preloadTime()
     }
 
     /**
@@ -104,13 +85,6 @@ class CreateEventFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCreateEventBinding.inflate(inflater, container, false)
-
-
-        //create channel
-        createChannel(
-            getString(R.string.calendar_app_notification_id),
-            getString(R.string.calendar_app_notification_channel_name)
-        )
         return binding.root
     }
 
@@ -127,12 +101,14 @@ class CreateEventFragment : Fragment() {
             binding.apply {
                 calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
-                deleteEvent.text = getString(R.string.delete)
+                deleteEvent.isVisible = true
             }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
-                    currentEvent = selectedItem
-                    bind(currentEvent)
+                    if (selectedItem != null) {
+                        currentEvent = selectedItem
+                        bind(currentEvent)
+                    }
                 }
         }
 
@@ -228,13 +204,16 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun updateEvent() {
+        val isAllDayChecked = binding.allDay.isChecked
+
         if (isEntryValid()) {
             currentEvent.apply {
                 title = binding.inputTitle.text.toString()
                 location = binding.inputLocation.text.toString()
                 date = binding.inputDate.text.toString()
-                time_from = binding.inputTimeFrom.text.toString()
-                time_to = binding.inputTimeTo.text.toString()
+                time_from =
+                    if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString()
+                time_to = if (isAllDayChecked) "" else binding.inputTimeTo.text.toString()
                 url = binding.eventUrl.text.toString()
                 notes = binding.eventNotes.text.toString()
             }
@@ -252,30 +231,20 @@ class CreateEventFragment : Fragment() {
 
             }*/
 
+            val isAllDayChecked = binding.allDay.isChecked
 
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
                 binding.inputDate.text.toString(),
-                binding.inputTimeFrom.text.toString(),
-                binding.inputTimeTo.text.toString(),
+                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
-            // move back to calendar fragment
             val action =
                 CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
-            // send notification
-            val notificationManager = ContextCompat.getSystemService(
-                app!!,
-                NotificationManager::class.java
-            ) as NotificationManager
-            notificationManager.sendNotification(
-                app.getString(R.string.event_coming_up), app
-            )
-
-
         }
 
     }
@@ -288,10 +257,20 @@ class CreateEventFragment : Fragment() {
             inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
             inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
             inputDate.text = event.date
-            inputTimeFrom.text = event.time_from
-            inputTimeTo.text = event.time_to
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
+            allDay.isChecked = event.time_from == "all-day"
+
+            if (event.time_from == "all-day") {
+                allDay.isChecked = true
+                preloadTime()
+            } else {
+                allDay.isChecked = false
+                inputTimeFrom.text = event.time_from
+                inputTimeTo.text = event.time_to
+            }
+
+            pickTime.isVisible = !allDay.isChecked
         }
     }
 
@@ -308,9 +287,9 @@ class CreateEventFragment : Fragment() {
             binding.inputTimeTo.text.toString()
         )
 
-        if (isValidate()) {
-            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
-        }
+//        if (isValidate()) {
+//            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
+//        }
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
         lifecycle.coroutineScope.launch {
@@ -334,8 +313,6 @@ class CreateEventFragment : Fragment() {
                         Log.i(TAG, "$TAG: add Event button was clicked")
                         //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
                         addNewEvent()
-
-
                     }
                 }
             }
@@ -348,15 +325,18 @@ class CreateEventFragment : Fragment() {
     }
 
     fun showDatePicker() {
-        DatePickerFragment().show(childFragmentManager, DatePickerFragment.DATE_PICKER)
+        val date = binding.inputDate.text.toString()
+        DatePickerFragment(date).show(childFragmentManager, DatePickerFragment.DATE_PICKER)
     }
 
     fun showTimeFromPicker() {
-        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
+        val timeFrom = binding.inputTimeFrom.text.toString()
+        TimePickerFragment(timeFrom).show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
     }
 
     fun showTimeToPicker() {
-        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
+        val timeTo = binding.inputTimeTo.text.toString()
+        TimePickerFragment(timeTo).show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
     }
 
     private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {
@@ -384,69 +364,74 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.inputTitle.addTextChangedListener(TextFieldValidation(binding.inputTitle))
-        binding.inputTimeFrom.addTextChangedListener(TextFieldValidation(binding.inputTimeFrom))
-        binding.inputTimeTo.addTextChangedListener(TextFieldValidation(binding.inputTimeTo))
+        binding.apply {
+            inputTitle.addTextChangedListener(TextFieldValidation(inputTitle))
+            inputTimeFrom.addTextChangedListener(TextFieldValidation(inputTimeFrom))
+            inputTimeTo.addTextChangedListener(TextFieldValidation(inputTimeTo))
+
+            // Listener for "All-Day" Toggle to show/hide time_picker
+            allDay.setOnCheckedChangeListener { _, isCheck ->
+                pickTime.isVisible = !isCheck
+            }
+        }
     }
 
 
     private fun isValidate(): Boolean = validateTitle() && validateTimeInput()
 
     private fun validateTitle(): Boolean {
-        if (binding.inputTitle.text.toString().trim().isEmpty()) {
-            binding.eventTitle.error = "Required Title"
-            binding.eventTitle.requestFocus()
-            return false
-        } else if (binding.inputTitle.text.toString().length > 30) {
-            binding.eventTitle.error = "Title cannot exceeding 30 letters "
-        } else {
-            binding.eventTitle.isErrorEnabled = false
+        when {
+            binding.inputTitle.text.toString().trim().isEmpty() -> {
+                binding.eventTitle.error = "Required Title"
+                binding.eventTitle.requestFocus()
+                showSubmitButton(false)
+            }
+            binding.inputTitle.text.toString().length > 30 -> {
+                binding.eventTitle.error = "Title cannot exceeding 30 letters"
+                showSubmitButton(false)
+            }
+            else -> {
+                binding.eventTitle.isErrorEnabled = false
+                showSubmitButton(true)
+            }
         }
-        return true
+        return binding.submitCreateEvent.isVisible
     }
 
 
     private fun validateTimeInput(): Boolean {
-        if (binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
-            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())
-            ) {
-                binding.dateTimeLayout.error = "TimeTo much later than timeFrom"
+        if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
+                binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
+                showSubmitButton(false)
             } else {
                 binding.dateTimeLayout.isErrorEnabled = false
+                showSubmitButton(true)
             }
         }
-        return true
+        return binding.submitCreateEvent.isVisible
+    }
+
+    private fun preloadTime() {
+        scheduleEventShareViewModel.pickTimeFrom(
+            LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+        scheduleEventShareViewModel.pickTimeTo(
+            LocalTime.now().plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+    }
+
+    private fun showSubmitButton(boolean: Boolean) {
+        binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
     }
 
     /**
      * Delete Event
      */
     fun deleteEvent() {
-        scheduleEventShareViewModel.deleteEvent(currentEvent)
+        scheduleEventShareViewModel.deleteItem(currentEvent)
         findNavController().navigateUp()
     }
 
 
-    /**
-     * create channel for notification
-     */
-    private fun createChannel(channelId: String, channelName: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                setShowBadge(false)
-            }
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = "Event coming up"
-            val notificationManager = requireActivity().getSystemService(
-                NotificationManager::class.java
-            )
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
-    }
 }

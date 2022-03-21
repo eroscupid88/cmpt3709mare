@@ -63,7 +63,7 @@ class CalendarFragment : Fragment() {
 
         binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
 
-        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDateAndTime(LocalTime.now().toString(),sharedScheduleEvent.today))
+        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedScheduleEvent.today))
 
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(

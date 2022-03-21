@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:checked="true"
+                        android:checked="false"
                         android:text="@string/all_day"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -176,80 +176,79 @@
                             android:onClick="@{()->createEventFragment.showDatePicker()}"
                             app:endIconMode="clear_text"
                             app:errorEnabled="true"
-                            app:layout_constraintBottom_toTopOf="@id/pick_date_time_separator"
-                            app:layout_constraintStart_toStartOf="@id/inputTimeFrom"
+                            app:layout_constraintBottom_toTopOf="@id/pick_time"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:id="@+id/pick_date_time_separator"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_margin="10dp"
-                            android:background="#c0c0c0"
-                            app:layout_constraintBottom_toTopOf="@id/inputTimeFrom"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/inputDate" />
-
-
-                        <TextView
-                            android:id="@+id/pick_time_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:text="@string/pick_time"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toTopOf="@id/date_time_layout"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
-
-                        <Button
-                            android:id="@+id/inputTimeFrom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="10dp"
-                            android:background="@color/picker_orange"
-                            android:onClick="@{()->createEventFragment.showTimeFromPicker()}"
-                            app:endIconMode="clear_text"
-                            app:errorEnabled="true"
-                            app:layout_constraintBottom_toTopOf="@id/date_time_layout"
-                            app:layout_constraintEnd_toStartOf="@id/connecting_word"
-                            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
-
-                        <TextView
-                            android:id="@+id/connecting_word"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/connecting_word"
-                            app:layout_constraintBottom_toTopOf="@id/date_time_layout"
-                            app:layout_constraintEnd_toStartOf="@id/inputTimeTo"
-                            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator"
-                            tools:text="To" />
-
-                        <Button
-                            android:id="@+id/inputTimeTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="30dp"
-                            android:background="@color/picker_orange"
-                            android:onClick="@{()->createEventFragment.showTimeToPicker()}"
-                            app:endIconMode="clear_text"
-                            app:errorEnabled="true"
-                            app:layout_constraintBottom_toTopOf="@id/date_time_layout"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/date_time_layout"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/pick_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            app:errorEnabled="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@+id/inputDate">
 
+                            <View
+                                android:id="@+id/pick_date_time_separator"
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#c0c0c0"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/pick_time_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:text="@string/pick_time"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="@id/inputTimeFrom"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/inputTimeFrom" />
+
+                            <Button
+                                android:id="@+id/inputTimeFrom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:background="@color/picker_orange"
+                                android:onClick="@{()->createEventFragment.showTimeFromPicker()}"
+                                app:endIconMode="clear_text"
+                                app:errorEnabled="true"
+                                app:layout_constraintEnd_toStartOf="@id/connecting_word"
+                                app:layout_constraintTop_toTopOf="@id/inputTimeTo" />
+
+                            <TextView
+                                android:id="@+id/connecting_word"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/connecting_word"
+                                app:layout_constraintBottom_toBottomOf="@id/inputTimeTo"
+                                app:layout_constraintEnd_toStartOf="@id/inputTimeTo"
+                                app:layout_constraintTop_toTopOf="@id/inputTimeTo"
+                                tools:text="To" />
+
+                            <Button
+                                android:id="@+id/inputTimeTo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="30dp"
+                                android:background="@color/picker_orange"
+                                android:onClick="@{()->createEventFragment.showTimeToPicker()}"
+                                app:endIconMode="clear_text"
+                                app:errorEnabled="true"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/pick_date_time_separator" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/date_time_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:errorEnabled="true"
+                                app:layout_constraintStart_toStartOf="@id/inputTimeFrom"
+                                app:layout_constraintTop_toBottomOf="@id/inputTimeTo" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
@@ -322,24 +321,21 @@
 
             </LinearLayout>
 
-            <TextView
+            <Button
                 android:id="@+id/delete_event"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
                 android:onClick="@{()->createEventFragment.deleteEvent()}"
-                android:text="@null"
+                android:text="@string/delete"
                 android:textColor="@color/red"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_box_create_event_linearlayout" />
-
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/input_box_create_event_linearlayout"
+                app:strokeColor="@color/red"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
 </layout>
 

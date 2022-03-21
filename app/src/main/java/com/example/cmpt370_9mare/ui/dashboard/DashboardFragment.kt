@@ -10,14 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentDashboardBinding
 
 private const val TAG = "dashboard"
@@ -29,8 +25,8 @@ class DashboardFragment : Fragment() {
 
     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     // to share the ViewModel across fragments.
-    private val viewModel: ScheduleEventViewModel by activityViewModels {
-        ScheduleEventViewModelFactory(
+    private val viewModel: DashboardViewModel by activityViewModels {
+        DashboardViewModelFactory(
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
     }
@@ -93,12 +89,8 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializeDashboardAdapter(events: LiveData<List<ScheduleEvent>>) {
-        val dashboardAdapter = DashboardAdapter {
-            val action =
-                DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(it.id)
-            this.findNavController().navigate(action)
-        }
+    private fun initializeDashboardAdapter(events: LiveData<List<DashboardGroupEvents>>) {
+        val dashboardAdapter = DashboardAdapter()
 
         recyclerView.adapter = dashboardAdapter
         // Attach an observer on the event list to update the UI automatically when the data changes.
@@ -112,7 +104,7 @@ class DashboardFragment : Fragment() {
     private fun showEvents(type: String): Boolean {
         when (type) {
             FUTURE -> initializeDashboardAdapter(viewModel.futureEvents)
-            PAST -> initializeDashboardAdapter(viewModel.pastEvent)
+            PAST -> initializeDashboardAdapter(viewModel.pastEvents)
             else -> initializeDashboardAdapter(viewModel.searchedEvents)
         }
 
