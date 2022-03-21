@@ -150,7 +150,7 @@ class ContentTest : BaseTest() {
     }
 
     @Test
-    fun TC4_Test_title_pickDate_pickTime() {
+    fun `TC4_Test_title_pickDate_pickTime`() {
         val testName = "TC4"
 
         createEvent(testName, timeFrom = "03:00", timeTo = "05:00")
@@ -158,17 +158,6 @@ class ContentTest : BaseTest() {
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
-    }
-
-    @Test
-    fun TC5_Test_title_pickDate_pickTime() {
-        val testName = "TC5"
-
-        createEvent(testName, "2021-03-13")
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testName)
     }
