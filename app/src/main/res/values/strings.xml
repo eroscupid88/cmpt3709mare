@@ -67,7 +67,11 @@
     <string name="all_events">All Events</string>
     <string name="forward_button">forward_button</string>
     <string name="delete">Delete</string>
-
+    <string name="calendar_app_notification_id" translatable="false">event_channel</string>
+    <string name="calendar_app_notification_channel_name" translatable="true">Event</string>
+    <string name="snooze">Snooze</string>
+    <string name="notification_title">Event Title</string>
+    <string name="event_coming_up">Notice! event coming up</string>
 
     <string-array name="RepeatEvery">
         <item>Repeat Every</item>

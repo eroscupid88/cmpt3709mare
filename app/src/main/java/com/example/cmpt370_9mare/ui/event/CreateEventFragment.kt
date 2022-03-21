@@ -1,8 +1,13 @@
 package com.example.cmpt370_9mare.ui.event
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -16,6 +21,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -27,6 +33,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import com.example.cmpt370_9mare.receiver.AlarmReceiver
+import com.example.cmpt370_9mare.util.sendNotification
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalTime
@@ -46,6 +54,11 @@ private const val TAG = "createEventFragment"
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
     private var param1: String? = null
+    private val app = activity?.applicationContext
+    private val alarmManager = app?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+
+    private val notifyIntent = Intent(app, AlarmReceiver::class.java)
 
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
     private lateinit var currentEvent: ScheduleEvent
@@ -91,6 +104,13 @@ class CreateEventFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCreateEventBinding.inflate(inflater, container, false)
+
+
+        //create channel
+        createChannel(
+            getString(R.string.calendar_app_notification_id),
+            getString(R.string.calendar_app_notification_channel_name)
+        )
         return binding.root
     }
 
@@ -232,6 +252,7 @@ class CreateEventFragment : Fragment() {
 
             }*/
 
+
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
@@ -241,9 +262,20 @@ class CreateEventFragment : Fragment() {
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
+            // move back to calendar fragment
             val action =
                 CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
+            // send notification
+            val notificationManager = ContextCompat.getSystemService(
+                app!!,
+                NotificationManager::class.java
+            ) as NotificationManager
+            notificationManager.sendNotification(
+                app.getString(R.string.event_coming_up), app
+            )
+
+
         }
 
     }
@@ -302,6 +334,8 @@ class CreateEventFragment : Fragment() {
                         Log.i(TAG, "$TAG: add Event button was clicked")
                         //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
                         addNewEvent()
+
+
                     }
                 }
             }
@@ -384,7 +418,6 @@ class CreateEventFragment : Fragment() {
         return true
     }
 
-
     /**
      * Delete Event
      */
@@ -394,4 +427,26 @@ class CreateEventFragment : Fragment() {
     }
 
 
+    /**
+     * create channel for notification
+     */
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                setShowBadge(false)
+            }
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Event coming up"
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
 }
