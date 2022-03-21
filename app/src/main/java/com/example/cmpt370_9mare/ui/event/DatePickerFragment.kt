@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
@@ -33,9 +34,10 @@ class DatePickerFragment(private val date: String) : DialogFragment(),
         val month = date.slice(5..6).toInt() - 1
         val day = date.slice(8..9).toInt()
 
-        // Create a new instance of DatePickerDilog and return it
-        return DatePickerDialog(requireActivity(), this, year, month, day)
+        // Create a new instance of DatePickerDialog and return it
+        return DatePickerDialog(requireActivity(), R.style.PickerStyle, this, year, month, day)
     }
+
 
     // Set the pickedDate in the shared ScheduleEventViewModel
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {

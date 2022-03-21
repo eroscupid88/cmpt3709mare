@@ -7,6 +7,7 @@ import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
@@ -40,7 +41,7 @@ class TimePickerFragment(private val time: String) : DialogFragment(),
         val minute = time.slice(3..4).toInt()
 
         // Create a new instance of TimePickerDialog and return it
-        return TimePickerDialog(activity, this, hour, minute, true)
+        return TimePickerDialog(requireActivity(), R.style.PickerStyle, this, hour, minute, true)
     }
 
     override fun onTimeSet(view: TimePicker, hour: Int, time: Int) {

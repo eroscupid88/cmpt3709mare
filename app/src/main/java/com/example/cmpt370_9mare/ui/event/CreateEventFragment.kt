@@ -368,6 +368,8 @@ class CreateEventFragment : Fragment() {
             inputTitle.addTextChangedListener(TextFieldValidation(inputTitle))
             inputTimeFrom.addTextChangedListener(TextFieldValidation(inputTimeFrom))
             inputTimeTo.addTextChangedListener(TextFieldValidation(inputTimeTo))
+
+            // Listener for "All-Day" Toggle to show/hide time_picker
             allDay.setOnCheckedChangeListener { _, isCheck ->
                 pickTime.isVisible = !isCheck
             }
@@ -378,29 +380,36 @@ class CreateEventFragment : Fragment() {
     private fun isValidate(): Boolean = validateTitle() && validateTimeInput()
 
     private fun validateTitle(): Boolean {
-        if (binding.inputTitle.text.toString().trim().isEmpty()) {
-            binding.eventTitle.error = "Required Title"
-            binding.eventTitle.requestFocus()
-            return false
-        } else if (binding.inputTitle.text.toString().length > 30) {
-            binding.eventTitle.error = "Title cannot exceeding 30 letters "
-        } else {
-            binding.eventTitle.isErrorEnabled = false
+        when {
+            binding.inputTitle.text.toString().trim().isEmpty() -> {
+                binding.eventTitle.error = "Required Title"
+                binding.eventTitle.requestFocus()
+                showSubmitButton(false)
+            }
+            binding.inputTitle.text.toString().length > 30 -> {
+                binding.eventTitle.error = "Title cannot exceeding 30 letters"
+                showSubmitButton(false)
+            }
+            else -> {
+                binding.eventTitle.isErrorEnabled = false
+                showSubmitButton(true)
+            }
         }
-        return true
+        return binding.submitCreateEvent.isVisible
     }
 
 
     private fun validateTimeInput(): Boolean {
         if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
-            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())
-            ) {
+            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
                 binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
+                showSubmitButton(false)
             } else {
                 binding.dateTimeLayout.isErrorEnabled = false
+                showSubmitButton(true)
             }
         }
-        return true
+        return binding.submitCreateEvent.isVisible
     }
 
     private fun preloadTime() {
@@ -412,6 +421,9 @@ class CreateEventFragment : Fragment() {
         )
     }
 
+    private fun showSubmitButton(boolean: Boolean) {
+        binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+    }
 
     /**
      * Delete Event
