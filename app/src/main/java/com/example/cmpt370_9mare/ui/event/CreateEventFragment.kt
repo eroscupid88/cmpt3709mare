@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -73,13 +72,7 @@ class CreateEventFragment : Fragment() {
         }
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
-        scheduleEventShareViewModel.pickTimeFrom(
-            LocalTime.MIN.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
-        scheduleEventShareViewModel.pickTimeTo(
-            LocalTime.MIN.plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
-
+        preloadTime()
     }
 
     /**
@@ -211,13 +204,16 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun updateEvent() {
+        val isAllDayChecked = binding.allDay.isChecked
+
         if (isEntryValid()) {
             currentEvent.apply {
                 title = binding.inputTitle.text.toString()
                 location = binding.inputLocation.text.toString()
                 date = binding.inputDate.text.toString()
-                time_from = binding.inputTimeFrom.text.toString()
-                time_to = binding.inputTimeTo.text.toString()
+                time_from =
+                    if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString()
+                time_to = if (isAllDayChecked) "" else binding.inputTimeTo.text.toString()
                 url = binding.eventUrl.text.toString()
                 notes = binding.eventNotes.text.toString()
             }
@@ -235,12 +231,14 @@ class CreateEventFragment : Fragment() {
 
             }*/
 
+            val isAllDayChecked = binding.allDay.isChecked
+
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
                 binding.inputDate.text.toString(),
-                binding.inputTimeFrom.text.toString(),
-                binding.inputTimeTo.text.toString(),
+                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
@@ -259,10 +257,20 @@ class CreateEventFragment : Fragment() {
             inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
             inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
             inputDate.text = event.date
-            inputTimeFrom.text = event.time_from
-            inputTimeTo.text = event.time_to
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
+            allDay.isChecked = event.time_from == "all-day"
+
+            if (event.time_from == "all-day") {
+                allDay.isChecked = true
+                preloadTime()
+            } else {
+                allDay.isChecked = false
+                inputTimeFrom.text = event.time_from
+                inputTimeTo.text = event.time_to
+            }
+
+            pickTime.isVisible = !allDay.isChecked
         }
     }
 
@@ -356,9 +364,14 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.inputTitle.addTextChangedListener(TextFieldValidation(binding.inputTitle))
-        binding.inputTimeFrom.addTextChangedListener(TextFieldValidation(binding.inputTimeFrom))
-        binding.inputTimeTo.addTextChangedListener(TextFieldValidation(binding.inputTimeTo))
+        binding.apply {
+            inputTitle.addTextChangedListener(TextFieldValidation(inputTitle))
+            inputTimeFrom.addTextChangedListener(TextFieldValidation(inputTimeFrom))
+            inputTimeTo.addTextChangedListener(TextFieldValidation(inputTimeTo))
+            allDay.setOnCheckedChangeListener { _, isCheck ->
+                pickTime.isVisible = !isCheck
+            }
+        }
     }
 
 
@@ -379,15 +392,24 @@ class CreateEventFragment : Fragment() {
 
 
     private fun validateTimeInput(): Boolean {
-        if (binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+        if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
             if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())
             ) {
-                binding.dateTimeLayout.error = "TimeTo much later than timeFrom"
+                binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
             } else {
                 binding.dateTimeLayout.isErrorEnabled = false
             }
         }
         return true
+    }
+
+    private fun preloadTime() {
+        scheduleEventShareViewModel.pickTimeFrom(
+            LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
+        scheduleEventShareViewModel.pickTimeTo(
+            LocalTime.now().plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
+        )
     }
 
 

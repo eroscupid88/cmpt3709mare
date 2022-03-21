@@ -58,8 +58,8 @@ class ContentTest : BaseTest() {
             bundleOf("eventID" to -1),
             themeResId = R.style.Theme_Cmpt3709mare
         )
-        onView(withId(R.id.all_day)).check(matches(withText("All-day")))
-        onView(withId(R.id.all_day)).check(matches(isChecked()))
+        onView(withId(R.id.all_day)).check(matches(withText(R.string.all_day)))
+        onView(withId(R.id.all_day)).check(matches(isNotChecked()))
         onView(withId(R.id.all_day)).perform(click())
     }
 
