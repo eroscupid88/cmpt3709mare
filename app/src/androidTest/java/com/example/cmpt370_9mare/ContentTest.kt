@@ -111,7 +111,6 @@ class ContentTest : BaseTest() {
         onView(withId(R.id.cancel_create_event))
             .check(matches(isClickable()))
 
-        onView(withId(R.id.submit_create_event)).perform(click())
         onView(withId(R.id.submit_create_event))
             .check(matches(withText("Add")))
         onView(withId(R.id.submit_create_event))

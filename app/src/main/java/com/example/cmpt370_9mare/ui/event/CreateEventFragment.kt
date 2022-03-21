@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -107,7 +108,7 @@ class CreateEventFragment : Fragment() {
             binding.apply {
                 calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
-                deleteEvent.text = getString(R.string.delete)
+                deleteEvent.isVisible = true
             }
             scheduleEventShareViewModel.eventFromId(id)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
@@ -316,15 +317,18 @@ class CreateEventFragment : Fragment() {
     }
 
     fun showDatePicker() {
-        DatePickerFragment().show(childFragmentManager, DatePickerFragment.DATE_PICKER)
+        val date = binding.inputDate.text.toString()
+        DatePickerFragment(date).show(childFragmentManager, DatePickerFragment.DATE_PICKER)
     }
 
     fun showTimeFromPicker() {
-        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
+        val timeFrom = binding.inputTimeFrom.text.toString()
+        TimePickerFragment(timeFrom).show(childFragmentManager, TimePickerFragment.TIME_FROM_PICKER)
     }
 
     fun showTimeToPicker() {
-        TimePickerFragment().show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
+        val timeTo = binding.inputTimeTo.text.toString()
+        TimePickerFragment(timeTo).show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
     }
 
     private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {

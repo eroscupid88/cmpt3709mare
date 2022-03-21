@@ -86,6 +86,10 @@ class NavigationTests : BaseTest() {
         }
         // perform input
         onView(withId(R.id.input_title)).perform(typeText("Test Event"))
+        onView(withId(R.id.inputDate)).perform(SetButtonText("2024-04-02"))
+        onView(withId(R.id.inputTimeFrom)).perform(SetButtonText("04:02"))
+        onView(withId(R.id.inputTimeTo)).perform(SetButtonText("12:16"))
+
         // Click start order
         onView(withId(R.id.submit_create_event)).perform(click())
         verify(
