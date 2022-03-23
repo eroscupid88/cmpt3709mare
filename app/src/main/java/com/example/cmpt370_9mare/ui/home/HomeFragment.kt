@@ -58,24 +58,7 @@ class HomeFragment : Fragment() {
             //viewModel = homeViewModel
             homeFragment = this@HomeFragment
         }
-//
-//        recyclerView = binding.homeListRecyclerView
-//
-//        val homeAdapter = HomeAdapter { }
-//
-//        recyclerView.adapter = homeAdapter
-//        // Attach an observer on the allItems list to update the UI automatically when the data changes.
-//        viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
-//            items.let {
-//                val list: MutableList<ScheduleEvent> = mutableListOf<ScheduleEvent>()
-//                for (event in it) {
-//                    if (event.date == homeViewModel.getToday()) {
-//                        list.add(event)
-//                    }
-//                }
-//                homeAdapter.submitList(list)
-//            }
-//        }
+
         val expandableListView = binding.expandableListView
         viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
@@ -97,20 +80,14 @@ class HomeFragment : Fragment() {
 
         for (event in listSchedule) {
             if (event.date == homeViewModel.getToday()) {
-                todayEvents.add(event.title + "       " + event.time_from+" to "+event.time_to)
+                todayEvents.add(event.time_from+" to "+event.time_to+"      "+event.title)
             }
         }
         listData["Today Event"] = todayEvents
         return listData
     }
 
-//    private fun setupExpandableListView() {
-//        val expandableListView = binding.expandableListView
-//        val listData = data
-//        titleList = ArrayList(listData.keys)
-//        adapter = HomeExpandableAdapter(requireContext(), titleList as ArrayList<String>, listData)
-//        expandableListView.setAdapter(adapter)
-//    }
+
 
 
     fun goToNextDay() {
