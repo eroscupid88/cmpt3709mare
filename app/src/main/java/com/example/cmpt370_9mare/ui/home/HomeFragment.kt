@@ -3,6 +3,7 @@ package com.example.cmpt370_9mare.ui.home
 import androidx.fragment.app.activityViewModels
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 
 import com.example.cmpt370_9mare.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.reduce
 
 @RequiresApi(Build.VERSION_CODES.O)
 class HomeFragment : Fragment() {
@@ -36,21 +39,6 @@ class HomeFragment : Fragment() {
     private var adapter: ExpandableListAdapter? = null
     private var titleList: List<String>? = null
 
-    val data: HashMap<String, List<String>> get() {
-        val listData = HashMap<String, List<String>>()
-        val appleMobiles = ArrayList<String>()
-        appleMobiles.add(viewModel.today)
-        appleMobiles.add("iPhone 8 Plus")
-        appleMobiles.add("iPhone X")
-        appleMobiles.add("iPhone 7 Plus")
-        appleMobiles.add("iPhone 7")
-        appleMobiles.add("iPhone 6 Plus")
-        listData["Apple"] = appleMobiles
-        listData["Apple2"] = appleMobiles
-        listData["Apple3"] = appleMobiles
-        return listData
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +55,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = homeViewModel
+            //viewModel = homeViewModel
             homeFragment = this@HomeFragment
         }
 //
@@ -89,13 +77,31 @@ class HomeFragment : Fragment() {
 //            }
 //        }
         val expandableListView = binding.expandableListView
-        val listData = data
-        titleList = ArrayList(listData.keys)
-        adapter = HomeExpandableAdapter(this.requireContext().applicationContext, titleList as ArrayList<String>, listData)
-        expandableListView.setAdapter(adapter)
-        //setupExpandableListView();
+        viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                val listData = getData(it)
+                titleList = ArrayList(listData.keys)
+                adapter = HomeExpandableAdapter(
+                    this.requireContext().applicationContext,
+                    titleList as ArrayList<String>,
+                    listData
+                )
+                expandableListView.setAdapter(adapter)
+            }
+        }
+    }
 
+    private fun getData(listSchedule: List<ScheduleEvent>): HashMap<String, List<String>> {
+        val listData = HashMap<String, List<String>>()
+        val todayEvents = ArrayList<String>()
 
+        for (event in listSchedule) {
+            if (event.date == homeViewModel.getToday()) {
+                todayEvents.add(event.title + "       " + event.time_from+" to "+event.time_to)
+            }
+        }
+        listData["Today Event"] = todayEvents
+        return listData
     }
 
 //    private fun setupExpandableListView() {

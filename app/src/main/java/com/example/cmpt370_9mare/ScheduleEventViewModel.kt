@@ -3,8 +3,12 @@ package com.example.cmpt370_9mare
 import androidx.lifecycle.*
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.Flow
 
 class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
 
@@ -13,6 +17,7 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     // Cache future/past events from the database by comparing with current date
     val today = getCurrentDate()
+    var todayEvents = scheduleEventDao.getEventByDate(today).asLiveData()
     val futureEvents: LiveData<List<ScheduleEvent>> =
         scheduleEventDao.getFutureEvents(today).asLiveData()
     val pastEvent: LiveData<List<ScheduleEvent>> =
