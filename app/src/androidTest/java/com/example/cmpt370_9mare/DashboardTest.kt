@@ -1,105 +1,65 @@
 package com.example.cmpt370_9mare
 
-import android.view.KeyEvent
-import android.view.View
-import android.widget.Button
-import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers
-import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class DashboardTest {
+class DashboardTest : BaseTest() {
 
-    private fun setPastDate(): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return CoreMatchers.allOf(isDisplayed(), isAssignableFrom(Button::class.java))
-            }
-
-            override fun perform(uiController: UiController, view: View) {
-                (view as Button).text = "2020-04-02"
-            }
-
-            override fun getDescription(): String {
-                return "Replace Date"
-            }
-        }
-    }
+    private val pastDate = "2004-04-02"
 
     @Test
     fun dashboard_event_list() {
-        val randomNum = (1..1000).random()
+        val testTitle = "Test Dashboard Default List"
 
-        launchActivity<MainActivity>()
-        onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withId(R.id.floatingActionButton)).perform(click())
-        onView(withId(R.id.input_title)).perform(typeText("$randomNum Test Event"))
-            .perform(pressKey(KeyEvent.KEYCODE_ENTER))
-        onView(withId(R.id.submit_create_event)).perform(click())
+        createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
+        onView(withText(testTitle)).check(matches(isDisplayed()))
+        deleteEvent(testTitle)
     }
 
     @Test
     fun dashboard_future_events() {
-        val randomNum = (1..1000).random()
+        val testTitle = "Test Dashboard Future Events"
 
-        launchActivity<MainActivity>()
-        onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withId(R.id.floatingActionButton)).perform(click())
-        onView(withId(R.id.input_title)).perform(typeText("$randomNum Test Event"))
-        onView(withId(R.id.submit_create_event)).perform(click())
+        createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
+        onView(withText(testTitle)).check(matches(isDisplayed()))
+        deleteEvent(testTitle)
     }
 
     @Test
     fun dashboard_past_events() {
-        val randomNum = (1..1000).random()
+        val testTitle = "Test Dashboard Past Events"
 
-        launchActivity<MainActivity>()
-        onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withId(R.id.floatingActionButton)).perform(click())
-        onView(withId(R.id.input_title)).perform(typeText("$randomNum Test Event"))
-            .perform(pressKey(KeyEvent.KEYCODE_ENTER))
-        onView(withId(R.id.inputDate)).perform(setPastDate())
-        onView(withId(R.id.submit_create_event)).perform(click())
+        createEvent(testTitle, pastDate)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withId(R.id.event_list_recycler_view)).perform(swipeUp())
-        onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
+        onView(withText(testTitle)).check(matches(isDisplayed()))
+        deleteEvent(testTitle)
     }
 
     @Test
     fun dashboard_search_event() {
-        val randomNum = (1..1000).random()
+        val testTitle = "Test Dashboard Search Event"
 
-        launchActivity<MainActivity>()
-        onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withId(R.id.floatingActionButton)).perform(click())
-        onView(withId(R.id.input_title)).perform(typeText("$randomNum Test Event"))
-        onView(withId(R.id.submit_create_event)).perform(click())
+        createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.search_event)).perform(click())
-        onView(withHint("Enter Event Name")).perform(typeText("$randomNum"))
+        onView(withHint("Enter Event Name")).perform(typeText(testTitle))
         onView(withText("SEARCH")).perform(click())
-        onView(withText("$randomNum Test Event")).check(matches(isDisplayed()))
+        onView(withText(testTitle)).check(matches(isDisplayed()))
+        deleteEvent(testTitle)
     }
-
 }

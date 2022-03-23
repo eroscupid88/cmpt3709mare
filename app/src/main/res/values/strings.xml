@@ -11,7 +11,7 @@
     <string name="hello">hello</string>
     <string name="action_user_dropdown_menu">action_user_dropdown_menu</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">List of Events</string>
     <string name="title_calendar">Calendar</string>
     <string name="title_notifications">Notifications</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -28,7 +28,7 @@
     <string name="next_month_calendar">next_month_calendar</string>
     <string name="title">title</string>
     <string name="location">Location</string>
-    <string name="all_day">All-day</string>
+    <string name="all_day">All-Day</string>
     <string name="Start">Starts</string>
     <string name="chosen_day">Mar 8, 2022</string>
     <string name="time">10:25 AM</string>
@@ -62,10 +62,11 @@
     <string name="update_button_text">Update</string>
     <string name="modify_event_title">Modify Event</string>
     <string name="connecting_word">To</string>
-    <string name="future_events">Future Events</string>
-    <string name="past_events">Past Events</string>
+    <string name="future_events">Future</string>
+    <string name="past_events">Past</string>
     <string name="all_events">All Events</string>
     <string name="forward_button">forward_button</string>
+    <string name="delete">Delete</string>
 
 
     <string-array name="RepeatEvery">
@@ -109,8 +110,6 @@
         <item>Week(s)</item>
 
     </string-array>
-
-
 
 
 </resources>

@@ -1,10 +1,9 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
-import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDate
+import java.util.*
 
 
 @Entity(tableName = "event")
@@ -28,7 +27,18 @@ data class ScheduleEvent(
 )
 
 /**
+ * Get today's date in a customized format
+ */
+fun getCurrentDate(): String {
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH) + 1
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    return String.format("$year-%02d-%02d", month, day)
+}
+
+/**
  * Returns the passed in price in currency format.
  */
-fun getFormattedTime(dayFrom: String, timeFrom: String): String =
-    "At $dayFrom, $timeFrom"
+fun getFormattedTime(dayFrom: String, timeFrom: String): String = "At $dayFrom, $timeFrom"
