@@ -10,7 +10,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
@@ -19,7 +18,6 @@ import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragmentDirections
 import com.example.cmpt370_9mare.ui.event.NewEventFragment
 import com.example.cmpt370_9mare.ui.event.NewEventFragmentDirections
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -88,6 +86,10 @@ class NavigationTests : BaseTest() {
         }
         // perform input
         onView(withId(R.id.input_title)).perform(typeText("Test Event"))
+        onView(withId(R.id.inputDate)).perform(SetButtonText("2024-04-02"))
+        onView(withId(R.id.inputTimeFrom)).perform(SetButtonText("04:02"))
+        onView(withId(R.id.inputTimeTo)).perform(SetButtonText("12:16"))
+
         // Click start order
         onView(withId(R.id.submit_create_event)).perform(click())
         verify(

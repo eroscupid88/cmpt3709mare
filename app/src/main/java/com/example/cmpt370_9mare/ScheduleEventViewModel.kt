@@ -3,12 +3,9 @@ package com.example.cmpt370_9mare
 import androidx.lifecycle.*
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.toList
+import com.example.cmpt370_9mare.data.schedule_event.getCurrentDate
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.util.*
-import java.util.concurrent.Flow
 
 class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
 
@@ -17,14 +14,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     // Cache future/past events from the database by comparing with current date
     val today = getCurrentDate()
-    var todayEvents = scheduleEventDao.getEventByDate(today).asLiveData()
-    val futureEvents: LiveData<List<ScheduleEvent>> =
-        scheduleEventDao.getFutureEvents(today).asLiveData()
-    val pastEvent: LiveData<List<ScheduleEvent>> =
-        scheduleEventDao.getPastEvents(today).asLiveData()
-
-    // Searched Events
-    lateinit var searchedEvents: LiveData<List<ScheduleEvent>>
 
     val pickedDate = MutableLiveData<String>()
     val pickedTimeFrom = MutableLiveData<String>()
@@ -45,6 +34,15 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     private fun updateEvent(scheduleEvent: ScheduleEvent) {
         viewModelScope.launch {
             scheduleEventDao.updateEvent(scheduleEvent)
+        }
+    }
+
+    /**
+     * insertEvent function insert new event into EventRoomDatabase
+     */
+    private fun deleteEvent(scheduleEvent: ScheduleEvent) {
+        viewModelScope.launch {
+            scheduleEventDao.deleteEvent(scheduleEvent)
         }
     }
 
@@ -71,15 +69,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         )
     }
 
-    private fun getCurrentDate(): String {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH) + 1
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        return String.format("$year-%02d-%02d", month, day)
-    }
-
     /**
      * public function create new item and insert ScheduleEvent into EventRoomDatabase
      */
@@ -98,10 +87,22 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         insertEvent(newItem)
     }
 
+
+    /**
+     * Update event function
+     */
     fun updateItem(
         event: ScheduleEvent
     ) {
         updateEvent(event)
+    }
+
+
+    /**
+     *  DeleteEvent
+     */
+    fun deleteItem(event: ScheduleEvent) {
+        deleteEvent(event)
     }
 
     /**
@@ -125,6 +126,11 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
+    fun eventFromDateAndTime(currentTime: String, date: String): LiveData<List<ScheduleEvent>> {
+        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime, date).asLiveData()
+
+    }
+
     fun pickDate(date: String) {
         pickedDate.value = date
     }
@@ -137,8 +143,13 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
         pickedTimeTo.value = time
     }
 
-    fun searchEvent(name: String) {
-        searchedEvents = scheduleEventDao.searchEventByName(name).asLiveData()
+    fun eventConflicts(
+        date: String,
+        timeFrom: String,
+        timeTo: String,
+        eventId: Int
+    ): Flow<List<ScheduleEvent>> {
+        return scheduleEventDao.getConflictEvent(date, timeFrom, timeTo, eventId)
     }
 }
 
