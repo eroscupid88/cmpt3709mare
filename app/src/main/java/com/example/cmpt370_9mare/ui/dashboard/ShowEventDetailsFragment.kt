@@ -32,6 +32,7 @@ class ShowEventDetailsFragment(
 
             // Inflate and set the layout for the dialog
             builder.setView(binding.root)
+                .setMessage("Event Details")
                 // Add action buttons
                 .setPositiveButton(R.string.edit) { dialog, _ ->
                     dialog.cancel()
@@ -51,7 +52,7 @@ class ShowEventDetailsFragment(
             locationValue.text = event.location
             dateValue.text = event.date
             timeValue.text =
-                if (event.time_from == "all-day") "All-Day" else "${event.time_from} to ${event.time_to}"
+                if (event.time_to.isNotEmpty()) "${event.time_from} to ${event.time_to}" else event.time_from
             urlValue.text = event.url
             notesValue.text = event.notes
         }

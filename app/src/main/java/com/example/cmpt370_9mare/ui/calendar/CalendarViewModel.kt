@@ -90,7 +90,21 @@ class CalendarViewModel : ViewModel() {
         Log.d(TAG, "DEBUG: $yearMonth, $daysInMonth,$firstOfMonth,$dayOfWeek,$selectDate")
         Log.d(TAG, "DEBUG: $daysInMonthArray")
 
+        if (!clearDaysIfAllNull(daysInMonthArray.subList(0, 7))) {
+            clearDaysIfAllNull(daysInMonthArray.subList(35, 42))
+        }
+
         return daysInMonthArray
+    }
+
+    /**
+     * Remove
+     */
+    private fun clearDaysIfAllNull(dayList: MutableList<Day>): Boolean {
+        return if (dayList.none { day -> day != Day(null, null) }) {
+            dayList.clear()
+            true
+        } else false
     }
 
     fun nextMonthAction() {

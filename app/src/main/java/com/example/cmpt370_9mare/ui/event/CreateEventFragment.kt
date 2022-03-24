@@ -212,7 +212,7 @@ class CreateEventFragment : Fragment() {
                 location = binding.inputLocation.text.toString()
                 date = binding.inputDate.text.toString()
                 time_from =
-                    if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString()
+                    if (isAllDayChecked) getString(R.string.all_day) else binding.inputTimeFrom.text.toString()
                 time_to = if (isAllDayChecked) "" else binding.inputTimeTo.text.toString()
                 url = binding.eventUrl.text.toString()
                 notes = binding.eventNotes.text.toString()
@@ -237,7 +237,7 @@ class CreateEventFragment : Fragment() {
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
                 binding.inputDate.text.toString(),
-                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                if (isAllDayChecked) getString(R.string.all_day) else binding.inputTimeFrom.text.toString(),
                 if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
@@ -259,9 +259,8 @@ class CreateEventFragment : Fragment() {
             inputDate.text = event.date
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
-            allDay.isChecked = event.time_from == "all-day"
 
-            if (event.time_from == "all-day") {
+            if (event.time_from == getString(R.string.all_day)) {
                 allDay.isChecked = true
                 preloadTime()
             } else {
@@ -401,7 +400,7 @@ class CreateEventFragment : Fragment() {
 
 
     private fun validateTimeInput(): Boolean {
-        return if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+        return if (binding.inputTimeFrom.text.toString() != getString(R.string.all_day) && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
             if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
                 binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
                 false

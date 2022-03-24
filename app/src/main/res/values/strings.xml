@@ -33,7 +33,7 @@
     <string name="past_events">Past</string>
     <string name="forward_button">forward_button</string>
 
-    <!--    AlertDialog Buttons-->
+    <!-- AlertDialog Buttons -->
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>

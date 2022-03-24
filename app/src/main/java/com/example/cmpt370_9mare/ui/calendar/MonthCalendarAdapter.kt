@@ -1,4 +1,3 @@
-
 package com.example.cmpt370_9mare.ui.calendar
 
 import android.view.LayoutInflater
@@ -13,7 +12,7 @@ import com.example.cmpt370_9mare.data.Day
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
+class MonthCalendarAdapter(private val onItemClicked: (Day) -> Unit) :
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
 
 
@@ -26,10 +25,6 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
         }
     }
 
-    /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of
-     * [MarsPhoto] has been updated.
-     */
     companion object DiffCallback : DiffUtil.ItemCallback<Day>() {
         override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {
             return oldItem.day == newItem.day
@@ -39,6 +34,7 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
             return oldItem == newItem
         }
     }
+
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
