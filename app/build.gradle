@@ -135,5 +135,9 @@ dependencies {
 
     testImplementation 'org.mockito:mockito-core:4.3.1'
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    // When using Kotlin.
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
 }

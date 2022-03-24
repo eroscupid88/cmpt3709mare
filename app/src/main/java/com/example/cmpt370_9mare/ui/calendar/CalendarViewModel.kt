@@ -6,12 +6,11 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.data.Day
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
@@ -20,7 +19,6 @@ private const val TAG = "CalendarViewModel"
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
-    private var _currentDate = LocalDate.now()
     private var selectDate: LocalDate? = null
 
     val monthYearText: LiveData<String> = _monthYearText
@@ -32,7 +30,6 @@ class CalendarViewModel : ViewModel() {
         setMonthYearText()
         _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
     }
-
 
     private fun setMonthYearText() {
         _monthYearText.value = monthYearFromDate(selectDate!!).toString()
@@ -48,9 +45,6 @@ class CalendarViewModel : ViewModel() {
         return date?.format(formatter)
     }
 
-    fun setSelectedDate(date: LocalDate) {
-        selectDate = date
-    }
 
     private fun daysInMonthArray(date: LocalDate): ArrayList<Day> {
 
@@ -73,7 +67,7 @@ class CalendarViewModel : ViewModel() {
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(
-                    Day(null, null,false)
+                    Day(null, null, false)
                 )
                 else -> {
                     daysInMonthArray.add(
