@@ -364,6 +364,8 @@ class CreateEventFragment : Fragment() {
                 R.id.inputTimeFrom -> validateTimeInput()
                 R.id.inputTimeTo -> validateTimeInput()
             }
+
+            showSubmitButton(isValidated())
         }
     }
 
@@ -381,39 +383,37 @@ class CreateEventFragment : Fragment() {
     }
 
 
-    private fun isValidate(): Boolean = validateTitle() && validateTimeInput()
+    private fun isValidated(): Boolean = validateTitle() && validateTimeInput()
 
     private fun validateTitle(): Boolean {
-        when {
+        return when {
             binding.inputTitle.text.toString().trim().isEmpty() -> {
                 binding.eventTitle.error = "Required Title"
                 binding.eventTitle.requestFocus()
-                showSubmitButton(false)
+                false
             }
             binding.inputTitle.text.toString().length > 30 -> {
                 binding.eventTitle.error = "Title cannot exceeding 30 letters"
-                showSubmitButton(false)
+                false
             }
             else -> {
                 binding.eventTitle.isErrorEnabled = false
-                showSubmitButton(true)
+                true
             }
         }
-        return binding.submitCreateEvent.isVisible
     }
 
 
     private fun validateTimeInput(): Boolean {
-        if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+        return if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
             if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
                 binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
-                showSubmitButton(false)
+                false
             } else {
                 binding.dateTimeLayout.isErrorEnabled = false
-                showSubmitButton(true)
+                true
             }
-        }
-        return binding.submitCreateEvent.isVisible
+        } else true
     }
 
     private fun preloadTime() {
