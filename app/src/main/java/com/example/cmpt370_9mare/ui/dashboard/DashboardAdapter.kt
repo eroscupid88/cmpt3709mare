@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentEventDetailsBinding
 import com.example.cmpt370_9mare.databinding.GroupEventsViewBinding
+import com.example.cmpt370_9mare.ui.calendar.DailyEventCalendarAdapter
 
 /**
  * [ListAdapter] implementation for the recyclerview.
@@ -67,18 +68,18 @@ class DashboardAdapter(private val fragmentManager: FragmentManager) :
          * Bind views on DashboardFragment to the events' data
          */
         fun bind(group: DashboardGroupEvents) {
-            val groupEventSAdapter = GroupEventsAdapter {
+            val dailyEventAdapter = DailyEventCalendarAdapter {
                 ShowEventDetailsFragment(it).show(fragmentManager, "Event Details")
             }
 
             binding.dateOfGroup.text = group.date
             binding.groupList.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = groupEventSAdapter
+                adapter = dailyEventAdapter
             }
 
             group.events.observe(itemView.context as LifecycleOwner) {
-                groupEventSAdapter.submitList(it)
+                dailyEventAdapter.submitList(it)
             }
         }
     }

@@ -44,11 +44,11 @@ class ContentTest : BaseTest() {
             bundleOf("eventID" to -1),
             themeResId = R.style.Theme_Cmpt3709mare
         )
-        onView(withId(R.id.input_title)).check(matches(withHint("title")))
+        onView(withId(R.id.input_title)).check(matches(withHint(R.string.title)))
         onView(withId(R.id.event_title)).check(matches(isNotClickable()))
 
         // Check for the event location
-        onView(withId(R.id.input_location)).check(matches(withHint("Location")))
+        onView(withId(R.id.input_location)).check(matches(withHint(R.string.location)))
         onView(withId(R.id.event_location)).check(matches(isNotClickable()))
     }
 
@@ -131,17 +131,6 @@ class ContentTest : BaseTest() {
     fun TC2_Test_title_pickDate_pickTime() {
         val testName = "TC2"
 
-        createEvent(testName)
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
-    }
-
-    @Test
-    fun TC3_Test_title_pickDate_pickTime() {
-        val testName = "TC3"
-
         createEvent(testName, "2021-03-13")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
@@ -150,8 +139,8 @@ class ContentTest : BaseTest() {
     }
 
     @Test
-    fun TC4_Test_title_pickDate_pickTime() {
-        val testName = "TC4"
+    fun TC3_Test_title_pickDate_pickTime() {
+        val testName = "TC3"
 
         createEvent(testName, timeFrom = "03:00", timeTo = "05:00")
         onView(withId(R.id.navigation_calendar)).perform(click())
@@ -163,8 +152,8 @@ class ContentTest : BaseTest() {
     }
 
     @Test
-    fun TC5_Test_title_pickDate_pickTime() {
-        val testName = "TC5"
+    fun TC4_Test_title_pickDate_pickTime() {
+        val testName = "TC4"
 
         createEvent(testName, "2021-03-13")
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -174,30 +163,8 @@ class ContentTest : BaseTest() {
     }
 
     @Test
-    fun TC6_Test_title_pickDate_pickTime() {
-        val testName = "TC6"
-
-        createEvent(testName, timeFrom = "03:00", timeTo = "05:00")
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
-    }
-
-    @Test
-    fun TC7_Test_title_pickDate_pickTime() {
-        val testName = "TC7"
-
-        createEvent(testName, "2021-03-13", "03:00", "05:00")
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
-    }
-
-    @Test
-    fun TC8_Test_title_pickDate_pickTime() {
-        val testName = "TC8"
+    fun TC5_Test_title_pickDate_pickTime() {
+        val testName = "TC5"
 
         createEvent(testName, "2021-03-13", "03:00", "05:00")
         onView(withId(R.id.navigation_dashboard)).perform(click())
