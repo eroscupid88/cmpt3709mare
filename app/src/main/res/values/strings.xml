@@ -32,18 +32,25 @@
     <string name="future_events">Future</string>
     <string name="past_events">Past</string>
     <string name="forward_button">forward_button</string>
+<<<<<<< HEAD
 
     <!--    AlertDialog Buttons-->
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="search">Search</string>
+=======
+    <string name="delete">Delete</string>
+>>>>>>> 8b1d9c61fa167cb006187257177227f05bcf1374
     <string name="calendar_app_notification_id" translatable="false">event_channel</string>
     <string name="calendar_app_notification_channel_name" translatable="true">Event</string>
     <string name="snooze">Snooze</string>
     <string name="notification_title">Event Title</string>
     <string name="event_coming_up">Notice! event coming up</string>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b1d9c61fa167cb006187257177227f05bcf1374
 
     <string-array name="RepeatEvery">
         <item>Repeat Every</item>
