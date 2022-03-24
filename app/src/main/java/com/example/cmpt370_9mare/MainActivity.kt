@@ -1,10 +1,7 @@
 package com.example.cmpt370_9mare
 
 
-import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,28 +9,23 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.cmpt370_9mare.databinding.ActivityMainBinding
-import com.example.cmpt370_9mare.ui.event.SpinnerViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
 
 
 private const val TAG = "MainActivity"
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val spinnerViewModel: SpinnerViewModel by viewModels()
-
 
         val navView: BottomNavigationView = binding.navView
+
         // Retrieve NavController from the NavHostFragment
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -55,10 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun addNotification() {
-
     }
 
 

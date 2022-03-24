@@ -1,4 +1,4 @@
-package com.example.cmpt370_9mare.ui.dashboard
+package com.example.cmpt370_9mare.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
