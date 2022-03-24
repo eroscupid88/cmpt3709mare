@@ -11,4 +11,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="picker_orange">#FF2B2B2B</color>
     <color name="red">#FF0000</color>
+
+
+    <color name="purple">#2A2438</color>
+    <color name="purple_dark">#352F44</color>
+    <color name="purple_light">#5C5470</color>
+
+    <color name="Blue">#0288D1</color>
+    <color name="Blue_dark">#005B9F</color>
+    <color name="Blue_light">#81D4FA</color>
+    
+    
+
+    <color name="grey">#DBD8E3</color>
 </resources>
