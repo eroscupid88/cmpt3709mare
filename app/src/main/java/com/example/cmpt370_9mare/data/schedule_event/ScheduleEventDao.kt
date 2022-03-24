@@ -29,9 +29,8 @@ interface ScheduleEventDao {
     fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
 
     @Query(
-        "SELECT * FROM event WHERE date = :date AND NOT id = :eventId AND ((:timeTo BETWEEN time_from AND time_to)" +
-                "OR (:timeFrom BETWEEN time_from AND time_to) OR (time_from BETWEEN :timeFrom AND :timeTo) OR" +
-                " (time_to BETWEEN :timeFrom AND :timeTo))"
+        "SELECT * FROM event WHERE date = :date AND NOT id = :eventId " +
+                "AND NOT (:timeTo <= time_from OR :timeFrom >= time_to) ORDER BY time_from"
     )
     fun getConflictEvent(
         date: String,

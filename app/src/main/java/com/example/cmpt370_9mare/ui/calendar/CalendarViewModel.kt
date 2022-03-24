@@ -73,14 +73,13 @@ class CalendarViewModel : ViewModel() {
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(
-                    Day(null, null,false)
+                    Day(null, null)
                 )
                 else -> {
                     daysInMonthArray.add(
                         Day(
                             (x - dayOfWeek).toString(),
-                            firstOfMonth.plusDays(y.toLong()),
-                            false
+                            firstOfMonth.plusDays(y.toLong())
                         )
                     )
                     y++

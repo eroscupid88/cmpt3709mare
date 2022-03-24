@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -30,13 +32,14 @@ class HomeViewModel() : ViewModel() {
         return today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 
-    private fun stringDisplayToday(today: LocalDate): String{
+    private fun stringDisplayToday(today: LocalDate): String {
         return today.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))
     }
 
-    fun getToday():String{
+    fun getToday(): String {
         return stringFormatToday(today)
     }
+
     fun getPreviousDay() {
         today = today.plusDays(-1)
         _currentDay.value = stringDisplayToday(today)

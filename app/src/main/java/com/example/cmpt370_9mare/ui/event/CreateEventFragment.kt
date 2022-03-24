@@ -302,8 +302,7 @@ class CreateEventFragment : Fragment() {
                 when {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
-                        showConflictDialog()
-                        //TODO: Make Alert for conflicting times
+                        showConflictDialog(it)
                     }
                     navigationArgs.eventId > 0 -> {
                         Log.i(TAG, "$TAG: update Event button was clicked")
@@ -334,11 +333,17 @@ class CreateEventFragment : Fragment() {
         TimePickerFragment(timeTo).show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
     }
 
-    private fun showConflictDialog() {
+    private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         builder.setTitle("Conflict Found")
-        //TODO: List and format conflicting events in pop-up
-        builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
+
+        var txt = ""
+        conflictEvents.forEach {
+            txt += "${it.title}: ${it.time_from} - ${it.time_to}\n"
+        }
+        builder.setMessage(txt)
+
+        builder.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
