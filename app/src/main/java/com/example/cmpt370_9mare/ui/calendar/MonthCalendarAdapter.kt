@@ -1,18 +1,24 @@
 package com.example.cmpt370_9mare.ui.calendar
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.databinding.CalendarCellLayoutBinding
 import com.example.cmpt370_9mare.data.Day
+import java.time.LocalDate
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class MonthCalendarAdapter(private val onItemClicked: (Day) -> Unit) :
+@RequiresApi(Build.VERSION_CODES.O)
+class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
 
 
@@ -20,6 +26,12 @@ class MonthCalendarAdapter(private val onItemClicked: (Day) -> Unit) :
         private var binding: CalendarCellLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(day: Day) {
+            binding.dotDay.setImageResource(android.R.color.transparent)
+            if (day.day != null) {
+                if (day.date == LocalDate.now()) {
+                    binding.dateBackgroundId.setImageResource(R.drawable.date_background_current)
+                }
+            }
             binding.day = day
             binding.executePendingBindings()
         }
@@ -53,9 +65,15 @@ class MonthCalendarAdapter(private val onItemClicked: (Day) -> Unit) :
      */
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = getItem(position)
-        holder.itemView.setOnClickListener {
-            onItemClicked(day)
+        if (day.day != null) {
+            holder.itemView.setOnClickListener {
+                onItemClicked(day)
+            }
+            holder.bind(day)
+        } else {
+            holder.bind(day)
         }
-        holder.bind(day)
+
+
     }
 }
