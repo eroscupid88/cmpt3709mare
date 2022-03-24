@@ -131,7 +131,7 @@ class ContentTest : BaseTest() {
     fun TC2_Test_title_pickDate_pickTime() {
         val testName = "TC2"
 
-        createEvent(testName, "2021-03-13")
+        createEvent(testName, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
@@ -142,7 +142,7 @@ class ContentTest : BaseTest() {
     fun TC3_Test_title_pickDate_pickTime() {
         val testName = "TC3"
 
-        createEvent(testName, timeFrom = "03:00", timeTo = "05:00")
+        createEvent(testName, FUTURE, "03:00", "05:00")
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -155,7 +155,7 @@ class ContentTest : BaseTest() {
     fun TC4_Test_title_pickDate_pickTime() {
         val testName = "TC4"
 
-        createEvent(testName, "2021-03-13")
+        createEvent(testName, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
@@ -166,7 +166,7 @@ class ContentTest : BaseTest() {
     fun TC5_Test_title_pickDate_pickTime() {
         val testName = "TC5"
 
-        createEvent(testName, "2021-03-13", "03:00", "05:00")
+        createEvent(testName, PAST, "03:00", "05:00")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
