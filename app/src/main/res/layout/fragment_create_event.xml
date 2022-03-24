@@ -283,6 +283,7 @@
                             android:layout_weight="1"
                             android:entries="@array/repeat_method_option"
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
+                            android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 

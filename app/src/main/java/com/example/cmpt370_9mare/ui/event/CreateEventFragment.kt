@@ -147,6 +147,7 @@ class CreateEventFragment : Fragment() {
     fun setRepeatEvery(position: Int) {
         when (position) {
             0 -> {
+
                 ArrayAdapter.createFromResource(
                     requireContext(),
                     R.array.repeat_day_array,
@@ -190,7 +191,10 @@ class CreateEventFragment : Fragment() {
             }
             else -> Log.i(TAG, "Hi just do nothing $position")
         }
+
         spinnerViewModel.setRepeatEvery(position)
+        spinnerViewModel.setTypeSelected(position + 1)
+
 
     }
 
@@ -297,7 +301,6 @@ class CreateEventFragment : Fragment() {
             }*/
 
             val isAllDayChecked = binding.allDay.isChecked
-
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
@@ -307,10 +310,22 @@ class CreateEventFragment : Fragment() {
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
+            repeatEvent()
             val action =
                 CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
         }
+
+    }
+
+    private fun repeatEvent() {
+        spinnerViewModel.lengthSelection.observe(this.viewLifecycleOwner) {
+            for (x: Int in (1..it)) {
+                //TO DO loop and create event
+
+            }
+        }
+
 
     }
 
