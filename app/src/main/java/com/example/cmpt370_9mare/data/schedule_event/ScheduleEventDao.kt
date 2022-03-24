@@ -30,7 +30,7 @@ interface ScheduleEventDao {
 
     @Query(
         "SELECT * FROM event WHERE date = :date AND NOT id = :eventId " +
-                "AND NOT (:timeTo <= time_from OR :timeFrom >= time_to)"
+                "AND NOT (:timeTo <= time_from OR :timeFrom >= time_to) ORDER BY time_from"
     )
     fun getConflictEvent(
         date: String,

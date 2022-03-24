@@ -303,7 +303,6 @@ class CreateEventFragment : Fragment() {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
                         showConflictDialog(it)
-                        //TODO: Make Alert for conflicting times
                     }
                     navigationArgs.eventId > 0 -> {
                         Log.i(TAG, "$TAG: update Event button was clicked")
