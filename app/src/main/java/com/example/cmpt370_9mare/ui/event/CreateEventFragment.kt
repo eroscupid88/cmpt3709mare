@@ -349,7 +349,7 @@ class CreateEventFragment : Fragment() {
         }
         builder.setMessage(txt)
 
-        builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
