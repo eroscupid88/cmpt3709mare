@@ -2,18 +2,19 @@ package com.example.cmpt370_9mare.ui.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.databinding.GroupEventsViewBinding
+import com.example.cmpt370_9mare.ui.calendar.DailyEventCalendarAdapter
 
 /**
  * [ListAdapter] implementation for the recyclerview.
  */
-class DashboardAdapter :
+class DashboardAdapter(private val fragmentManager: FragmentManager) :
     ListAdapter<DashboardGroupEvents, DashboardAdapter.DashboardViewHolder>(DiffCallback) {
 
     companion object {
@@ -52,29 +53,31 @@ class DashboardAdapter :
     /**
      * ViewHolder to hold data of DashboardFragment
      */
-    class DashboardViewHolder(private var binding: GroupEventsViewBinding) :
+    inner class DashboardViewHolder(private var binding: GroupEventsViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         /**
          * Bind views on DashboardFragment to the events' data
          */
         fun bind(group: DashboardGroupEvents) {
-            val groupEventSAdapter = GroupEventsAdapter {
+            val dailyEventAdapter = DailyEventCalendarAdapter {
                 val action =
-                    DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(
-                        it.id
-                    )
-                Navigation.findNavController(itemView).navigate(action)
+                    DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(it.id)
+
+                ShowEventDetailsFragment(it, action).show(
+                    fragmentManager,
+                    ShowEventDetailsFragment.EVENT_DETAILS
+                )
             }
 
             binding.dateOfGroup.text = group.date
             binding.groupList.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = groupEventSAdapter
+                adapter = dailyEventAdapter
             }
 
             group.events.observe(itemView.context as LifecycleOwner) {
-                groupEventSAdapter.submitList(it)
+                dailyEventAdapter.submitList(it)
             }
         }
     }

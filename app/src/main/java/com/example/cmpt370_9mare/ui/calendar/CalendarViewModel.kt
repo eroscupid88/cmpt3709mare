@@ -73,8 +73,7 @@ class CalendarViewModel : ViewModel() {
                     daysInMonthArray.add(
                         Day(
                             (x - dayOfWeek).toString(),
-                            firstOfMonth.plusDays(y.toLong()),
-                            false
+                            firstOfMonth.plusDays(y.toLong())
                         )
                     )
                     y++

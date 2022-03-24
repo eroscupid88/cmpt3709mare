@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import com.example.cmpt370_9mare.data.schedule_event.EventRoomDatabase
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
@@ -20,6 +21,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
+@MediumTest
 class ScheduleEventDaoTest {
     private lateinit var scheduleEventDao: ScheduleEventDao
     private lateinit var db: EventRoomDatabase
@@ -146,10 +148,12 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun getDailyEventByTimeAndDateTest():Unit = runBlocking{
+    fun getDailyEventByTimeAndDateTest(): Unit = runBlocking {
         val scheduleEvent1 = ScheduleEvent(1, "event1", "", "2022-06-06", "10:15:31", "", "", "")
-        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "2022-06-06", "14:15:14","15:15:14" , "", "")
-        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "2022-06-06", "15:15:14","16:15:14" , "", "")
+        val scheduleEvent2 =
+            ScheduleEvent(2, "event2", "", "2022-06-06", "14:15:14", "15:15:14", "", "")
+        val scheduleEvent3 =
+            ScheduleEvent(3, "event3", "", "2022-06-06", "15:15:14", "16:15:14", "", "")
         scheduleEventDao.insertEvent(scheduleEvent2)
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent3)
@@ -161,11 +165,11 @@ class ScheduleEventDaoTest {
         )
         assertEquals(
             scheduleEvent2.id,
-            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[0].id
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime, currentDate).first()[0].id
         )
         assertEquals(
             scheduleEvent3.id,
-            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[1].id
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime, currentDate).first()[1].id
         )
 
     }

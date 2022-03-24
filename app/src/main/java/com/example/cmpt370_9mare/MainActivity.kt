@@ -1,10 +1,7 @@
 package com.example.cmpt370_9mare
 
 
-import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val navView: BottomNavigationView = binding.navView
+
         // Retrieve NavController from the NavHostFragment
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -55,10 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun addNotification() {
-
     }
 
 

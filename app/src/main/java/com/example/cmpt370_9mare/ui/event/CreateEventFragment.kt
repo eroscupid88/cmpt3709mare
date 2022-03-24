@@ -383,7 +383,6 @@ class CreateEventFragment : Fragment() {
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
                         showConflictDialog(it)
-                        //TODO: Make Alert for conflicting times
                     }
                     navigationArgs.eventId > 0 -> {
                         Log.i(TAG, "$TAG: update Event button was clicked")
@@ -397,11 +396,6 @@ class CreateEventFragment : Fragment() {
                 }
             }
         }
-    }
-
-    fun onSelectRepeat() {
-        val action = CreateEventFragmentDirections.actionCreateEventFragmentToNewEventFragment()
-        findNavController().navigate(action)
     }
 
     fun showDatePicker() {
@@ -422,8 +416,14 @@ class CreateEventFragment : Fragment() {
     private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         builder.setTitle("Conflict Found")
-        //TODO: List and format conflicting events in pop-up
-        builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
+
+        var txt = ""
+        conflictEvents.forEach {
+            txt += "${it.title}: ${it.time_from} - ${it.time_to}\n"
+        }
+        builder.setMessage(txt)
+
+        builder.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
@@ -505,12 +505,23 @@ class CreateEventFragment : Fragment() {
         binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
     }
 
+    private fun showDeleteConfirmationDialog() {
+        val builder = AlertDialog.Builder(this.context)
+        builder.setMessage("Delete the current event?")
+            .setCancelable(false)
+            .setPositiveButton("Confirm") { _, _ ->
+                scheduleEventShareViewModel.deleteItem(currentEvent)
+                findNavController().navigateUp()
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .show()
+    }
+
     /**
      * Delete Event
      */
     fun deleteEvent() {
-        scheduleEventShareViewModel.deleteItem(currentEvent)
-        findNavController().navigateUp()
+        showDeleteConfirmationDialog()
     }
 
 

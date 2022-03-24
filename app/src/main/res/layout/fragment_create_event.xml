@@ -302,7 +302,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:hint="@string/URL"
+                        android:hint="@string/url"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true">
 
