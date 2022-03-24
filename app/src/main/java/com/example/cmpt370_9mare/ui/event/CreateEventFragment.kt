@@ -342,7 +342,11 @@ class CreateEventFragment : Fragment() {
     private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         builder.setTitle("Conflict Found")
-        //TODO: List and format conflicting events in pop-up
+
+        conflictEvents.forEach {
+            builder.setMessage("${it.title}: ${it.time_from} - ${it.time_to}")
+        }
+
         builder.setNegativeButton("Ok") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
