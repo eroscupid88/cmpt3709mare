@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentEventDetailsBinding
 import com.example.cmpt370_9mare.databinding.GroupEventsViewBinding
@@ -97,7 +98,7 @@ class ShowEventDetailsFragment(private val event: ScheduleEvent) : DialogFragmen
             // Inflate and set the layout for the dialog
             builder.setView(binding.root)
                 // Add action buttons
-                .setPositiveButton("Edit") { dialog, _ ->
+                .setPositiveButton(R.string.edit) { dialog, _ ->
                     dialog.cancel()
                     val action =
                         DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(
@@ -105,7 +106,7 @@ class ShowEventDetailsFragment(private val event: ScheduleEvent) : DialogFragmen
                         )
                     NavHostFragment.findNavController(this).navigate(action)
                 }
-                .setNeutralButton("Cancel") { dialog, _ ->
+                .setNeutralButton(R.string.cancel) { dialog, _ ->
                     dialog.cancel()
                 }
                 .create()

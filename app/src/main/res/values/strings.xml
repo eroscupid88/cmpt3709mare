@@ -11,7 +11,6 @@
     <string name="title_dashboard">List of Events</string>
     <string name="title_calendar">Calendar</string>
     <string name="title_notifications">Notifications</string>
-    <string name="cancel">Cancel</string>
     <string name="new_event_title">New Event</string>
     <string name="add">Add</string>
     <string name="next_month_calendar">next_month_calendar</string>
@@ -33,9 +32,12 @@
     <string name="future_events">Future</string>
     <string name="past_events">Past</string>
     <string name="forward_button">forward_button</string>
-    <string name="delete">Delete</string>
-    <string name="search">Search</string>
 
+    <!--    AlertDialog Buttons-->
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
 
     <string-array name="RepeatEvery">
         <item>Repeat Every</item>

@@ -8,12 +8,10 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/show_past_events"
-        android:icon="@drawable/ic_past"
         android:title="@string/past_events"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/show_future_events"
-        android:icon="@drawable/ic_future"
         android:title="@string/future_events"
         app:showAsAction="always" />
 </menu>

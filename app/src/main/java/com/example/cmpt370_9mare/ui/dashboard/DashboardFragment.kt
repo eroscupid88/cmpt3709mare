@@ -122,7 +122,7 @@ class DashboardFragment : Fragment() {
         builder.setView(input)
 
         // Set up the buttons
-        builder.setPositiveButton("Search") { _, _ ->
+        builder.setPositiveButton(R.string.search) { _, _ ->
             val eventName = String.format("%%${input.text}%%")
             if (eventName != "%%") {
                 viewModel.searchEvent(eventName)
@@ -131,7 +131,7 @@ class DashboardFragment : Fragment() {
                 initializeDashboardAdapter(MutableLiveData())
             }
         }
-            .setNeutralButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .setNeutralButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
             .show()
     }
 }
