@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,7 +71,13 @@ class DashboardAdapter(private val fragmentManager: FragmentManager) :
          */
         fun bind(group: DashboardGroupEvents) {
             val dailyEventAdapter = DailyEventCalendarAdapter {
-                ShowEventDetailsFragment(it).show(fragmentManager, "Event Details")
+                val action =
+                    DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(it.id)
+
+                ShowEventDetailsFragment(it, action).show(
+                    fragmentManager,
+                    ShowEventDetailsFragment.EVENT_DETAILS
+                )
             }
 
             binding.dateOfGroup.text = group.date
@@ -86,7 +93,15 @@ class DashboardAdapter(private val fragmentManager: FragmentManager) :
     }
 }
 
-class ShowEventDetailsFragment(private val event: ScheduleEvent) : DialogFragment() {
+class ShowEventDetailsFragment(
+    private val event: ScheduleEvent,
+    private val action: NavDirections
+) : DialogFragment() {
+
+    companion object {
+        const val EVENT_DETAILS = "eventDetails_tag"
+    }
+
     private var _binding: FragmentEventDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -100,10 +115,6 @@ class ShowEventDetailsFragment(private val event: ScheduleEvent) : DialogFragmen
                 // Add action buttons
                 .setPositiveButton(R.string.edit) { dialog, _ ->
                     dialog.cancel()
-                    val action =
-                        DashboardFragmentDirections.actionNavigationDashboardToCreateEventFragment(
-                            event.id
-                        )
                     NavHostFragment.findNavController(this).navigate(action)
                 }
                 .setNeutralButton(R.string.cancel) { dialog, _ ->

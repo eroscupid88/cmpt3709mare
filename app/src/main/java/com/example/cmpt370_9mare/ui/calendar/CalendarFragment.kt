@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
@@ -19,6 +18,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
+import com.example.cmpt370_9mare.ui.dashboard.DashboardFragmentDirections
+import com.example.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
 
 private const val TAG = "CalendarFragment"
 
@@ -81,7 +82,11 @@ class CalendarFragment : Fragment() {
 
             val action =
                 CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(it.id)
-            this.findNavController().navigate(action)
+
+            ShowEventDetailsFragment(it, action).show(
+                childFragmentManager,
+                ShowEventDetailsFragment.EVENT_DETAILS
+            )
         }
 
         binding.dailyEventList.adapter = dailyEventAdapter
