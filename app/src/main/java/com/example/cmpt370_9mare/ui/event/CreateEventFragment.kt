@@ -425,12 +425,23 @@ class CreateEventFragment : Fragment() {
         binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
     }
 
+    private fun showDeleteConfirmationDialog() {
+        val builder = AlertDialog.Builder(this.context)
+        builder.setMessage("Delete the current event?")
+            .setCancelable(false)
+            .setPositiveButton("Confirm") { _, _ ->
+                scheduleEventShareViewModel.deleteItem(currentEvent)
+                findNavController().navigateUp()
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .show()
+    }
+
     /**
      * Delete Event
      */
     fun deleteEvent() {
-        scheduleEventShareViewModel.deleteItem(currentEvent)
-        findNavController().navigateUp()
+        showDeleteConfirmationDialog()
     }
 
 

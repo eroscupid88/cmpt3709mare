@@ -90,7 +90,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun initializeDashboardAdapter(events: LiveData<List<DashboardGroupEvents>>) {
-        val dashboardAdapter = DashboardAdapter()
+        val dashboardAdapter = DashboardAdapter(childFragmentManager)
 
         recyclerView.adapter = dashboardAdapter
         // Attach an observer on the event list to update the UI automatically when the data changes.
@@ -112,7 +112,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showSearchDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        val builder = AlertDialog.Builder(this.context)
         builder.setTitle("Search for Events by Name")
         // Set up the input
         val input = EditText(this.context)
@@ -130,10 +130,8 @@ class DashboardFragment : Fragment() {
             } else {
                 initializeDashboardAdapter(MutableLiveData())
             }
-
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-
-        builder.show()
+            .setNeutralButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .show()
     }
 }
