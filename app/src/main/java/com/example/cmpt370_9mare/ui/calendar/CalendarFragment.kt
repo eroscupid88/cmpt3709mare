@@ -18,7 +18,6 @@ import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
-import com.example.cmpt370_9mare.ui.dashboard.DashboardFragmentDirections
 import com.example.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
 
 private const val TAG = "CalendarFragment"
