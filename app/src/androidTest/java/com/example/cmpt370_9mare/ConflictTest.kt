@@ -1,18 +1,11 @@
 package com.example.cmpt370_9mare
 
-import android.view.KeyEvent
-import androidx.core.os.bundleOf
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
-import com.example.cmpt370_9mare.ui.event.CreateEventFragment
-import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 
