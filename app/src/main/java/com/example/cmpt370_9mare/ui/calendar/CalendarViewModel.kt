@@ -10,8 +10,6 @@ import com.example.cmpt370_9mare.data.Day
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 private const val TAG = "CalendarViewModel"
@@ -73,7 +71,9 @@ class CalendarViewModel : ViewModel() {
         for (x: Int in 1..42) {
             when {
                 x <= dayOfWeek || x > daysInMonth + dayOfWeek -> daysInMonthArray.add(
+
                     Day(null, null)
+
                 )
                 else -> {
                     daysInMonthArray.add(

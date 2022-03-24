@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
@@ -59,8 +61,12 @@ class CreateEventFragment : Fragment() {
         )
     }
 
+    private val spinnerViewModel: SpinnerViewModel by activityViewModels()
+
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
+
+    private var spinner: Spinner? = null
 
     /**
      * create CreateEventFragment instance and accept params argument from another fragment
@@ -85,6 +91,7 @@ class CreateEventFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCreateEventBinding.inflate(inflater, container, false)
+        spinner = _binding!!.spRepeatEvery
         return binding.root
     }
 
@@ -93,8 +100,10 @@ class CreateEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             viewModel = scheduleEventShareViewModel
+            spinnerViewModel = spinnerViewModel
             createEventFragment = this@CreateEventFragment
         }
+
 
         val id = navigationArgs.eventId
         if (id > 0) {
@@ -127,6 +136,66 @@ class CreateEventFragment : Fragment() {
         scheduleEventShareViewModel.pickedTimeTo.observe(
             this
         ) { binding.inputTimeTo.text = it }
+    }
+
+    fun setSpinnerValue(position: Int) {
+        spinnerViewModel.setSpinnerSelected(position)
+        Log.d(TAG, "some: $position")
+    }
+
+
+    fun setRepeatEvery(position: Int) {
+        when (position) {
+            0 -> {
+
+                ArrayAdapter.createFromResource(
+                    requireContext(),
+                    R.array.repeat_day_array,
+                    android.R.layout.simple_spinner_dropdown_item
+                ).also { adapter ->
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    // Apply the adapter to the spinner
+                    spinner!!.adapter = adapter
+                }
+
+                Log.i(TAG, "create drop down for daily")
+
+            }
+            1 -> {
+                ArrayAdapter.createFromResource(
+                    requireContext(),
+                    R.array.repeat_week_array,
+                    android.R.layout.simple_spinner_dropdown_item
+                ).also { adapter ->
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    // Apply the adapter to the spinner
+                    spinner!!.adapter = adapter
+                }.notifyDataSetChanged()
+                Log.i(TAG, "create drop down for weekly")
+            }
+
+            2 -> {
+                ArrayAdapter.createFromResource(
+                    requireContext(),
+                    R.array.repeat_month_array,
+                    android.R.layout.simple_spinner_dropdown_item
+                ).also { adapter ->
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    // Apply the adapter to the spinner
+                    spinner!!.adapter = adapter
+                }
+                Log.i(TAG, "create drop down for monthly")
+            }
+            else -> Log.i(TAG, "Hi just do nothing $position")
+        }
+
+        spinnerViewModel.setRepeatEvery(position)
+        spinnerViewModel.setTypeSelected(position + 1)
+
+
     }
 
     /**
@@ -232,7 +301,6 @@ class CreateEventFragment : Fragment() {
             }*/
 
             val isAllDayChecked = binding.allDay.isChecked
-
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
@@ -242,10 +310,22 @@ class CreateEventFragment : Fragment() {
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
+            repeatEvent()
             val action =
                 CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
         }
+
+    }
+
+    private fun repeatEvent() {
+        spinnerViewModel.lengthSelection.observe(this.viewLifecycleOwner) {
+            for (x: Int in (1..it)) {
+                //TO DO loop and create event
+
+            }
+        }
+
 
     }
 

@@ -12,6 +12,10 @@
             type="com.example.cmpt370_9mare.ScheduleEventViewModel" />
 
         <variable
+            name="spinnerViewModel"
+            type="com.example.cmpt370_9mare.ui.event.SpinnerViewModel" />
+
+        <variable
             name="createEventFragment"
             type="com.example.cmpt370_9mare.ui.event.CreateEventFragment" />
     </data>
@@ -258,17 +262,30 @@
                         android:layout_marginEnd="10dp"
                         android:background="#c0c0c0" />
 
-                    <Spinner
-                        android:id="@+id/spRepeatEvery"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:entries="@array/RepeatEvery" />
+                        android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spRepetitionInterval"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:entries="@array/RepetitionInterval" />
+                        <Spinner
+                            android:id="@+id/spRepeatEvery"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setSpinnerValue(selection)}"
+                            android:selectedItemPosition="@{spinnerViewModel.lengthSelection}"
+                            tools:ignore="HardcodedText" />
+
+                        <Spinner
+                            android:id="@+id/spRepetitionInterval"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:entries="@array/repeat_method_option"
+                            android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
+                            android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
