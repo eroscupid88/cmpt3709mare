@@ -12,10 +12,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class ConflictTest : BaseTest() {
-    private val conflictDate = "2222-02-22"
-
     @Test
     fun TC1_create_event_causes_conflict() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
@@ -30,6 +29,7 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC2_modify_event_causes_conflict() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
@@ -66,6 +66,7 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC4_conflicting_events_show_in_dialog() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
@@ -81,6 +82,7 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC5_multiple_conflicting_events() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle1 = "First event"
         val testTitle2 = "Second event"
         val conflictTitle = "Conflict event"
@@ -100,6 +102,7 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC6_conflict_timing_not_exclusive() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle1 = "First event"
         val testTitle2 = "Second event"
 

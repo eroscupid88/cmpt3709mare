@@ -48,8 +48,7 @@ open class BaseTest {
     fun deleteEvent(title: String) {
         onView(withText(title)).perform(click())
         onView(withText("Edit")).perform(click())
-        onView(withId(R.id.layout_create_event_fragment)).perform(swipeUp())
-        onView(withId(R.id.delete_event)).perform(click())
+        onView(withId(R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
     }
 

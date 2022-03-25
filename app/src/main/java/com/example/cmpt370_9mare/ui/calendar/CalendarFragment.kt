@@ -26,7 +26,9 @@ class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val sharedViewModel: CalendarViewModel by activityViewModels()
+    private val sharedViewModel: CalendarViewModel by activityViewModels {
+        CalendarViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
+    }
     private val sharedScheduleEvent: ScheduleEventViewModel by activityViewModels {
         ScheduleEventViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
     }
@@ -53,9 +55,10 @@ class CalendarFragment : Fragment() {
         initializeMonthCalendarAdapter()
         initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedViewModel.selectDate.value.toString()))
 
-//        sharedViewModel.selectDate.observe(viewLifecycleOwner) {
-//            sharedViewModel.currentMonth = it.monthValue
-//        }
+        sharedViewModel.selectDate.observe(viewLifecycleOwner) {
+            sharedViewModel.datesWithEventInMonth =
+                sharedViewModel.datesFromMonths(it.toString().substring(0..6))
+        }
 
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(

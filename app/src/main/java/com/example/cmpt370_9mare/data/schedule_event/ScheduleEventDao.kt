@@ -28,7 +28,7 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event WHERE date = :date ORDER BY time_from")
     fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
 
-    @Query("SELECT DISTINCT date from event WHERE date LIKE :month")
+    @Query("SELECT DISTINCT date FROM event WHERE date LIKE :month")
     fun getDatesByMonth(month: String): Flow<List<String>>
 
     @Query(

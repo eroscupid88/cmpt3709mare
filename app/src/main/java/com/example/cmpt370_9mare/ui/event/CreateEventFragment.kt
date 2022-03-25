@@ -29,6 +29,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
+import com.example.cmpt370_9mare.ui.calendar.CalendarViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalTime
@@ -51,6 +53,12 @@ class CreateEventFragment : Fragment() {
 
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
     private lateinit var currentEvent: ScheduleEvent
+
+    private val calendarViewModel: CalendarViewModel by activityViewModels {
+        CalendarViewModelFactory(
+            (activity?.application as ScheduleApplication).database.scheduleEventDao()
+        )
+    }
 
     /**
      * get Singleton scheduleEventViewModel shared throughout fragments
@@ -77,7 +85,7 @@ class CreateEventFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
         }
         // Clear the date and time variables in viewModel
-        scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
+        scheduleEventShareViewModel.pickDate(calendarViewModel.selectDate.value.toString())
         preloadTime()
     }
 
@@ -495,9 +503,7 @@ class CreateEventFragment : Fragment() {
         scheduleEventShareViewModel.pickTimeFrom(
             LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
         )
-        scheduleEventShareViewModel.pickTimeTo(
-            LocalTime.now().plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
+        scheduleEventShareViewModel.pickTimeTo("23:59")
     }
 
     private fun showSubmitButton(boolean: Boolean) {

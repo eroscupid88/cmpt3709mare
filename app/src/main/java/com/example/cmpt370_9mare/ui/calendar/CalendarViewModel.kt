@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 private const val TAG = "CalendarViewModel"
 
 @RequiresApi(Build.VERSION_CODES.O)
-class CalendarViewModel : ViewModel() {
+class CalendarViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
     private val _selectDate = MutableLiveData(LocalDate.now())
@@ -23,10 +23,8 @@ class CalendarViewModel : ViewModel() {
     val monthYearText: LiveData<String> = _monthYearText
     val daysOfTheMonth: MutableLiveData<ArrayList<Day>?> = _daysOfTheMonth
 
-//    var currentMonth = LocalDate.now().monthValue
-//    private val currentMonthString get() = String.format("%02d", currentMonth)
-//    val datesWithEventInMonth: LiveData<List<String>> =
-//        scheduleEventDao.getDatesByMonth(currentMonthString).asLiveData()
+    private var currentMonth = selectDate.value.toString().substring(0..6)
+    var datesWithEventInMonth = datesFromMonths(currentMonth)
 
     init {
         logging()
@@ -125,20 +123,23 @@ class CalendarViewModel : ViewModel() {
     fun setSelectDate(date: LocalDate?) {
         _selectDate.value = date
     }
+
+    fun datesFromMonths(month: String): LiveData<List<String>> =
+        scheduleEventDao.getDatesByMonth("$month%%").asLiveData()
 }
 
-//class CalendarViewModelFactory(private val scheduleEventDao: ScheduleEventDao) :
-//    ViewModelProvider.Factory {
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return CalendarViewModel(scheduleEventDao) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//
-//}
+class CalendarViewModelFactory(private val scheduleEventDao: ScheduleEventDao) :
+    ViewModelProvider.Factory {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return CalendarViewModel(scheduleEventDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+}
 
 
 //package com.example.cmpt370_9mare.ui.calendar
