@@ -29,6 +29,8 @@ import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
+import com.example.cmpt370_9mare.ui.calendar.CalendarViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -52,6 +54,12 @@ class CreateEventFragment : Fragment() {
 
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
     private lateinit var currentEvent: ScheduleEvent
+
+    private val calendarViewModel: CalendarViewModel by activityViewModels {
+        CalendarViewModelFactory(
+            (activity?.application as ScheduleApplication).database.scheduleEventDao()
+        )
+    }
 
     /**
      * get Singleton scheduleEventViewModel shared throughout fragments
@@ -78,7 +86,7 @@ class CreateEventFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
         }
         // Clear the date and time variables in viewModel
-        scheduleEventShareViewModel.pickDate(scheduleEventShareViewModel.today)
+        scheduleEventShareViewModel.pickDate(calendarViewModel.selectDate.value.toString())
         preloadTime()
     }
 
@@ -281,7 +289,7 @@ class CreateEventFragment : Fragment() {
                 location = binding.inputLocation.text.toString()
                 date = binding.inputDate.text.toString()
                 time_from =
-                    if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString()
+                    if (isAllDayChecked) getString(R.string.all_day) else binding.inputTimeFrom.text.toString()
                 time_to = if (isAllDayChecked) "" else binding.inputTimeTo.text.toString()
                 url = binding.eventUrl.text.toString()
                 notes = binding.eventNotes.text.toString()
@@ -396,9 +404,8 @@ class CreateEventFragment : Fragment() {
             inputDate.text = event.date
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
-            allDay.isChecked = event.time_from == "all-day"
 
-            if (event.time_from == "all-day") {
+            if (event.time_from == getString(R.string.all_day)) {
                 allDay.isChecked = true
                 preloadTime()
             } else {
@@ -540,7 +547,7 @@ class CreateEventFragment : Fragment() {
 
 
     private fun validateTimeInput(): Boolean {
-        return if (binding.inputTimeFrom.text.toString() != "all-day" && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
+        return if (binding.inputTimeFrom.text.toString() != getString(R.string.all_day) && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
             if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
                 binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
                 false
@@ -555,9 +562,7 @@ class CreateEventFragment : Fragment() {
         scheduleEventShareViewModel.pickTimeFrom(
             LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
         )
-        scheduleEventShareViewModel.pickTimeTo(
-            LocalTime.now().plusHours(1).format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
-        )
+        scheduleEventShareViewModel.pickTimeTo("23:59")
     }
 
     private fun showSubmitButton(boolean: Boolean) {

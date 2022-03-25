@@ -18,17 +18,28 @@ open class BaseTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
+    companion object {
+        const val FUTURE = "future"
+        const val PAST = "past"
+    }
+
     fun createEvent(
         title: String,
-        date: String = "2024-04-02",
+        date: String = FUTURE,
         timeFrom: String = "04:02",
         timeTo: String = "12:16"
     ) {
+        val randomDate = when (date) {
+            FUTURE -> "${(2023..9999).random()}-04-02"
+            PAST -> "${(1001..2021).random()}-04-02"
+            else -> date
+        }
+
         onView(withId(R.id.navigation_calendar)).perform(click())
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.input_title)).perform(typeText(title))
             .perform(pressKey(KeyEvent.KEYCODE_ENTER))
-        onView(withId(R.id.inputDate)).perform(SetButtonText(date))
+        onView(withId(R.id.inputDate)).perform(SetButtonText(randomDate))
         onView(withId(R.id.inputTimeFrom)).perform(SetButtonText(timeFrom))
         onView(withId(R.id.inputTimeTo)).perform(SetButtonText(timeTo))
         onView(withId(R.id.submit_create_event)).perform(click())
@@ -37,18 +48,17 @@ open class BaseTest {
     fun deleteEvent(title: String) {
         onView(withText(title)).perform(click())
         onView(withText("Edit")).perform(click())
-        onView(withId(R.id.layout_create_event_fragment)).perform(swipeUp())
-        onView(withId(R.id.delete_event)).perform(click())
+        onView(withId(R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
     }
 
-    class SetButtonText(private val date: String) : ViewAction {
+    class SetButtonText(private val text: String) : ViewAction {
         override fun getConstraints(): Matcher<View> {
             return CoreMatchers.allOf(isDisplayed(), isAssignableFrom(Button::class.java))
         }
 
         override fun perform(uiController: UiController, view: View) {
-            (view as Button).text = date
+            (view as Button).text = text
         }
 
         override fun getDescription(): String {

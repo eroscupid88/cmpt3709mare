@@ -14,11 +14,12 @@ import org.junit.runner.RunWith
 class ConflictTest : BaseTest() {
     @Test
     fun TC1_create_event_causes_conflict() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
-        createEvent(testTitle)
-        createEvent(conflictTitle, timeFrom = "06:02")
+        createEvent(testTitle, conflictDate)
+        createEvent(conflictTitle, conflictDate, "06:02")
         onView(withText("Conflict Found")).check(matches(isDisplayed()))
         onView(withText("OK")).perform(click())
         onView(withId(R.id.cancel_create_event)).perform(click())
@@ -28,11 +29,12 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC2_modify_event_causes_conflict() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
-        createEvent(testTitle)
-        createEvent(conflictTitle, timeFrom = "12:16", timeTo = "14:16")
+        createEvent(testTitle, conflictDate)
+        createEvent(conflictTitle, conflictDate, "12:16", "14:16")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
@@ -64,11 +66,12 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC4_conflicting_events_show_in_dialog() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle = "First event"
         val conflictTitle = "Conflict event"
 
-        createEvent(testTitle)
-        createEvent(conflictTitle, timeFrom = "06:02")
+        createEvent(testTitle, conflictDate)
+        createEvent(conflictTitle, conflictDate, "06:02")
         onView(withText("Conflict Found")).check(matches(isDisplayed()))
         onView(withText("First event: 04:02 - 12:16\n")).check(matches(isDisplayed()))
         onView(withText("OK")).perform(click())
@@ -79,13 +82,14 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC5_multiple_conflicting_events() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle1 = "First event"
         val testTitle2 = "Second event"
         val conflictTitle = "Conflict event"
 
-        createEvent(testTitle1)
-        createEvent(testTitle2, timeFrom = "12:45", timeTo = "13:45")
-        createEvent(conflictTitle, timeFrom = "06:02", timeTo = "13:00")
+        createEvent(testTitle1, conflictDate)
+        createEvent(testTitle2, conflictDate, "12:45", "13:45")
+        createEvent(conflictTitle, conflictDate, "06:02", "13:00")
         onView(withText("Conflict Found")).check(matches(isDisplayed()))
         onView(withText("First event: 04:02 - 12:16\nSecond event: 12:45 - 13:45\n"))
             .check(matches(isDisplayed()))
@@ -98,11 +102,12 @@ class ConflictTest : BaseTest() {
 
     @Test
     fun TC6_conflict_timing_not_exclusive() {
+        val conflictDate = "${(2023..9999).random()}-04-02"
         val testTitle1 = "First event"
         val testTitle2 = "Second event"
 
-        createEvent(testTitle1)
-        createEvent(testTitle2, timeFrom = "12:16", timeTo = "13:16")
+        createEvent(testTitle1, conflictDate)
+        createEvent(testTitle2, conflictDate, "12:16", "13:16")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         deleteEvent(testTitle1)
         deleteEvent(testTitle2)

@@ -14,9 +14,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class DashboardTest : BaseTest() {
-
-    private val pastDate = "2004-04-02"
-
     @Test
     fun dashboard_event_list() {
         val testTitle = "Test Dashboard Default List"
@@ -44,7 +41,7 @@ class DashboardTest : BaseTest() {
     fun dashboard_past_events() {
         val testTitle = "Test Dashboard Past Events"
 
-        createEvent(testTitle, pastDate)
+        createEvent(testTitle, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
