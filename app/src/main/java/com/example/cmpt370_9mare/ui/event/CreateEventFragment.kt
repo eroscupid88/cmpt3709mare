@@ -31,6 +31,7 @@ import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -103,7 +104,6 @@ class CreateEventFragment : Fragment() {
             spinnerViewModel = spinnerViewModel
             createEventFragment = this@CreateEventFragment
         }
-
 
         val id = navigationArgs.eventId
         if (id > 0) {
@@ -291,7 +291,8 @@ class CreateEventFragment : Fragment() {
         }
     }
 
-    private fun addNewEvent() {
+    fun addNewEvent() {
+        val repeatDate = binding.inputDate.text.toString()
         if (isEntryValid()) {
             //TODO: Create Events for all repeat cases up to 1 year.
             /*val test = arguments?.getString(ARG_REPEAT)
@@ -304,28 +305,84 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
                 binding.inputLocation.text.toString(),
-                binding.inputDate.text.toString(),
+                repeatDate,
                 if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
                 if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
                 binding.eventUrl.text.toString(),
                 binding.eventNotes.text.toString()
             )
-            repeatEvent()
+
+            // repeat event function
+            repeatEvent(repeatDate, isAllDayChecked)
+
             val action =
                 CreateEventFragmentDirections.actionCreateEventFragmentToNavigationCalendar()
             findNavController().navigate(action)
+
         }
 
     }
 
-    private fun repeatEvent() {
-        spinnerViewModel.lengthSelection.observe(this.viewLifecycleOwner) {
-            for (x: Int in (1..it)) {
-                //TO DO loop and create event
+    private fun repeatEvent(date: String, isAllDayChecked: Boolean) {
+        spinnerViewModel.typeSelection.observe(this.viewLifecycleOwner) {
+            val option = it
+            Log.i(TAG, "option :$option")
+            spinnerViewModel.lengthSelection.observe(this.viewLifecycleOwner) {
+                when (option) {
+                    1 -> {
+                        Log.i(TAG, "it :$it")
+                        for (x: Int in (1..it)) {
+                            Log.i(TAG, " x : $x")
+                            scheduleEventShareViewModel.addNewItem(
+                                binding.inputTitle.text.toString(),
+                                binding.inputLocation.text.toString(),
+                                LocalDate.parse(date).plusDays(x.toLong()).toString(),
+                                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                                if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
+                                binding.eventUrl.text.toString(),
+                                binding.eventNotes.text.toString()
+                            )
+                        }
+                    }
+                    2 -> {
+                        Log.i(TAG, "it :$it")
+                        for (x: Int in (1..it)) {
+                            Log.i(TAG, " x : $x")
+                            scheduleEventShareViewModel.addNewItem(
+                                binding.inputTitle.text.toString(),
+                                binding.inputLocation.text.toString(),
+                                LocalDate.parse(date).plusWeeks(x.toLong()).toString(),
+                                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                                if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
+                                binding.eventUrl.text.toString(),
+                                binding.eventNotes.text.toString()
+                            )
+                        }
+                    }
+                    3 -> {
+                        Log.i(TAG, "it :$it")
+                        for (x: Int in (1..it)) {
+                            Log.i(TAG, " x : $x")
+                            scheduleEventShareViewModel.addNewItem(
+                                binding.inputTitle.text.toString(),
+                                binding.inputLocation.text.toString(),
+                                LocalDate.parse(date).plusMonths(x.toLong()).toString(),
+                                if (isAllDayChecked) "all-day" else binding.inputTimeFrom.text.toString(),
+                                if (isAllDayChecked) "" else binding.inputTimeTo.text.toString(),
+                                binding.eventUrl.text.toString(),
+                                binding.eventNotes.text.toString()
+                            )
+                        }
+                    }
+                    else -> Log.i(TAG, "Default")
+                }
+
 
             }
-        }
 
+
+//
+        }
 
     }
 
@@ -359,17 +416,14 @@ class CreateEventFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-
     fun createModifyEvent() {
+
         val (date, timeFrom, timeTo) = Triple(
             binding.inputDate.text.toString(),
             binding.inputTimeFrom.text.toString(),
             binding.inputTimeTo.text.toString()
         )
 
-//        if (isValidate()) {
-//            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
-//        }
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
         lifecycle.coroutineScope.launch {
@@ -396,6 +450,11 @@ class CreateEventFragment : Fragment() {
                 }
             }
         }
+
+
+        // testing
+
+
     }
 
     fun showDatePicker() {
@@ -504,6 +563,7 @@ class CreateEventFragment : Fragment() {
     private fun showSubmitButton(boolean: Boolean) {
         binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
     }
+
 
     private fun showDeleteConfirmationDialog() {
         val builder = AlertDialog.Builder(this.context)
