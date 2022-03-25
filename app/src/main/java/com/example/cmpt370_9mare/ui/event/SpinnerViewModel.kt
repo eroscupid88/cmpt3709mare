@@ -20,6 +20,10 @@ class SpinnerViewModel : ViewModel() {
     private val _typeSelection = MutableLiveData<Int>()
     val typeSelection: LiveData<Int> get() = _typeSelection
 
+    private val _eventTypeSelection = MutableLiveData<Int>()
+    val eventTypeSelection: LiveData<Int> get() = _eventTypeSelection
+
+
     private val day_array: Array<Int> = arrayOf(
         1,
         2,
@@ -92,6 +96,11 @@ class SpinnerViewModel : ViewModel() {
      */
     fun setTypeSelected(type: Int) {
         _typeSelection.value = type
+    }
+
+
+    fun setEventTypeSelection(type: Int) {
+        _eventTypeSelection.value = type
     }
 
 

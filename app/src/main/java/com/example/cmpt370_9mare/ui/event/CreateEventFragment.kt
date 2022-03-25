@@ -589,5 +589,12 @@ class CreateEventFragment : Fragment() {
         showDeleteConfirmationDialog()
     }
 
+    /*
+        setEventType function selection option of calendar type
+     */
+    fun setEventType(selection: Int) {
+        spinnerViewModel.setEventTypeSelection(selection)
+    }
+
 
 }

@@ -286,6 +286,14 @@
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
                             android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
                             tools:ignore="HardcodedText" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:entries="@array/event_type"
+                            android:onItemSelected="@{(parent,view,selection,id)-> createEventFragment.setEventType(selection)}"
+                            android:selectedItemPosition="@{spinnerViewModel.eventTypeSelection}" />
+
                     </LinearLayout>
 
 
