@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -30,7 +31,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:contentDescription="@string/nothing"
-                android:src="@drawable/date_background_current" />
+                android:src="@drawable/date_background_current"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/cellDayText"
@@ -43,7 +46,8 @@
                 android:text="@{day.day}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="30" />
         </FrameLayout>
 
         <ImageView
@@ -54,11 +58,13 @@
             android:layout_marginBottom="1dp"
             android:contentDescription="@string/dot_image"
             android:src="@drawable/ic_circle_black_2"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frame_layout_cell"
-            app:layout_constraintVertical_bias="0.25" />
+            app:layout_constraintVertical_bias="0.25"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
