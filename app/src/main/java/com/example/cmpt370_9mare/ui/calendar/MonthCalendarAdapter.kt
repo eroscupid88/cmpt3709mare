@@ -4,13 +4,14 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.activityViewModels
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.databinding.CalendarCellLayoutBinding
 import com.example.cmpt370_9mare.data.Day
+import com.example.cmpt370_9mare.databinding.CalendarCellLayoutBinding
 import java.time.LocalDate
 
 /**
@@ -18,28 +19,56 @@ import java.time.LocalDate
  * data, including computing diffs between lists.
  */
 @RequiresApi(Build.VERSION_CODES.O)
-class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
+class MonthCalendarAdapter(
+    private val viewModel: CalendarViewModel,
+    private val lifecycleOwner: LifecycleOwner,
+    private val onItemClicked: (Day) -> Unit
+) :
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
 
 
-    class DayViewHolder(
+    inner class DayViewHolder(
         private var binding: CalendarCellLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(day: Day) {
             binding.dotDay.setImageResource(android.R.color.transparent)
-            if (day.day != null) {
-                if (day.date == LocalDate.now()) {
+            if (day.date == LocalDate.now()) {
+                binding.cellDayText.setTextColor(
+                    ContextCompat.getColor(
+                        binding.cellDayText.context,
+                        R.color.red
+                    )
+                )
+            }
+
+            viewModel.selectDate.observe(lifecycleOwner) {
+                if (it == day.date) {
                     binding.dateBackgroundId.setImageResource(R.drawable.date_background_current)
+                } else {
+                    binding.dateBackgroundId.setImageResource(R.drawable.date_background)
                 }
             }
-            binding.day = day
-            binding.executePendingBindings()
+
+//            viewModel.datesWithEventInMonth.observe(lifecycleOwner) {
+//                if (it.contains(day.date.toString())) {
+//                    binding.dotDay.setImageResource(android.R.color.black)
+//                } else {
+//                    binding.dotDay.setImageResource(android.R.color.transparent)
+//                }
+//            }
+
+            binding.apply {
+                this.day = day
+                lifecycleOwner = this@MonthCalendarAdapter.lifecycleOwner
+                executePendingBindings()
+            }
+
         }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Day>() {
         override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {
-            return oldItem.day == newItem.day
+            return (oldItem.date == newItem.date) && (oldItem.date != null)
         }
 
         override fun areContentsTheSame(oldItem: Day, newItem: Day): Boolean {
@@ -50,12 +79,13 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): DayViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         return DayViewHolder(
-            CalendarCellLayoutBinding.inflate(LayoutInflater.from(parent.context))
+            CalendarCellLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
     }
 
@@ -63,17 +93,15 @@ class MonthCalendarAdapter(private val onItemClicked:(Day)->Unit) :
      *
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MonthCalendarAdapter.DayViewHolder, position: Int) {
         val day = getItem(position)
+
         if (day.day != null) {
             holder.itemView.setOnClickListener {
                 onItemClicked(day)
             }
-            holder.bind(day)
-        } else {
-            holder.bind(day)
         }
 
-
+        holder.bind(day)
     }
 }

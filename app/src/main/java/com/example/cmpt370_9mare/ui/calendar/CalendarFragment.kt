@@ -11,11 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.data.Day
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
 import com.example.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
@@ -51,16 +49,13 @@ class CalendarFragment : Fragment() {
             calendarFragment = this@CalendarFragment
         }
 
-        // Initialize the monthCalendarGrid adapter
-        binding.monthCalendarGrid.adapter = MonthCalendarAdapter {
-//            sharedViewModel.setCurrentedDate(it.date.toString())
-            initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(it.date.toString()))
-            Log.d(TAG, "clicked: ${it.date.toString()}")
-        }
+        // Initialize adapters
+        initializeMonthCalendarAdapter()
+        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedViewModel.selectDate.value.toString()))
 
-        binding.dailyEventList.layoutManager = LinearLayoutManager(this.context)
-
-        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedScheduleEvent.today))
+//        sharedViewModel.selectDate.observe(viewLifecycleOwner) {
+//            sharedViewModel.currentMonth = it.monthValue
+//        }
 
         binding.floatingActionButton.setOnClickListener {
             val action = CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(
@@ -73,6 +68,15 @@ class CalendarFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializeMonthCalendarAdapter() {
+        binding.monthCalendarGrid.adapter =
+            MonthCalendarAdapter(sharedViewModel, viewLifecycleOwner) {
+                sharedViewModel.setSelectDate(it.date)
+                initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(it.date.toString()))
+                Log.d(TAG, "clicked: ${it.date}")
+            }
     }
 
     private fun initializeDailyEventAdapter(events: LiveData<List<ScheduleEvent>>) {
@@ -101,6 +105,8 @@ class CalendarFragment : Fragment() {
      */
     fun goToNextMonth() {
         sharedViewModel.nextMonthAction()
+        initializeMonthCalendarAdapter()
+        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedViewModel.selectDate.value.toString()))
     }
 
     /**
@@ -108,5 +114,7 @@ class CalendarFragment : Fragment() {
      */
     fun goToPreviousMonth() {
         sharedViewModel.previousMonthAction()
+        initializeMonthCalendarAdapter()
+        initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(sharedViewModel.selectDate.value.toString()))
     }
 }

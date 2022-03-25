@@ -3,10 +3,9 @@ package com.example.cmpt370_9mare.ui.calendar
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.cmpt370_9mare.data.Day
+import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -18,22 +17,26 @@ private const val TAG = "CalendarViewModel"
 class CalendarViewModel : ViewModel() {
     private val _monthYearText = MutableLiveData<String>()
     private val _daysOfTheMonth = MutableLiveData<ArrayList<Day>?>()
-    private var _currentDate = LocalDate.now()
-    private var selectDate: LocalDate? = null
+    private val _selectDate = MutableLiveData(LocalDate.now())
 
+    val selectDate: LiveData<LocalDate> = _selectDate
     val monthYearText: LiveData<String> = _monthYearText
     val daysOfTheMonth: MutableLiveData<ArrayList<Day>?> = _daysOfTheMonth
 
+//    var currentMonth = LocalDate.now().monthValue
+//    private val currentMonthString get() = String.format("%02d", currentMonth)
+//    val datesWithEventInMonth: LiveData<List<String>> =
+//        scheduleEventDao.getDatesByMonth(currentMonthString).asLiveData()
+
     init {
         logging()
-        selectDate = LocalDate.now()
         setMonthYearText()
-        _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
+        _daysOfTheMonth.value = selectDate.value?.let { daysInMonthArray(it) }
     }
 
 
     private fun setMonthYearText() {
-        _monthYearText.value = monthYearFromDate(selectDate!!).toString()
+        _monthYearText.value = monthYearFromDate(selectDate.value).toString()
     }
 
     private fun logging() {
@@ -44,10 +47,6 @@ class CalendarViewModel : ViewModel() {
     private fun monthYearFromDate(date: LocalDate?): String? {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
         return date?.format(formatter)
-    }
-
-    fun setSelectedDate(date: LocalDate) {
-        selectDate = date
     }
 
     private fun daysInMonthArray(date: LocalDate): ArrayList<Day> {
@@ -87,7 +86,7 @@ class CalendarViewModel : ViewModel() {
             }
 
         }
-        Log.d(TAG, "DEBUG: $yearMonth, $daysInMonth,$firstOfMonth,$dayOfWeek,$selectDate")
+        Log.d(TAG, "DEBUG: $yearMonth, $daysInMonth,$firstOfMonth,$dayOfWeek,${selectDate.value}")
         Log.d(TAG, "DEBUG: $daysInMonthArray")
 
         if (!clearDaysIfAllNull(daysInMonthArray.subList(0, 7))) {
@@ -108,20 +107,38 @@ class CalendarViewModel : ViewModel() {
     }
 
     fun nextMonthAction() {
-        selectDate = selectDate!!.plusMonths(1)
+        _selectDate.value = selectDate.value?.plusMonths(1)
 
-        _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
+        _daysOfTheMonth.value = selectDate.value?.let { daysInMonthArray(it) }
         setMonthYearText()
-        Log.d(TAG, "DEBUG: NextMonthAction selectedDate: $selectDate")
+        Log.d(TAG, "DEBUG: NextMonthAction selectedDate: ${selectDate.value}")
     }
 
     fun previousMonthAction() {
-        selectDate = selectDate!!.minusMonths(1)
-        _daysOfTheMonth.value = daysInMonthArray(selectDate!!)
+        _selectDate.value = selectDate.value?.minusMonths(1)
+
+        _daysOfTheMonth.value = selectDate.value?.let { daysInMonthArray(it) }
         setMonthYearText()
         Log.d(TAG, "DEBUG: previousMonthAction selectedDate: $selectDate")
     }
+
+    fun setSelectDate(date: LocalDate?) {
+        _selectDate.value = date
+    }
 }
+
+//class CalendarViewModelFactory(private val scheduleEventDao: ScheduleEventDao) :
+//    ViewModelProvider.Factory {
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return CalendarViewModel(scheduleEventDao) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//
+//}
 
 
 //package com.example.cmpt370_9mare.ui.calendar
