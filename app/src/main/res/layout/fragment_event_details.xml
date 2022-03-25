@@ -1,107 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:id="@+id/card"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    app:cardCornerRadius="5dp"
+    tools:ignore="MissingConstraints">
 
-
-    <TextView
-        android:id="@+id/title"
-        style="@style/EventDetails"
-        android:text="@string/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/title_value"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintStart_toEndOf="@id/location"
-        app:layout_constraintTop_toTopOf="@id/title"
-        tools:text="Event Title" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/location"
-        style="@style/EventDetails"
-        android:text="@string/location"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        <ImageView
+            android:id="@+id/daily_event_color"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:contentDescription="@string/nothing" />
 
-    <TextView
-        android:id="@+id/location_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/location"
-        app:layout_constraintStart_toStartOf="@id/title_value"
-        app:layout_constraintTop_toTopOf="@id/location"
-        tools:text="Event Location" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/EventDetails"
-        android:text="@string/pick_date"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+            <TextView
+                android:id="@+id/title_value"
+                style="@style/EventDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                tools:text="Event Title" />
 
-    <TextView
-        android:id="@+id/date_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/date"
-        app:layout_constraintStart_toStartOf="@id/title_value"
-        app:layout_constraintTop_toTopOf="@id/date"
-        tools:text="Event Date" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/time"
-        style="@style/EventDetails"
-        android:text="@string/pick_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date" />
 
-    <TextView
-        android:id="@+id/time_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/time"
-        app:layout_constraintStart_toStartOf="@id/title_value"
-        app:layout_constraintTop_toTopOf="@id/time"
-        tools:text="Event Time" />
+                <TextView
+                    android:id="@+id/date_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:text="Event Date" />
 
-    <TextView
-        android:id="@+id/url"
-        style="@style/EventDetails"
-        android:text="@string/url"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time" />
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/at" />
 
-    <TextView
-        android:id="@+id/url_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/url"
-        app:layout_constraintStart_toStartOf="@id/title_value"
-        app:layout_constraintTop_toTopOf="@id/url"
-        tools:text="Event URL" />
+                <TextView
+                    android:id="@+id/time_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Event Time" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/notes"
-        style="@style/EventDetails"
-        android:text="@string/notes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/url" />
+            <TextView
+                android:id="@+id/location"
+                style="@style/EventDetails"
+                android:text="@string/location" />
 
-    <TextView
-        android:id="@+id/notes_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/notes"
-        app:layout_constraintStart_toStartOf="@id/title_value"
-        app:layout_constraintTop_toTopOf="@id/notes"
-        tools:text="Event Notes" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/location_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Event Location" />
+
+            <TextView
+                android:id="@+id/url"
+                style="@style/EventDetails"
+                android:text="@string/url" />
+
+            <TextView
+                android:id="@+id/url_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Event URL" />
+
+            <TextView
+                android:id="@+id/notes"
+                style="@style/EventDetails"
+                android:text="@string/notes" />
+
+            <TextView
+                android:id="@+id/notes_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Event Notes" />
+
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/black"
+                android:text="@string/edit"/>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
