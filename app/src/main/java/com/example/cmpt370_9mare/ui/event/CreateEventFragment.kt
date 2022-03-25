@@ -112,7 +112,7 @@ class CreateEventFragment : Fragment() {
             createEventFragment = this@CreateEventFragment
         }
 
-
+        // Edit text entries if the fragment is given an ID (update events)
         val id = navigationArgs.eventId
         if (id > 0) {
             binding.apply {
@@ -283,6 +283,7 @@ class CreateEventFragment : Fragment() {
     private fun updateEvent() {
         val isAllDayChecked = binding.allDay.isChecked
 
+        // Make sure we validate all inputs needed before allowing updates
         if (isEntryValid()) {
             currentEvent.apply {
                 title = binding.inputTitle.text.toString()
@@ -368,6 +369,7 @@ class CreateEventFragment : Fragment() {
 
 
     fun createModifyEvent() {
+        // Set up Triple for data for DAO
         val (date, timeFrom, timeTo) = Triple(
             binding.inputDate.text.toString(),
             binding.inputTimeFrom.text.toString(),
@@ -378,7 +380,7 @@ class CreateEventFragment : Fragment() {
 //            Toast.makeText(requireActivity(), "validated", Toast.LENGTH_SHORT).show()
 //        }
         Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
-
+        // Set up coroutine to wait for single data collection of all conflict events
         lifecycle.coroutineScope.launch {
             scheduleEventShareViewModel.eventConflicts(
                 date,
@@ -387,14 +389,17 @@ class CreateEventFragment : Fragment() {
                 navigationArgs.eventId
             ).collect {
                 when {
+                    // CONFLICT
                     it.isNotEmpty() -> {
                         Log.i(TAG, "$TAG: Conflicts!")
                         showConflictDialog(it)
                     }
+                    // UPDATE/MODIFY
                     navigationArgs.eventId > 0 -> {
                         Log.i(TAG, "$TAG: update Event button was clicked")
                         updateEvent()
                     }
+                    // ADD/CREATE
                     else -> {
                         Log.i(TAG, "$TAG: add Event button was clicked")
                         //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
@@ -420,10 +425,13 @@ class CreateEventFragment : Fragment() {
         TimePickerFragment(timeTo).show(childFragmentManager, TimePickerFragment.TIME_TO_PICKER)
     }
 
+    // Used to build and create a pop-up menu detailing all conflict events
+    // present from a database query
     private fun showConflictDialog(conflictEvents: List<ScheduleEvent>) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         builder.setTitle("Conflict Found")
 
+        // Get all conflict events and format to string
         var txt = ""
         conflictEvents.forEach {
             txt += "${it.title}: ${it.time_from} - ${it.time_to}\n"
