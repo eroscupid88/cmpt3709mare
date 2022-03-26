@@ -38,16 +38,8 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
 private const val TAG = "createEventFragment"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateEventFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
@@ -254,27 +246,6 @@ class CreateEventFragment : Fragment() {
             )
         }
 
-    }
-
-    /**
-     * companion object is Singleton object pass to Fragment and ViewModel
-     */
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param repeat Parameter 1.
-         * @return A new instance of fragment CreateEventFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(repeat: String) =
-            CreateEventFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, repeat)
-                }
-            }
     }
 
     /**

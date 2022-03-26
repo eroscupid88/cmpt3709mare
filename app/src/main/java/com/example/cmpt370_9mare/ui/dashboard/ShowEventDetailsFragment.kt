@@ -27,18 +27,11 @@ class ShowEventDetailsFragment(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
+            val builder = AlertDialog.Builder(it, R.style.RoundedCornersDialog)
             _binding = FragmentEventDetailsBinding.inflate(layoutInflater)
 
             // Inflate and set the layout for the dialog
-            builder.setView(binding.root)
-                .setMessage("Event Details")
-                // Add action buttons
-                .setPositiveButton(R.string.edit) { dialog, _ ->
-                    dialog.cancel()
-                    NavHostFragment.findNavController(this).navigate(action)
-                }
-                .create()
+            builder.setView(binding.root).create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
@@ -55,6 +48,10 @@ class ShowEventDetailsFragment(
                 if (event.time_to.isNotEmpty()) "${event.time_from} to ${event.time_to}" else event.time_from
             urlValue.text = event.url
             notesValue.text = event.notes
+            editButton.setOnClickListener {
+                requireDialog().cancel()
+                NavHostFragment.findNavController(requireParentFragment()).navigate(action)
+            }
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
