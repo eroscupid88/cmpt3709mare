@@ -38,13 +38,13 @@
                             />
                         <TextView
                             android:id="@+id/cellDayText"
+                            android:background="@color/purple_light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:text = "@{day.day}"
-                            android:background="@null"
                             android:layout_gravity="center"
                             android:layout_marginTop="1dp"
                             android:layout_marginBottom="1dp"
