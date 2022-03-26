@@ -26,8 +26,9 @@ open class BaseTest {
     fun createEvent(
         title: String,
         date: String = FUTURE,
+        conflictCheck: Boolean = false,
         timeFrom: String = "04:02",
-        timeTo: String = "12:16"
+        timeTo: String = "12:16",
     ) {
         val randomDate = when (date) {
             FUTURE -> "${(2023..9999).random()}-04-02"
@@ -42,6 +43,9 @@ open class BaseTest {
         onView(withId(R.id.inputDate)).perform(SetButtonText(randomDate))
         onView(withId(R.id.inputTimeFrom)).perform(SetButtonText(timeFrom))
         onView(withId(R.id.inputTimeTo)).perform(SetButtonText(timeTo))
+        if (conflictCheck) {
+            onView(withId(R.id.conflict_check)).perform(click())
+        }
         onView(withId(R.id.submit_create_event)).perform(click())
     }
 

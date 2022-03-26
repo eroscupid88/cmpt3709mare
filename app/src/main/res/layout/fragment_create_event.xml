@@ -79,6 +79,7 @@
                         android:text="@string/add"
                         android:textAlignment="center"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -252,6 +253,17 @@
                                 app:errorEnabled="true"
                                 app:layout_constraintStart_toStartOf="@id/inputTimeFrom"
                                 app:layout_constraintTop_toBottomOf="@id/inputTimeTo" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/conflict_check"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:checked="false"
+                                android:text="@string/check_for_conflicts"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/date_time_layout" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -262,16 +274,45 @@
                         android:layout_marginEnd="10dp"
                         android:background="#c0c0c0" />
 
-                    <LinearLayout
+                    <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:entries="@array/event_type"
+                        android:onItemSelected="@{(parent,view,selection,id)-> createEventFragment.setEventType(selection)}"
+                        android:selectedItemPosition="@{spinnerViewModel.eventTypeSelection}" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/repeat_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:checked="false"
+                        android:text="@string/repeat" />
+
+                    <LinearLayout
+                        android:id="@+id/repeat_spinners"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/repeat_description"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="@dimen/margin"
+                            android:layout_weight="1"
+                            tools:text="Every Month For" />
 
                         <Spinner
                             android:id="@+id/spRepeatEvery"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.75"
+                            android:dropDownHeight="20dp"
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setSpinnerValue(selection)}"
                             android:selectedItemPosition="@{spinnerViewModel.lengthSelection}"
                             tools:ignore="HardcodedText" />
@@ -280,7 +321,8 @@
                             android:id="@+id/spRepetitionInterval"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1.25"
                             android:entries="@array/repeat_method_option"
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
                             android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
