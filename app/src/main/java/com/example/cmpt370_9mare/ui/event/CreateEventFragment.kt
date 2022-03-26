@@ -50,9 +50,9 @@ private const val TAG = "createEventFragment"
  */
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
-    private var param1: String? = null
-
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
+    private var eventId = 0
+
     private lateinit var currentEvent: ScheduleEvent
 
     private val calendarViewModel: CalendarViewModel by activityViewModels {
@@ -82,9 +82,8 @@ class CreateEventFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-        }
+
+        eventId = navigationArgs.eventId
         // Clear the date and time variables in viewModel
         scheduleEventShareViewModel.pickDate(calendarViewModel.selectDate.value.toString())
         preloadTime()
@@ -113,14 +112,13 @@ class CreateEventFragment : Fragment() {
             createEventFragment = this@CreateEventFragment
         }
 
-        val id = navigationArgs.eventId
-        if (id > 0) {
+        if (eventId > 0) {
             binding.apply {
                 calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
                 deleteEvent.isVisible = true
             }
-            scheduleEventShareViewModel.eventFromId(id)
+            scheduleEventShareViewModel.eventFromId(eventId)
                 .observe(this.viewLifecycleOwner) { selectedItem ->
                     if (selectedItem != null) {
                         currentEvent = selectedItem
@@ -302,13 +300,6 @@ class CreateEventFragment : Fragment() {
     fun addNewEvent() {
         val repeatDate = binding.inputDate.text.toString()
         if (isEntryValid()) {
-            //TODO: Create Events for all repeat cases up to 1 year.
-            /*val test = arguments?.getString(ARG_REPEAT)
-            Log.i(TAG, "$TAG: $test")
-            when (test) {
-
-            }*/
-
             val isAllDayChecked = binding.allDay.isChecked
             scheduleEventShareViewModel.addNewItem(
                 binding.inputTitle.text.toString(),
@@ -332,11 +323,11 @@ class CreateEventFragment : Fragment() {
     }
 
     private fun repeatEvent(date: String, isAllDayChecked: Boolean) {
-        spinnerViewModel.typeSelection.observe(this.viewLifecycleOwner) {
-            val option = it
+        spinnerViewModel.typeSelection.observe(this.viewLifecycleOwner) { option ->
             Log.i(TAG, "option :$option")
             spinnerViewModel.lengthSelection.observe(this.viewLifecycleOwner) {
                 when (option) {
+                    // Repeat every day for ... days
                     1 -> {
                         Log.i(TAG, "it :$it")
                         for (x: Int in (1..it)) {
@@ -352,6 +343,7 @@ class CreateEventFragment : Fragment() {
                             )
                         }
                     }
+                    // Repeat every week for ... weeks
                     2 -> {
                         Log.i(TAG, "it :$it")
                         for (x: Int in (1..it)) {
@@ -367,6 +359,7 @@ class CreateEventFragment : Fragment() {
                             )
                         }
                     }
+                    // Repeat every ... months
                     3 -> {
                         Log.i(TAG, "it :$it")
                         for (x: Int in (1..it)) {
@@ -415,6 +408,10 @@ class CreateEventFragment : Fragment() {
             }
 
             pickTime.isVisible = !allDay.isChecked
+
+            // No repeat option while updating events
+            repeatButton.isChecked = false
+            repeatButton.isVisible = false
         }
     }
 
@@ -424,44 +421,46 @@ class CreateEventFragment : Fragment() {
     }
 
     fun createModifyEvent() {
+        if (!binding.conflictCheck.isChecked) {
+            if (eventId > 0) {
+                updateEvent()
+            } else {
+                addNewEvent()
+            }
+        } else {
+            val (date, timeFrom, timeTo) = Triple(
+                binding.inputDate.text.toString(),
+                binding.inputTimeFrom.text.toString(),
+                binding.inputTimeTo.text.toString()
+            )
 
-        val (date, timeFrom, timeTo) = Triple(
-            binding.inputDate.text.toString(),
-            binding.inputTimeFrom.text.toString(),
-            binding.inputTimeTo.text.toString()
-        )
+            Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
 
-        Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, ${navigationArgs.eventId}")
-
-        lifecycle.coroutineScope.launch {
-            scheduleEventShareViewModel.eventConflicts(
-                date,
-                timeFrom,
-                timeTo,
-                navigationArgs.eventId
-            ).collect {
-                when {
-                    it.isNotEmpty() -> {
-                        Log.i(TAG, "$TAG: Conflicts!")
-                        showConflictDialog(it)
-                    }
-                    navigationArgs.eventId > 0 -> {
-                        Log.i(TAG, "$TAG: update Event button was clicked")
-                        updateEvent()
-                    }
-                    else -> {
-                        Log.i(TAG, "$TAG: add Event button was clicked")
-                        //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
-                        addNewEvent()
+            lifecycle.coroutineScope.launch {
+                scheduleEventShareViewModel.eventConflicts(
+                    date,
+                    timeFrom,
+                    timeTo,
+                    eventId
+                ).collect {
+                    when {
+                        it.isNotEmpty() -> {
+                            Log.i(TAG, "$TAG: Conflicts!")
+                            showConflictDialog(it)
+                        }
+                        eventId > 0 -> {
+                            Log.i(TAG, "$TAG: update Event button was clicked")
+                            updateEvent()
+                        }
+                        else -> {
+                            Log.i(TAG, "$TAG: add Event button was clicked")
+                            //Snackbar.make(binding.root, R.string.Event_created, Snackbar.LENGTH_SHORT).show()
+                            addNewEvent()
+                        }
                     }
                 }
             }
         }
-
-
-        // testing
-
-
     }
 
     fun showDatePicker() {
@@ -520,6 +519,21 @@ class CreateEventFragment : Fragment() {
             // Listener for "All-Day" Toggle to show/hide time_picker
             allDay.setOnCheckedChangeListener { _, isCheck ->
                 pickTime.isVisible = !isCheck
+                // Do not check for conflict if "All-Day" is selected
+                if (isCheck) {
+                    conflictCheck.isChecked = false
+                }
+            }
+            conflictCheck.setOnCheckedChangeListener { _, isCheck ->
+                if (isCheck && eventId <= 0) {
+                    repeatButton.isChecked = false
+                }
+            }
+            repeatButton.setOnCheckedChangeListener { _, isCheck ->
+                if (isCheck) {
+                    conflictCheck.isChecked = false
+                }
+                repeatSpinners.isVisible = isCheck
             }
         }
     }
