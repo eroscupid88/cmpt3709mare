@@ -1,7 +1,6 @@
 package com.example.cmpt370_9mare.data.schedule_event
 
 import androidx.room.*
-import com.example.cmpt370_9mare.ui.dashboard.DashboardGroupEvents
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -28,10 +27,12 @@ interface ScheduleEventDao {
     @Query("SELECT * FROM event WHERE date = :date ORDER BY time_from")
     fun getEventByDate(date: String): Flow<List<ScheduleEvent>>
 
+    @Query("SELECT DISTINCT date FROM event WHERE date LIKE :month")
+    fun getDatesByMonth(month: String): Flow<List<String>>
+
     @Query(
-        "SELECT * FROM event WHERE date = :date AND NOT id = :eventId AND ((:timeTo BETWEEN time_from AND time_to)" +
-                "OR (:timeFrom BETWEEN time_from AND time_to) OR (time_from BETWEEN :timeFrom AND :timeTo) OR" +
-                " (time_to BETWEEN :timeFrom AND :timeTo))"
+        "SELECT * FROM event WHERE date = :date AND NOT id = :eventId " +
+                "AND NOT (:timeTo <= time_from OR :timeFrom >= time_to) ORDER BY time_from"
     )
     fun getConflictEvent(
         date: String,

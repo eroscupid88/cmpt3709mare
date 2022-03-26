@@ -107,17 +107,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     /**
-     * public function isEntryValid check whether or not title input is empty or not.
-     * event created if only title is not blank
-     */
-    fun isEntryValid(title: String): Boolean {
-        if (title.isBlank()) {
-            return false
-        }
-        return true
-    }
-
-    /**
      * Return an event which has the given ID
      */
     fun eventFromId(id: Int): LiveData<ScheduleEvent> =
@@ -125,11 +114,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
     fun eventFromDate(date: String): LiveData<List<ScheduleEvent>> {
         return scheduleEventDao.getEventByDate(date).asLiveData()
-    }
-
-    fun eventFromDateAndTime(currentTime: String, date: String): LiveData<List<ScheduleEvent>> {
-        return scheduleEventDao.getDailyEventByTimeAndDate(currentTime, date).asLiveData()
-
     }
 
     fun pickDate(date: String) {

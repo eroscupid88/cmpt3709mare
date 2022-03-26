@@ -16,8 +16,6 @@ import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
 import com.example.cmpt370_9mare.ui.calendar.CalendarFragmentDirections
 import com.example.cmpt370_9mare.ui.event.CreateEventFragment
 import com.example.cmpt370_9mare.ui.event.CreateEventFragmentDirections
-import com.example.cmpt370_9mare.ui.event.NewEventFragment
-import com.example.cmpt370_9mare.ui.event.NewEventFragmentDirections
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -103,104 +101,4 @@ class NavigationTests : BaseTest() {
         onView(withId(R.id.show_future_events)).perform(click())
         deleteEvent("Test Event")
     }
-
-
-    /**
-     * Testing action fragment from create event fragment to calendar using add button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_never() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_never)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-    /**
-     * Testing action fragment from create event fragment to calendar using day button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_day() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_everyday)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-
-    /**
-     * Testing action fragment from create event fragment to calendar using week button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_week() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_every_week)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-    /**
-     * Testing action fragment from create event fragment to calendar using 2week button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_2week() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_every_2week)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-    /**
-     * Testing action fragment from create event fragment to calendar using month button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_month() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_every_month)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-    /**
-     * Testing action fragment from create event fragment to calendar using year button
-     */
-    @Test
-    fun new_Button_fragment_navigate_to_create_event_fragment_year() {
-        val mockNavController = mock(NavController::class.java)
-        val scenario =
-            launchFragmentInContainer<NewEventFragment>(themeResId = R.style.Theme_Cmpt3709mare)
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
-        }
-        // Click start order
-        onView(withId(R.id.new_event_every_year)).perform(click())
-        verify(mockNavController).navigate(NewEventFragmentDirections.actionNewEventFragmentToCreateEventFragment())
-    }
-
-
 }
