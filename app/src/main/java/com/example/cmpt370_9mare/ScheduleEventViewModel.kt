@@ -106,17 +106,6 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
     }
 
     /**
-     * public function isEntryValid check whether or not title input is empty or not.
-     * event created if only title is not blank
-     */
-    fun isEntryValid(title: String): Boolean {
-        if (title.isBlank()) {
-            return false
-        }
-        return true
-    }
-
-    /**
      * Return an event which has the given ID
      */
     fun eventFromId(id: Int): LiveData<ScheduleEvent> =
