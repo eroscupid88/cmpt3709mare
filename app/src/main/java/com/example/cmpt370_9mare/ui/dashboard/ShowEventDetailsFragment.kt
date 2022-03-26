@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
@@ -43,15 +44,28 @@ class ShowEventDetailsFragment(
         binding.apply {
             titleValue.text = event.title
             locationValue.text = event.location
+            groupValue.text = event.group
             dateValue.text = event.date
             timeValue.text =
                 if (event.time_to.isNotEmpty()) "${event.time_from} to ${event.time_to}" else event.time_from
             urlValue.text = event.url
             notesValue.text = event.notes
+
             editButton.setOnClickListener {
                 requireDialog().cancel()
                 NavHostFragment.findNavController(requireParentFragment()).navigate(action)
             }
+            
+            eventDetailsColor.setBackgroundColor(
+                ContextCompat.getColor(
+                    eventDetailsColor.context,
+                    when (event.group) {
+                        "Personal" -> R.color.blue
+                        "Work" -> R.color.orange
+                        else -> R.color.green
+                    }
+                )
+            )
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }

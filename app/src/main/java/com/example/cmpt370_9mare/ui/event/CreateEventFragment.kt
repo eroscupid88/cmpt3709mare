@@ -14,10 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
@@ -70,6 +73,7 @@ class CreateEventFragment : Fragment() {
         get() = object {
             val title = binding.inputTitle.text.toString()
             val location = binding.inputLocation.text.toString()
+            val group = binding.groupMenuAutocomplete.text.toString()
             val date = binding.inputDate.text.toString()
             val timeFrom = binding.inputTimeFrom.text.toString()
             val timeTo = binding.inputTimeTo.text.toString()
@@ -102,6 +106,9 @@ class CreateEventFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCreateEventBinding.inflate(inflater, container, false)
         spinner = binding.spRepeatEvery
+
+        setDropdownAdapter(binding.groupMenuAutocomplete, spinnerViewModel.eventGroups)
+
         return binding.root
     }
 
@@ -145,15 +152,13 @@ class CreateEventFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        scheduleEventShareViewModel.pickedDate.observe(
-            this
-        ) { binding.inputDate.text = it }
-        scheduleEventShareViewModel.pickedTimeFrom.observe(
-            this
-        ) { binding.inputTimeFrom.text = it }
-        scheduleEventShareViewModel.pickedTimeTo.observe(
-            this
-        ) { binding.inputTimeTo.text = it }
+        scheduleEventShareViewModel.pickedDate.observe(this) { binding.inputDate.text = it }
+        scheduleEventShareViewModel.pickedTimeFrom.observe(this) { binding.inputTimeFrom.text = it }
+        scheduleEventShareViewModel.pickedTimeTo.observe(this) { binding.inputTimeTo.text = it }
+    }
+
+    private fun setDropdownAdapter(view: AutoCompleteTextView, objects: List<Any>) {
+        view.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_item, objects))
     }
 
     fun setSpinnerValue(position: Int) {
@@ -302,6 +307,7 @@ class CreateEventFragment : Fragment() {
         currentEvent.apply {
             title = inputs.title
             location = inputs.location
+            group = inputs.group
             date = inputs.date
             time_from =
                 if (binding.allDay.isChecked) getString(R.string.all_day) else inputs.timeFrom
@@ -321,6 +327,7 @@ class CreateEventFragment : Fragment() {
         binding.apply {
             inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
             inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
+            groupMenuAutocomplete.setText(event.group)
             inputDate.text = event.date
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
@@ -347,6 +354,7 @@ class CreateEventFragment : Fragment() {
             scheduleEventShareViewModel.addNewItem(
                 title,
                 location,
+                group,
                 anotherDate,
                 if (binding.allDay.isChecked) getString(R.string.all_day) else timeFrom,
                 if (binding.allDay.isChecked) "" else timeTo,
@@ -454,20 +462,26 @@ class CreateEventFragment : Fragment() {
             allDay.setOnCheckedChangeListener { _, isCheck ->
                 pickTime.isVisible = !isCheck
                 // Do not check for conflict if "All-Day" is selected
-                if (isCheck) {
-                    conflictCheck.isChecked = false
-                }
+                if (isCheck) conflictCheck.isChecked = false
             }
             conflictCheck.setOnCheckedChangeListener { _, isCheck ->
-                if (isCheck && eventId <= 0) {
-                    repeatButton.isChecked = false
-                }
+                if (isCheck && eventId <= 0) repeatButton.isChecked = false
             }
             repeatButton.setOnCheckedChangeListener { _, isCheck ->
-                if (isCheck) {
-                    conflictCheck.isChecked = false
-                }
+                if (isCheck) conflictCheck.isChecked = false
                 repeatSpinners.isVisible = isCheck
+            }
+
+            // Group Selector Listener to change dot colour
+            groupMenuAutocomplete.addTextChangedListener {
+                groupColour.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    when (groupMenuAutocomplete.text.toString()) {
+                        "Personal" -> R.drawable.group_personal
+                        "Work" -> R.drawable.group_work
+                        else -> R.drawable.group_school
+                    }
+                )
             }
         }
     }

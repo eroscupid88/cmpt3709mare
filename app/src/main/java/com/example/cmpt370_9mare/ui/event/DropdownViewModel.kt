@@ -1,9 +1,11 @@
 package com.example.cmpt370_9mare.ui.event
 
 import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cmpt370_9mare.R
 
 private const val TAG = "Spinner View Model"
 
@@ -29,6 +31,8 @@ class SpinnerViewModel : ViewModel() {
     init {
         _dropdownSelected.value = dayArray
     }
+
+    val eventGroups = listOf("Personal", "Work", "School")
 
     /**
      * setSpinnerSelected function set value of lengthSelection
