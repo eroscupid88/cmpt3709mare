@@ -23,38 +23,6 @@ class SpinnerViewModel : ViewModel() {
 
 
     private val dayArray: Array<Int> = (1..30).toList().toTypedArray()
-
-    //        1,
-//        2,
-//        3,
-//        4,
-//        5,
-//        6,
-//        7,
-//        8,
-//        9,
-//        10,
-//        11,
-//        12,
-//        13,
-//        14,
-//        15,
-//        16,
-//        17,
-//        18,
-//        19,
-//        20,
-//        21,
-//        22,
-//        23,
-//        24,
-//        25,
-//        26,
-//        27,
-//        28,
-//        29,
-//        30
-//    )
     private val weekArray: Array<Int> = (1..4).toList().toTypedArray()
     private val monthArray: Array<Int> = (1..11).toList().toTypedArray()
 
@@ -72,7 +40,7 @@ class SpinnerViewModel : ViewModel() {
 
 
     /**
-     * setRepeatEvery function set Livedata to the choosen array for spinner dropdown
+     * setRepeatEvery function set Livedata to the chosen array for spinner dropdown
      */
     fun setRepeatEvery(position: Int) {
         _dropdownSelected.value = when (position) {
@@ -97,6 +65,4 @@ class SpinnerViewModel : ViewModel() {
     fun setEventTypeSelection(type: Int) {
         _eventTypeSelection.value = type
     }
-
-
 }

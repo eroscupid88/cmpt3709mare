@@ -299,17 +299,20 @@
                         tools:visibility="visible">
 
                         <TextView
+                            android:id="@+id/repeat_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
                             android:layout_marginEnd="@dimen/margin"
-                            android:layout_weight="1.25"
-                            tools:text="Repeat Every ... For" />
+                            android:layout_weight="1"
+                            tools:text="Every Month For" />
 
                         <Spinner
                             android:id="@+id/spRepeatEvery"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
+                            android:dropDownHeight="20dp"
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setSpinnerValue(selection)}"
                             android:selectedItemPosition="@{spinnerViewModel.lengthSelection}"
                             tools:ignore="HardcodedText" />
@@ -318,7 +321,8 @@
                             android:id="@+id/spRepetitionInterval"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1.25"
                             android:entries="@array/repeat_method_option"
                             android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
                             android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
