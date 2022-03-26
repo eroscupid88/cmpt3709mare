@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         }
 
         val expandableListView = binding.expandableListView
-        viewModel.allEvents.observe(this.viewLifecycleOwner) { items ->
+        viewModel.TodayAndFutureEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 val listData = getData(it)
                 titleList = ArrayList(listData.keys)
@@ -77,13 +77,35 @@ class HomeFragment : Fragment() {
     private fun getData(listSchedule: List<ScheduleEvent>): HashMap<String, List<String>> {
         val listData = HashMap<String, List<String>>()
         val todayEvents = ArrayList<String>()
-
+        val nextEvent = ArrayList<String>()
+        var lastEvent = 0
+        // get today event
         for (event in listSchedule) {
             if (event.date == homeViewModel.getToday()) {
                 todayEvents.add(event.time_from+" to "+event.time_to+"      "+event.title)
+                lastEvent = event.id
+            }
+            //if (event.id > homeViewModel.getToday(). )
+        }
+        if (todayEvents.isEmpty()){
+            todayEvents.add("No events for Today")
+            nextEvent.add(listSchedule[0].date+"            "+listSchedule[0].title)
+        }else{
+            for (event in listSchedule){
+                if (event.id == lastEvent+1){
+                    nextEvent.add(event.date+"            "+event.title)
+                }
             }
         }
+        if (nextEvent.isEmpty()){
+            nextEvent.add("No event for the Future")
+        }
+
+        // get future event
         listData["Today Event"] = todayEvents
+        listData["Next Event"] = nextEvent
+
+
         return listData
     }
 
