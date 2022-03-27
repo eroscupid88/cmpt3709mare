@@ -66,58 +66,79 @@
                     tools:text="Event Time" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/location"
-                style="@style/EventDetails"
-                android:text="@string/location" />
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/location_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Event Location" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/group"
-                style="@style/EventDetails"
-                android:text="@string/group" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/group_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Event Location" />
+                        <TextView
+                            android:id="@+id/location"
+                            style="@style/EventDetails"
+                            android:text="@string/location" />
 
-            <TextView
-                android:id="@+id/url"
-                style="@style/EventDetails"
-                android:text="@string/url" />
+                        <TextView
+                            android:id="@+id/location_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Event Location" />
 
-            <TextView
-                android:id="@+id/url_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Event URL" />
+                        <TextView
+                            android:id="@+id/group"
+                            style="@style/EventDetails"
+                            android:text="@string/group" />
 
-            <TextView
-                android:id="@+id/notes"
-                style="@style/EventDetails"
-                android:text="@string/notes" />
+                        <TextView
+                            android:id="@+id/group_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Event Location" />
 
-            <TextView
-                android:id="@+id/notes_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Event Notes" />
+                        <TextView
+                            android:id="@+id/url"
+                            style="@style/EventDetails"
+                            android:text="@string/url" />
 
-            <Button
-                android:id="@+id/edit_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/edit"
-                app:strokeColor="@color/black" />
+                        <TextView
+                            android:id="@+id/url_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Event URL" />
+
+                        <TextView
+                            android:id="@+id/notes"
+                            style="@style/EventDetails"
+                            android:text="@string/notes" />
+
+                        <TextView
+                            android:id="@+id/notes_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Event Notes" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="50dp" />
+                    </LinearLayout>
+                </ScrollView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:contentDescription="@string/edit"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_baseline_edit_24" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
