@@ -46,7 +46,7 @@ class DashboardTest : BaseTest() {
         onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText(testTitle)).check(matches(isDisplayed()))
-        deleteEvent(testTitle)
+        deleteEvent(testTitle, true)
     }
 
     @Test
