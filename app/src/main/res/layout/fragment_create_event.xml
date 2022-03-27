@@ -12,10 +12,6 @@
             type="com.example.cmpt370_9mare.ScheduleEventViewModel" />
 
         <variable
-            name="spinnerViewModel"
-            type="com.example.cmpt370_9mare.ui.event.SpinnerViewModel" />
-
-        <variable
             name="createEventFragment"
             type="com.example.cmpt370_9mare.ui.event.CreateEventFragment" />
     </data>
@@ -331,29 +327,40 @@
                             android:layout_weight="1"
                             tools:text="Every Month For" />
 
-                        <Spinner
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/spRepeatEvery"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
-                            android:dropDownHeight="20dp"
-                            android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setSpinnerValue(selection)}"
-                            android:selectedItemPosition="@{spinnerViewModel.lengthSelection}"
-                            tools:ignore="HardcodedText" />
+                            android:labelFor="@id/spRepeatEvery_autocomplete">
 
-                        <Spinner
+                            <AutoCompleteTextView
+                                android:id="@+id/spRepeatEvery_autocomplete"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:dropDownHeight="200dp"
+                                android:inputType="none"
+                                android:text="@string/_1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/spRepetitionInterval"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
                             android:layout_weight="1.25"
-                            android:entries="@array/repeat_method_option"
-                            android:onItemSelected="@{(parent, view, selection, id)-> createEventFragment.setRepeatEvery(selection)}"
-                            android:selectedItemPosition="@{spinnerViewModel.typeSelection}"
-                            tools:ignore="HardcodedText" />
+                            android:labelFor="@id/spRepetitionInterval_autocomplete">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spRepetitionInterval_autocomplete"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none"
+                                android:text="@string/day_s"
+                                tools:text="Month(s)" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
-
-
                 </LinearLayout>
 
                 <LinearLayout

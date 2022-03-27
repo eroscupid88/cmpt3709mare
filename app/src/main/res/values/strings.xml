@@ -49,17 +49,6 @@
     <string name="event_group">Event Group</string>
     <string name="group">Group</string>
     <string name="personal">Personal</string>
-
-    <string-array name="event_groups">
-        <item>Personal</item>
-        <item>Work</item>
-        <item>School</item>
-    </string-array>
-
-    <string-array name="RepetitionInterval">
-        <item>Interval</item>
-        <item>Day(s)</item>
-        <item>Week(s)</item>
-
-    </string-array>
+    <string name="_1">1</string>
+    <string name="day_s">Day(s)</string>
 </resources>
