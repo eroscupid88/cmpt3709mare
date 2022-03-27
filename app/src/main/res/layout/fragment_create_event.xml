@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/base_margin"
                 android:orientation="horizontal">
 
@@ -39,32 +39,25 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:onClick="@{()-> createEventFragment.cancelEvent()}"
                     android:text="@string/cancel"
-                    android:textAlignment="center"
-                    app:strokeColor="@color/design_default_color_primary" />
+                    android:textColor="@color/black"
+                    app:strokeColor="@color/blue" />
 
                 <TextView
-                    android:id="@+id/calendar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@string/new_event_title"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/submit_create_event"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:onClick="@{()-> createEventFragment.createModifyEvent()}"
                     android:text="@string/add"
-                    android:textAlignment="center"
-                    app:strokeColor="@color/design_default_color_primary" />
+                    android:textColor="@color/black"
+                    app:strokeColor="@color/blue" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,8 +104,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/pick_date_text"
@@ -236,9 +228,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/group_colour"
@@ -368,9 +359,9 @@
                 android:layout_marginTop="@dimen/margin"
                 android:onClick="@{()->createEventFragment.deleteEvent()}"
                 android:text="@string/delete"
-                android:textColor="@color/red"
+                android:textColor="@color/red_900_light"
                 android:visibility="gone"
-                app:strokeColor="@color/red"
+                app:strokeColor="@color/red_900_light"
                 tools:visibility="visible" />
         </LinearLayout>
     </ScrollView>

@@ -21,7 +21,7 @@ class ContentTest : BaseTest() {
 
     @Test
     fun schedule_fragment_content_test() {
-        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
+        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme_Cmpt3709mare)
         onView(withId(R.id.next_month_calendar)).perform(click())
         onView(withId(R.id.button_last_month)).perform(click())
 

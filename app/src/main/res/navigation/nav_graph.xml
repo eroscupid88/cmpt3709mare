@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/createEventFragment"
         android:name="com.example.cmpt370_9mare.ui.event.CreateEventFragment"
-        android:label="CreateEventFragment"
+        android:label="@string/title_create_event"
         tools:layout="@layout/fragment_create_event">
         <action
             android:id="@+id/action_createEventFragment_to_navigation_calendar"
