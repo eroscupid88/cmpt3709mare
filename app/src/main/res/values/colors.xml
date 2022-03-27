@@ -11,4 +11,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="picker_orange">#FF2B2B2B</color>
     <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="orange">#FFA500</color>
 </resources>

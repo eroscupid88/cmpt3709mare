@@ -46,47 +46,9 @@
     <string name="at">at</string>
     <string name="check_for_conflicts">Check for Conflicts</string>
     <string name="repeat_description">Every %s For</string>
-
-
-    <string-array name="RepeatEvery">
-        <item>Repeat Every</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-    </string-array>
-
-    <string-array name="RepetitionInterval">
-        <item>Interval</item>
-        <item>Day(s)</item>
-        <item>Week(s)</item>
-
-    </string-array>
+    <string name="event_group">Event Group</string>
+    <string name="group">Group</string>
+    <string name="personal">Personal</string>
+    <string name="_1">1</string>
+    <string name="day_s">Day(s)</string>
 </resources>
