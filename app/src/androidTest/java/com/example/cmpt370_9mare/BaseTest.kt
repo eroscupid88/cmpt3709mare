@@ -49,7 +49,10 @@ open class BaseTest {
         onView(withId(R.id.submit_create_event)).perform(click())
     }
 
-    fun deleteEvent(title: String) {
+    fun deleteEvent(title: String, past: Boolean = false) {
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        if (past) onView(withId(R.id.show_past_events)).perform(click())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText(title)).perform(click())
         onView(withText("Edit")).perform(click())
         onView(withId(R.id.delete_event)).perform(scrollTo(), click())
@@ -79,6 +82,10 @@ open class BaseTest {
             val recyclerView = view as RecyclerView
             val itemCount = recyclerView.adapter?.itemCount
             val position = itemCount?.minus(1) ?: 0
+            recyclerView.scrollToPosition(position)
+            uiController?.loopMainThreadUntilIdle()
+            /* This is not a mistake.
+            Repeat is needed for case RecyclerView inside RecyclerView*/
             recyclerView.scrollToPosition(position)
             uiController?.loopMainThreadUntilIdle()
         }

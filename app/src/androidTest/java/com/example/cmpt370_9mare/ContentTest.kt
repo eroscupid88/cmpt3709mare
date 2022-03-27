@@ -122,8 +122,6 @@ class ContentTest : BaseTest() {
         val testName = "TC1"
 
         createEvent(testName)
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testName)
     }
 
@@ -132,10 +130,7 @@ class ContentTest : BaseTest() {
         val testName = "TC2"
 
         createEvent(testName, PAST)
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 
     @Test
@@ -147,7 +142,6 @@ class ContentTest : BaseTest() {
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testName)
     }
 
@@ -158,8 +152,7 @@ class ContentTest : BaseTest() {
         createEvent(testName, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 
     @Test
@@ -169,7 +162,6 @@ class ContentTest : BaseTest() {
         createEvent(testName, PAST, timeFrom = "03:00", timeTo = "05:00")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 }
