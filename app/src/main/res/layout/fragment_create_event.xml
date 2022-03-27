@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/base_margin"
                 android:orientation="horizontal">
 
@@ -39,32 +39,23 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:onClick="@{()-> createEventFragment.cancelEvent()}"
                     android:text="@string/cancel"
-                    android:textAlignment="center"
                     android:textColor="@color/black"
                     app:strokeColor="@color/blue" />
 
                 <TextView
-                    android:id="@+id/calendar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@string/new_event_title"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/submit_create_event"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:onClick="@{()-> createEventFragment.createModifyEvent()}"
                     android:text="@string/add"
-                    android:textAlignment="center"
                     android:textColor="@color/black"
                     app:strokeColor="@color/blue" />
             </LinearLayout>

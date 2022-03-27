@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -91,7 +92,7 @@ class CreateEventFragment : Fragment() {
         initialization.setDropdownAdapter(binding.spRepeatEveryAutocomplete, repeatLengths)
         initialization.setDropdownAdapter(binding.spRepetitionIntervalAutocomplete, repeatTypes)
         initialization.preloadTime()
-        
+
         return binding.root
     }
 
@@ -104,7 +105,6 @@ class CreateEventFragment : Fragment() {
 
         if (eventId > 0) {
             binding.apply {
-                calendarTitle.text = getString(R.string.modify_event_title)
                 submitCreateEvent.text = getString(R.string.update_button_text)
                 deleteEvent.isVisible = true
             }
@@ -115,6 +115,8 @@ class CreateEventFragment : Fragment() {
                         initialization.bind(currentEvent)
                     }
                 }
+            (activity as AppCompatActivity?)?.supportActionBar?.title =
+                getString(R.string.modify_event_title)
         } else {
             binding.repeatDescription.text = getString(R.string.repeat_description, "Day")
         }
