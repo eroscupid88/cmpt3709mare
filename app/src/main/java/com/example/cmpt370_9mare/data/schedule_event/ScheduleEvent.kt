@@ -14,6 +14,8 @@ data class ScheduleEvent(
     var title: String,
     @ColumnInfo(name = "location")
     var location: String,
+    @ColumnInfo(name = "group")
+    var group: String,
     @ColumnInfo(name = "date")
     var date: String,
     @ColumnInfo(name = "time_from")

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import com.example.cmpt370_9mare.data.schedule_event.EventRoomDatabase
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
@@ -20,6 +21,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
+@MediumTest
 class ScheduleEventDaoTest {
     private lateinit var scheduleEventDao: ScheduleEventDao
     private lateinit var db: EventRoomDatabase
@@ -56,6 +58,7 @@ class ScheduleEventDaoTest {
             1,
             "event1",
             "Saskatoon",
+            "Personal",
             "July 25, 2017",
             "10:40 AM",
             "10:50 AM",
@@ -80,7 +83,7 @@ class ScheduleEventDaoTest {
     @Test
     @Throws(IOException::class)
     fun insertAndGetScheduleEventTest2(): Unit = runBlocking {
-        val scheduleEvent = ScheduleEvent(2, "event2", "", "", "", "", "", "")
+        val scheduleEvent = ScheduleEvent(2, "event2", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent)
         val events: List<ScheduleEvent> = scheduleEventDao.getScheduleEvents().first()
         assertEquals(2, scheduleEvent.id)
@@ -91,6 +94,7 @@ class ScheduleEventDaoTest {
         assertEquals("", scheduleEvent.location)
         assertEquals("", scheduleEvent.url)
         assertEquals("", scheduleEvent.notes)
+        assertEquals("", scheduleEvent.group)
     }
 
 
@@ -100,9 +104,9 @@ class ScheduleEventDaoTest {
     @Test
     @Throws(IOException::class)
     fun getScheduleEventsTest(): Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "")
-        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "", "", "")
-        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "", "", "", "", "")
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
+        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "", "", "", "")
+        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent2)
         scheduleEventDao.insertEvent(scheduleEvent3)
@@ -117,7 +121,7 @@ class ScheduleEventDaoTest {
     @Test
     @Throws(IOException::class)
     fun getScheduleEventTest1(): Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "")
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
         assertEquals(scheduleEvent1.title, scheduleEventDao.getScheduleEvent(1).first().title)
     }
@@ -130,8 +134,8 @@ class ScheduleEventDaoTest {
     @Test
     @Throws(IOException::class)
     fun getScheduleEventTest2(): Unit = runBlocking {
-        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "")
-        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "10:20 AM", "", "")
+        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "", "", "", "", "", "")
+        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "", "", "", "10:20 AM", "", "")
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent2)
         assertEquals(
@@ -146,10 +150,13 @@ class ScheduleEventDaoTest {
      */
     @Test
     @Throws(IOException::class)
-    fun getDailyEventByTimeAndDateTest():Unit = runBlocking{
-        val scheduleEvent1 = ScheduleEvent(1, "event1", "", "2022-06-06", "10:15:31", "", "", "")
-        val scheduleEvent2 = ScheduleEvent(2, "event2", "", "2022-06-06", "14:15:14","15:15:14" , "", "")
-        val scheduleEvent3 = ScheduleEvent(3, "event3", "", "2022-06-06", "15:15:14","16:15:14" , "", "")
+    fun getDailyEventByTimeAndDateTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(1, "event1", "", "", "2022-06-06", "10:15:31", "", "", "")
+        val scheduleEvent2 =
+            ScheduleEvent(2, "event2", "", "", "2022-06-06", "14:15:14", "15:15:14", "", "")
+        val scheduleEvent3 =
+            ScheduleEvent(3, "event3", "", "", "2022-06-06", "15:15:14", "16:15:14", "", "")
         scheduleEventDao.insertEvent(scheduleEvent2)
         scheduleEventDao.insertEvent(scheduleEvent1)
         scheduleEventDao.insertEvent(scheduleEvent3)
@@ -161,11 +168,11 @@ class ScheduleEventDaoTest {
         )
         assertEquals(
             scheduleEvent2.id,
-            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[0].id
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime, currentDate).first()[0].id
         )
         assertEquals(
             scheduleEvent3.id,
-            scheduleEventDao.getDailyEventByTimeAndDate(currentTime,currentDate).first()[1].id
+            scheduleEventDao.getDailyEventByTimeAndDate(currentTime, currentDate).first()[1].id
         )
 
     }
