@@ -75,5 +75,23 @@ class ModifyTest : BaseTest() {
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText(testNewTitle)).perform(click())
         onView(withText(newDate)).check(matches(isDisplayed()))
+        onView(withText("Edit")).perform(click())
+        onView(withId(R.id.delete_event)).perform(scrollTo(), click())
+        onView(withText("Confirm")).perform(click())
+    }
+
+    @Test
+    fun TC3_no_conflicts_on_modifying_own_event() {
+        val testTitle = "TC3 First event"
+
+        createEvent(testTitle)
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
+        onView(withText(testTitle)).perform(click())
+        onView(withText("Edit")).perform(click())
+        onView(withId(R.id.conflict_check)).perform(click())
+        onView(withId(R.id.submit_create_event)).perform(click())
+        onView(withId(R.id.search_event)).check(matches(isDisplayed()))
+        deleteEvent(testTitle)
     }
 }
