@@ -10,9 +10,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.data.Day
-import com.example.cmpt370_9mare.databinding.CalendarCellLayoutBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.data.Day
+import ca.nomosnow.cmpt370_9mare.databinding.CalendarCellLayoutBinding
 import java.time.LocalDate
 
 /**

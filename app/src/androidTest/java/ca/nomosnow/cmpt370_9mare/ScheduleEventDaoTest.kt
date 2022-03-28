@@ -5,9 +5,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.example.cmpt370_9mare.data.schedule_event.EventRoomDatabase
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.EventRoomDatabase
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

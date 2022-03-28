@@ -12,9 +12,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 

@@ -10,11 +10,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.cmpt370_9mare.ui.calendar.CalendarViewModel" />
+            type="ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarViewModel" />
 
         <variable
             name="calendarFragment"
-            type="com.example.cmpt370_9mare.ui.calendar.CalendarFragment" />
+            type="ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarFragment" />
 
     </data>
 

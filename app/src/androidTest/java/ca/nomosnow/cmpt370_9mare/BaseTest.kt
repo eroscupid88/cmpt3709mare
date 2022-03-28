@@ -37,40 +37,40 @@ open class BaseTest {
             else -> date
         }
 
-        onView(withId(com.example.cmpt370_9mare.R.id.navigation_calendar)).perform(click())
-        onView(withId(com.example.cmpt370_9mare.R.id.floatingActionButton)).perform(click())
-        onView(withId(com.example.cmpt370_9mare.R.id.input_title)).perform(typeText(title))
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.navigation_calendar)).perform(click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.floatingActionButton)).perform(click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.input_title)).perform(typeText(title))
             .perform(pressKey(KeyEvent.KEYCODE_ENTER))
-        onView(withId(com.example.cmpt370_9mare.R.id.inputDate)).perform(
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputDate)).perform(
             SetButtonText(
                 randomDate
             )
         )
-        onView(withId(com.example.cmpt370_9mare.R.id.inputTimeFrom)).perform(
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputTimeFrom)).perform(
             SetButtonText(
                 timeFrom
             )
         )
-        onView(withId(com.example.cmpt370_9mare.R.id.inputTimeTo)).perform(
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputTimeTo)).perform(
             SetButtonText(
                 timeTo
             )
         )
         if (conflictCheck) {
-            onView(withId(com.example.cmpt370_9mare.R.id.conflict_check)).perform(click())
+            onView(withId(ca.nomosnow.cmpt370_9mare.R.id.conflict_check)).perform(click())
         }
-        onView(withId(com.example.cmpt370_9mare.R.id.submit_create_event)).perform(click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.submit_create_event)).perform(click())
     }
 
     fun deleteEvent(title: String, past: Boolean = false) {
-        onView(withId(com.example.cmpt370_9mare.R.id.navigation_dashboard)).perform(click())
-        if (past) onView(withId(com.example.cmpt370_9mare.R.id.show_past_events)).perform(click())
-        onView(withId(com.example.cmpt370_9mare.R.id.event_list_recycler_view)).perform(
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.navigation_dashboard)).perform(click())
+        if (past) onView(withId(ca.nomosnow.cmpt370_9mare.R.id.show_past_events)).perform(click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.event_list_recycler_view)).perform(
             ScrollToBottom()
         )
         onView(withText(title)).perform(click())
-        onView(withId(com.example.cmpt370_9mare.R.id.edit_fab)).perform(click())
-        onView(withId(com.example.cmpt370_9mare.R.id.delete_event)).perform(scrollTo(), click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.edit_fab)).perform(click())
+        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
     }
 

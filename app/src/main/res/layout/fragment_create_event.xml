@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.cmpt370_9mare.ScheduleEventViewModel" />
+            type="ca.nomosnow.cmpt370_9mare.ScheduleEventViewModel" />
 
         <variable
             name="createEventFragment"
-            type="com.example.cmpt370_9mare.ui.event.CreateEventFragment" />
+            type="ca.nomosnow.cmpt370_9mare.ui.event.CreateEventFragment" />
     </data>
 
     <ScrollView

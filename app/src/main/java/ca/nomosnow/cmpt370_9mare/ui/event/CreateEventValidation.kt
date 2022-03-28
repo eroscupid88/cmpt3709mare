@@ -6,9 +6,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.annotation.RequiresApi
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)

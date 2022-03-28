@@ -12,10 +12,10 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
-import com.example.cmpt370_9mare.ui.calendar.CalendarFragmentDirections
-import com.example.cmpt370_9mare.ui.event.CreateEventFragment
-import com.example.cmpt370_9mare.ui.event.CreateEventFragmentDirections
+import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarFragment
+import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarFragmentDirections
+import ca.nomosnow.cmpt370_9mare.ui.event.CreateEventFragment
+import ca.nomosnow.cmpt370_9mare.ui.event.CreateEventFragmentDirections
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*

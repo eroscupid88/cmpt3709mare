@@ -9,8 +9,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.cmpt370_9mare.ui.calendar.CalendarFragment
-import com.example.cmpt370_9mare.ui.event.CreateEventFragment
+import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarFragment
+import ca.nomosnow.cmpt370_9mare.ui.event.CreateEventFragment
 import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith

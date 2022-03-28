@@ -1,9 +1,9 @@
 package ca.nomosnow.cmpt370_9mare
 
 import androidx.lifecycle.*
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
-import com.example.cmpt370_9mare.data.schedule_event.getCurrentDate
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.getCurrentDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

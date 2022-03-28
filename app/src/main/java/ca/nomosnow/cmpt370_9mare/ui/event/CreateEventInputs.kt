@@ -3,8 +3,8 @@ package ca.nomosnow.cmpt370_9mare.ui.event
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentCreateEventBinding
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)

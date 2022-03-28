@@ -6,9 +6,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.databinding.DailyEventViewBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.databinding.DailyEventViewBinding
 
 class DailyEventCalendarAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     ListAdapter<ScheduleEvent, DailyEventCalendarAdapter.DailyEventViewHolder>(DiffCallback) {

@@ -15,14 +15,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.databinding.FragmentCreateEventBinding
-import com.example.cmpt370_9mare.ui.calendar.CalendarViewModel
-import com.example.cmpt370_9mare.ui.calendar.CalendarViewModelFactory
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.ScheduleApplication
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModel
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModelFactory
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentCreateEventBinding
+import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarViewModel
+import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 

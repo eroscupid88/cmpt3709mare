@@ -12,9 +12,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.databinding.FragmentDashboardBinding
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.ScheduleApplication
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentDashboardBinding
 
 private const val TAG = "dashboard"
 private const val FUTURE = "future"

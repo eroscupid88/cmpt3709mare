@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.data.schedule_event.getFormattedTime
-import com.example.cmpt370_9mare.databinding.EventViewBinding
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.getFormattedTime
+import ca.nomosnow.cmpt370_9mare.databinding.EventViewBinding
 
 /**
  * [ListAdapter] implementation for the recyclerview.

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.cmpt370_9mare.databinding.EventItemBinding
-import com.example.cmpt370_9mare.databinding.EventViewBinding
-import com.example.cmpt370_9mare.databinding.GroupEventBinding
+import ca.nomosnow.cmpt370_9mare.databinding.EventItemBinding
+import ca.nomosnow.cmpt370_9mare.databinding.EventViewBinding
+import ca.nomosnow.cmpt370_9mare.databinding.GroupEventBinding
 
 class HomeExpandableAdapter  internal constructor(
     private val context: Context,

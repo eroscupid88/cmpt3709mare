@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
-import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
-import com.example.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
+import ca.nomosnow.cmpt370_9mare.ScheduleApplication
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModel
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModelFactory
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentCalendarBinding
+import ca.nomosnow.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
 
 private const val TAG = "CalendarFragment"
 

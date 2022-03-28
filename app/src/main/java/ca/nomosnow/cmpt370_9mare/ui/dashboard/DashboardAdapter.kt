@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.databinding.GroupEventsViewBinding
-import com.example.cmpt370_9mare.ui.calendar.DailyEventCalendarAdapter
+import ca.nomosnow.cmpt370_9mare.databinding.GroupEventsViewBinding
+import ca.nomosnow.cmpt370_9mare.ui.calendar.DailyEventCalendarAdapter
 
 /**
  * [ListAdapter] implementation for the recyclerview.

@@ -4,8 +4,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.example.cmpt370_9mare.data.Day
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import ca.nomosnow.cmpt370_9mare.data.Day
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -142,7 +142,7 @@ class CalendarViewModelFactory(private val scheduleEventDao: ScheduleEventDao) :
 }
 
 
-//package com.example.cmpt370_9mare.ui.calendar
+//package ca.nomosnow.cmpt370_9mare.ui.calendar
 //
 //import android.os.Build
 //import android.os.Bundle
@@ -154,9 +154,9 @@ class CalendarViewModelFactory(private val scheduleEventDao: ScheduleEventDao) :
 //import androidx.core.content.ContextCompat
 //import androidx.recyclerview.widget.GridLayoutManager
 //import androidx.recyclerview.widget.RecyclerView
-//import com.example.cmpt370_9mare.R
-//import com.example.cmpt370_9mare.adapter.CalendarAdapter
-//import com.example.cmpt370_9mare.databinding.FragmentCalendarBinding
+//import ca.nomosnow.cmpt370_9mare.R
+//import ca.nomosnow.cmpt370_9mare.adapter.CalendarAdapter
+//import ca.nomosnow.cmpt370_9mare.databinding.FragmentCalendarBinding
 //import java.time.LocalDate
 //import java.time.YearMonth
 //import java.time.format.DateTimeFormatter

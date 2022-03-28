@@ -8,7 +8,7 @@
 
         <variable
             name="day"
-            type="com.example.cmpt370_9mare.data.Day" />
+            type="ca.nomosnow.cmpt370_9mare.data.Day" />
     </data>
 
 

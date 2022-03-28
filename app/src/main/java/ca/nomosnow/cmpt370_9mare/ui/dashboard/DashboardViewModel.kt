@@ -1,8 +1,8 @@
 package ca.nomosnow.cmpt370_9mare.ui.dashboard
 
 import androidx.lifecycle.*
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
-import com.example.cmpt370_9mare.data.schedule_event.getCurrentDate
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.getCurrentDate
 
 class DashboardViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
 

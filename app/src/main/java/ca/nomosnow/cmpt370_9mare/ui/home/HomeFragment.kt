@@ -11,13 +11,13 @@ import android.widget.ExpandableListAdapter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cmpt370_9mare.R
-import com.example.cmpt370_9mare.ScheduleApplication
-import com.example.cmpt370_9mare.ScheduleEventViewModel
-import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent
+import ca.nomosnow.cmpt370_9mare.R
+import ca.nomosnow.cmpt370_9mare.ScheduleApplication
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModel
+import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModelFactory
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
 
-import com.example.cmpt370_9mare.databinding.FragmentHomeBinding
+import ca.nomosnow.cmpt370_9mare.databinding.FragmentHomeBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.reduce
 import java.time.LocalDate

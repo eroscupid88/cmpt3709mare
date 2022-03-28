@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.cmpt370_9mare.data.schedule_event.ScheduleEventDao
+import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
