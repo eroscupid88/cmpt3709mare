@@ -95,7 +95,11 @@ class HomeFragment : Fragment() {
         }
         if (todayEvents.isEmpty()) {
             todayEvents.add("No events for Today")
-            nextEvent.add(listSchedule[0].date + "            " + listSchedule[0].title)
+            if (listSchedule.isNotEmpty()) {
+            nextEvent.add(listSchedule[0].date + "            " + listSchedule[0].title)}
+            else{
+                nextEvent.add("No event for future")
+            }
         } else {
             for (event in listSchedule) {
                 if (event.id == lastEvent + 1) {
