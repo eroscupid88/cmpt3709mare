@@ -8,11 +8,11 @@
 
         <variable
             name="scheduleEvent"
-            type="com.example.cmpt370_9mare.data.schedule_event.ScheduleEvent" />
+            type="ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent" />
 
         <variable
             name="calendarFragment"
-            type="com.example.cmpt370_9mare.ui.calendar.CalendarFragment" />
+            type="ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarFragment" />
     </data>
 
 

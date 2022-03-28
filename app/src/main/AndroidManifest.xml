@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cmpt370_9mare">
+    package="ca.nomosnow.cmpt370_9mare">
 
     <application
-        android:name="com.example.cmpt370_9mare.ScheduleApplication"
+        android:name="ca.nomosnow.cmpt370_9mare.ScheduleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
