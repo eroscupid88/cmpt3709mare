@@ -31,7 +31,6 @@ class ContentTest : BaseTest() {
 
         // check for create new event button
         onView(withId(R.id.floatingActionButton)).check(matches(isClickable()))
-        onView(withId(R.id.floatingActionButton)).check(matches(withText("New Event")))
     }
 
     /**
