@@ -11,7 +11,6 @@ import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import java.util.*
 
 
 /**

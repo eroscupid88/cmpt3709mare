@@ -23,8 +23,6 @@ class ConflictTest : BaseTest() {
         onView(withText("Conflict Found")).check(matches(isDisplayed()))
         onView(withText("OK")).perform(click())
         onView(withId(R.id.cancel_create_event)).perform(click())
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testTitle)
     }
 
@@ -60,7 +58,6 @@ class ConflictTest : BaseTest() {
         deleteEvent(testTitle)
         createEvent(testTitle, conflictCheck = true)
         onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_future_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText(testTitle)).check(matches(isDisplayed()))
         deleteEvent(testTitle)
@@ -78,8 +75,6 @@ class ConflictTest : BaseTest() {
         onView(withText("TC4 First event: 04:02 - 12:16\n")).check(matches(isDisplayed()))
         onView(withText("OK")).perform(click())
         onView(withId(R.id.cancel_create_event)).perform(click())
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testTitle)
     }
 
@@ -98,8 +93,6 @@ class ConflictTest : BaseTest() {
             .check(matches(isDisplayed()))
         onView(withText("OK")).perform(click())
         onView(withId(R.id.cancel_create_event)).perform(click())
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testTitle1)
         deleteEvent(testTitle2)
     }
@@ -112,8 +105,6 @@ class ConflictTest : BaseTest() {
 
         createEvent(testTitle1, conflictDate)
         createEvent(testTitle2, conflictDate, true, "12:16", "13:16")
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testTitle1)
         deleteEvent(testTitle2)
     }

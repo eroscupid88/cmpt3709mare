@@ -37,7 +37,7 @@ class MonthCalendarAdapter(
                 binding.cellDayText.setTextColor(
                     ContextCompat.getColor(
                         binding.cellDayText.context,
-                        R.color.red
+                        R.color.red_900
                     )
                 )
             }

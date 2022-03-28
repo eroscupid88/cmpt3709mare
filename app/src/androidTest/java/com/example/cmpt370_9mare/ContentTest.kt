@@ -21,7 +21,7 @@ class ContentTest : BaseTest() {
 
     @Test
     fun schedule_fragment_content_test() {
-        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme)
+        launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme_9mare)
         onView(withId(R.id.next_month_calendar)).perform(click())
         onView(withId(R.id.button_last_month)).perform(click())
 
@@ -31,7 +31,6 @@ class ContentTest : BaseTest() {
 
         // check for create new event button
         onView(withId(R.id.floatingActionButton)).check(matches(isClickable()))
-        onView(withId(R.id.floatingActionButton)).check(matches(withText("New Event")))
     }
 
     /**
@@ -42,7 +41,7 @@ class ContentTest : BaseTest() {
         // Check for the title event
         launchFragmentInContainer<CreateEventFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
         onView(withId(R.id.input_title)).check(matches(withHint(R.string.title)))
         onView(withId(R.id.event_title)).check(matches(isNotClickable()))
@@ -56,7 +55,7 @@ class ContentTest : BaseTest() {
     fun all_day_option_test() {
         launchFragmentInContainer<CreateEventFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
         onView(withId(R.id.all_day)).check(matches(withText(R.string.all_day)))
         onView(withId(R.id.all_day)).check(matches(isNotChecked()))
@@ -67,7 +66,7 @@ class ContentTest : BaseTest() {
     fun start_end_test() {
         launchFragmentInContainer<CreateEventFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
 
         // check for date
@@ -85,7 +84,7 @@ class ContentTest : BaseTest() {
     fun url_notes_test() {
         launchFragmentInContainer<CreateEventFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
         // Check for the url
         onView(withId(R.id.event_url))
@@ -104,7 +103,7 @@ class ContentTest : BaseTest() {
     fun cancel_create_button_test() {
         launchFragmentInContainer<CreateEventFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
         onView(withId(R.id.cancel_create_event))
             .check(matches(withText("Cancel")))
@@ -122,8 +121,6 @@ class ContentTest : BaseTest() {
         val testName = "TC1"
 
         createEvent(testName)
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testName)
     }
 
@@ -132,10 +129,7 @@ class ContentTest : BaseTest() {
         val testName = "TC2"
 
         createEvent(testName, PAST)
-        onView(withId(R.id.navigation_dashboard)).perform(click())
-        onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 
     @Test
@@ -147,7 +141,6 @@ class ContentTest : BaseTest() {
         onView(withId(R.id.floatingActionButton)).perform(click())
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_future_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         deleteEvent(testName)
     }
 
@@ -158,8 +151,7 @@ class ContentTest : BaseTest() {
         createEvent(testName, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 
     @Test
@@ -169,7 +161,6 @@ class ContentTest : BaseTest() {
         createEvent(testName, PAST, timeFrom = "03:00", timeTo = "05:00")
         onView(withId(R.id.navigation_dashboard)).perform(click())
         onView(withId(R.id.show_past_events)).perform(click())
-        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
-        deleteEvent(testName)
+        deleteEvent(testName, true)
     }
 }

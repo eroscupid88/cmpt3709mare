@@ -82,7 +82,6 @@
                 android:layout_weight="1"
                 android:text="@string/sunday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -91,7 +90,6 @@
                 android:layout_weight="1"
                 android:text="@string/monday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -100,7 +98,6 @@
                 android:layout_weight="1"
                 android:text="@string/tuesday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -109,7 +106,6 @@
                 android:layout_weight="1"
                 android:text="@string/wednesday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -118,7 +114,6 @@
                 android:layout_weight="1"
                 android:text="@string/thursday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -127,7 +122,6 @@
                 android:layout_weight="1"
                 android:text="@string/friday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -136,7 +130,6 @@
                 android:layout_weight="1"
                 android:text="@string/saturday"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -180,17 +173,16 @@
                 tools:listitem="@layout/daily_event_view" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:contentDescription="@string/add_new_item"
             android:text="@string/add_new_item"
-            app:icon="@android:drawable/ic_input_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@android:color/white" />
+            app:srcCompat="@android:drawable/ic_input_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -30,6 +30,8 @@ class SpinnerViewModel : ViewModel() {
         _dropdownSelected.value = dayArray
     }
 
+
+
     /**
      * setSpinnerSelected function set value of lengthSelection
      */

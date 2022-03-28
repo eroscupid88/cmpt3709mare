@@ -3,7 +3,6 @@ package com.example.cmpt370_9mare.ui.event
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -11,7 +10,6 @@ import com.example.cmpt370_9mare.R
 import com.example.cmpt370_9mare.ScheduleApplication
 import com.example.cmpt370_9mare.ScheduleEventViewModel
 import com.example.cmpt370_9mare.ScheduleEventViewModelFactory
-import java.util.*
 
 class DatePickerFragment(private val date: String) : DialogFragment(),
     DatePickerDialog.OnDateSetListener {
