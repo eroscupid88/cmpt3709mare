@@ -32,4 +32,21 @@
         <item name="dialogCornerRadius">5dp</item>
     </style>
 
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorSurface">@color/red_900</item>
+        <item name="colorOnSurface">@color/red_900_dark</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent
+        </item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/forth</item>
+    </style>
+
 </resources>

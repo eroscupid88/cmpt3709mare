@@ -9,6 +9,7 @@
         <item name="colorSecondary">@color/cyan</item>
         <item name="colorSecondaryVariant">@color/cyan_dark</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="materialCardViewStyle">@style/CardView</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
