@@ -10,7 +10,8 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.endsWith
 import org.hamcrest.Matcher
 import org.junit.Rule
 
@@ -54,14 +55,14 @@ open class BaseTest {
         if (past) onView(withId(R.id.show_past_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
         onView(withText(title)).perform(click())
-        onView(withText("Edit")).perform(click())
+        onView(withId(R.id.edit_fab)).perform(click())
         onView(withId(R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
     }
 
     class SetButtonText(private val text: String) : ViewAction {
         override fun getConstraints(): Matcher<View> {
-            return CoreMatchers.allOf(isDisplayed(), isAssignableFrom(Button::class.java))
+            return allOf(isDisplayed(), isAssignableFrom(Button::class.java))
         }
 
         override fun perform(uiController: UiController, view: View) {
@@ -75,7 +76,7 @@ open class BaseTest {
 
     class ScrollToBottom : ViewAction {
         override fun getConstraints(): Matcher<View> {
-            return CoreMatchers.allOf(isDisplayed(), isAssignableFrom(RecyclerView::class.java))
+            return allOf(isDisplayed(), isAssignableFrom(RecyclerView::class.java))
         }
 
         override fun perform(uiController: UiController?, view: View?) {
