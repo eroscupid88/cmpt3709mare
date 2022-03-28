@@ -32,27 +32,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@drawable/dsc00762_edited"
+                android:background="@color/purple_500"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/this_month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text="March"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    />
+                    android:textSize="50sp" />
 
                 <TextView
+                    android:id="@+id/day_number"
                     android:layout_width="200sp"
                     android:layout_height="200sp"
-                    android:gravity="center"
-                    android:text="23"
-                    android:textColor="@color/white"
-                    android:textSize="150sp"
                     android:layout_marginLeft="100sp"
-                    />
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="150sp" />
 
 
             </LinearLayout>
