@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
-
+    val today = getCurrentDate()
     // Cache all events form the database using LiveData.
     val allEvents: LiveData<List<ScheduleEvent>> = scheduleEventDao.getAllEvents().asLiveData()
-
+    val TodayAndFutureEvents: LiveData<List<ScheduleEvent>> = scheduleEventDao.getTodayAndFutureEvent(today).asLiveData()
     // Cache future/past events from the database by comparing with current date
-    val today = getCurrentDate()
+    //val today = getCurrentDate()
+
 
     val pickedDate = MutableLiveData<String>()
     val pickedTimeFrom = MutableLiveData<String>()

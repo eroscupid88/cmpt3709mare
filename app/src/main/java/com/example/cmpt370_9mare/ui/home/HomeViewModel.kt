@@ -40,12 +40,12 @@ class HomeViewModel() : ViewModel() {
         return stringFormatToday(today)
     }
 
-    fun getPreviousDay() {
+    fun monthDisplay() {
         today = today.plusDays(-1)
         _currentDay.value = stringDisplayToday(today)
     }
 
-    fun getNextDay() {
+    fun dayDisplay() {
         today = today.plusDays(1)
         _currentDay.value = stringDisplayToday(today)
     }

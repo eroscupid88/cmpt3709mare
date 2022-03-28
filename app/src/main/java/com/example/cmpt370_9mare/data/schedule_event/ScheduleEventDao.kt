@@ -55,4 +55,7 @@ interface ScheduleEventDao {
 
     @Query("SELECT DISTINCT date FROM event WHERE date < :currentDate ORDER by date DESC")
     fun getPastDates(currentDate: String): Flow<List<String>>
+
+    @Query("SELECT * FROM event WHERE date >= :currentDate ORDER by date")
+    fun getTodayAndFutureEvent(currentDate: String): Flow<List<ScheduleEvent>>
 }
