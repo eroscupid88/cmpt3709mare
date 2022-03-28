@@ -2,6 +2,7 @@ package com.example.cmpt370_9mare.ui.dashboard
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.view.*
@@ -119,19 +120,28 @@ class DashboardFragment : Fragment() {
         // Specify the type of input expected
         input.hint = "Enter Event Name"
         input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
 
         // Set up the buttons
-        builder.setPositiveButton(R.string.search) { _, _ ->
-            val eventName = String.format("%%${input.text}%%")
-            if (eventName != "%%") {
-                viewModel.searchEvent(eventName)
-                showEvents(SEARCH)
-            } else {
-                initializeDashboardAdapter(MutableLiveData())
-            }
-        }
+        builder.setView(input)
+            .setPositiveButton(R.string.search) { _, _ -> searchEventAndSetAdapter(input.text) }
             .setNeutralButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
+            .setOnKeyListener { dialog, keyCode, _ ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    searchEventAndSetAdapter(input.text)
+                    dialog.dismiss()
+                    true
+                } else false
+            }
             .show()
+    }
+
+    private fun searchEventAndSetAdapter(name: Editable) {
+        val eventName = String.format("%%$name%%")
+        if (eventName != "%%") {
+            viewModel.searchEvent(eventName)
+            showEvents(SEARCH)
+        } else {
+            initializeDashboardAdapter(MutableLiveData())
+        }
     }
 }
