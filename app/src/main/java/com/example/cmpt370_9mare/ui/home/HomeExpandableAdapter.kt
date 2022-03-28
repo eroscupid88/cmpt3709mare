@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.example.cmpt370_9mare.databinding.EventItemBinding
-import com.example.cmpt370_9mare.databinding.EventViewBinding
 import com.example.cmpt370_9mare.databinding.GroupEventBinding
 
-class HomeExpandableAdapter  internal constructor(
+class HomeExpandableAdapter internal constructor(
     private val context: Context,
     private val titleList: List<String>,
     private val dataList: HashMap<String, List<String>>
@@ -50,11 +48,16 @@ class HomeExpandableAdapter  internal constructor(
         return false
     }
 
-    override fun getGroupView(listPosition: Int, isExpanded: Boolean, view: View?, parent: ViewGroup?): View {
+    override fun getGroupView(
+        listPosition: Int,
+        isExpanded: Boolean,
+        view: View?,
+        parent: ViewGroup?
+    ): View {
         var convertView = view
         val holder: GroupViewHolder
         if (convertView == null) {
-            groupBinding = GroupEventBinding.inflate(inflater,parent,false)
+            groupBinding = GroupEventBinding.inflate(inflater, parent, false)
             convertView = groupBinding.root
             holder = GroupViewHolder()
             holder.label = groupBinding.listEvent
@@ -68,16 +71,22 @@ class HomeExpandableAdapter  internal constructor(
 
     }
 
-    override fun getChildView(listPosition: Int, expandableListPosition: Int, isLastChild: Boolean, view: View?, parent: ViewGroup?): View {
+    override fun getChildView(
+        listPosition: Int,
+        expandableListPosition: Int,
+        isLastChild: Boolean,
+        view: View?,
+        parent: ViewGroup?
+    ): View {
         var convertView = view
         val holder: ItemViewHolder
-        if (convertView == null){
-            itemBinding = EventItemBinding.inflate(inflater,parent,false)
+        if (convertView == null) {
+            itemBinding = EventItemBinding.inflate(inflater, parent, false)
             convertView = itemBinding.root
             holder = ItemViewHolder()
             holder.label = itemBinding.expandedListItem
             convertView.tag = holder
-        }else{
+        } else {
             holder = convertView.tag as ItemViewHolder
         }
 

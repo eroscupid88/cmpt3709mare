@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
                 val listData = getData(it)
                 titleList = ArrayList(listData.keys)
                 adapter = HomeExpandableAdapter(
-                    this.requireContext().applicationContext,
+                    requireContext(),
                     titleList as ArrayList<String>,
                     listData
                 )
@@ -96,8 +96,8 @@ class HomeFragment : Fragment() {
         if (todayEvents.isEmpty()) {
             todayEvents.add("No events for Today")
             if (listSchedule.isNotEmpty()) {
-            nextEvent.add(listSchedule[0].date + "            " + listSchedule[0].title)}
-            else{
+                nextEvent.add(listSchedule[0].date + "            " + listSchedule[0].title)
+            } else {
                 nextEvent.add("No event for future")
             }
         } else {
