@@ -21,7 +21,10 @@
     <color name="Blue">#0288D1</color>
     <color name="Blue_dark">#005B9F</color>
     <color name="Blue_light">#81D4FA</color>
-
+    <color name="first">#2A2438</color>
+    <color name="second">#352F44</color>
+    <color name="third">#5C5470</color>
+    <color name="forth">#DbD8E3</color>
 
 
     <color name="grey">#DBD8E3</color>
