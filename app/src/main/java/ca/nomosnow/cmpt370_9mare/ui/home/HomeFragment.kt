@@ -1,25 +1,19 @@
 package ca.nomosnow.cmpt370_9mare.ui.home
 
-import androidx.fragment.app.activityViewModels
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListAdapter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import ca.nomosnow.cmpt370_9mare.R
+import androidx.fragment.app.activityViewModels
 import ca.nomosnow.cmpt370_9mare.ScheduleApplication
 import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModel
 import ca.nomosnow.cmpt370_9mare.ScheduleEventViewModelFactory
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
-
 import ca.nomosnow.cmpt370_9mare.databinding.FragmentHomeBinding
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.reduce
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -37,7 +31,6 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private lateinit var recyclerView: RecyclerView
     private var adapter: ExpandableListAdapter? = null
     private var titleList: List<String>? = null
 
@@ -66,7 +59,7 @@ class HomeFragment : Fragment() {
         }
 
         val expandableListView = binding.expandableListView
-        viewModel.TodayAndFutureEvents.observe(this.viewLifecycleOwner) { items ->
+        viewModel.todayAndFutureEvents.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 val listData = getData(it)
                 titleList = ArrayList(listData.keys)
@@ -119,14 +112,6 @@ class HomeFragment : Fragment() {
         return listData
     }
 
-
-    fun monthDisplay() {
-        homeViewModel.monthDisplay()
-    }
-
-    fun dayDisplay() {
-        homeViewModel.dayDisplay()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

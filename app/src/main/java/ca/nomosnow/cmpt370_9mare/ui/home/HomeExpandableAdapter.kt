@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import ca.nomosnow.cmpt370_9mare.databinding.EventItemBinding
-import ca.nomosnow.cmpt370_9mare.databinding.EventViewBinding
 import ca.nomosnow.cmpt370_9mare.databinding.GroupEventBinding
 
 class HomeExpandableAdapter internal constructor(

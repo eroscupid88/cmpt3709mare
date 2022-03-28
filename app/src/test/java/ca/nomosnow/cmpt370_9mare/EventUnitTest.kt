@@ -1,4 +1,4 @@
-package ca.example.cmpt370_9mare
+package ca.nomosnow.cmpt370_9mare
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,7 +17,8 @@ import org.junit.runner.RunWith
 class EventUnitTest {
 
     @get:Rule
-    val activityRule = ActivityScenarioRule(ca.nomosnow.cmpt370_9mare.MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
