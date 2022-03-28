@@ -41,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> createEventFragment.cancelEvent()}"
                     android:text="@string/cancel"
-                    android:textColor="@color/black"
-                    app:strokeColor="@color/blue" />
+                    android:textColor="?attr/colorSecondaryVariant"
+                    app:strokeColor="?attr/colorSecondary" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -56,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> createEventFragment.createModifyEvent()}"
                     android:text="@string/add"
-                    android:textColor="@color/black"
-                    app:strokeColor="@color/blue" />
+                    android:textColor="?attr/colorSecondaryVariant"
+                    app:strokeColor="?attr/colorSecondary" />
             </LinearLayout>
 
             <LinearLayout
@@ -359,9 +359,8 @@
                 android:layout_marginTop="@dimen/margin"
                 android:onClick="@{()->createEventFragment.deleteEvent()}"
                 android:text="@string/delete"
-                android:textColor="@color/red_900_light"
                 android:visibility="gone"
-                app:strokeColor="@color/red_900_light"
+                app:strokeColor="?attr/colorPrimary"
                 tools:visibility="visible" />
         </LinearLayout>
     </ScrollView>

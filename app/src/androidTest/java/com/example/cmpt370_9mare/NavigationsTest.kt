@@ -37,7 +37,7 @@ class NavigationTests : BaseTest() {
         val mockNavController = mock(NavController::class.java)
         val scenario = launchFragmentInContainer<CalendarFragment>(
             bundleOf("eventID" to -1),
-            themeResId = R.style.Theme_Cmpt3709mare
+            themeResId = R.style.Theme_9mare
         )
         scenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
@@ -57,7 +57,7 @@ class NavigationTests : BaseTest() {
         val scenario =
             launchFragmentInContainer<CreateEventFragment>(
                 bundleOf("eventID" to -1),
-                themeResId = R.style.Theme_Cmpt3709mare
+                themeResId = R.style.Theme_9mare
             )
         scenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
@@ -77,7 +77,7 @@ class NavigationTests : BaseTest() {
         val scenario =
             launchFragmentInContainer<CreateEventFragment>(
                 bundleOf("eventID" to -1),
-                themeResId = R.style.Theme_Cmpt3709mare
+                themeResId = R.style.Theme_9mare
             )
         scenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
