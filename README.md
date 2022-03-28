@@ -1,6 +1,7 @@
 # CMPT370-9MARE
 
 Software Engineering Project for CMPT370 Winter 2022
+Designed by Dillon, Lucius, Nam, Kyle, and Abdul
 
 ## Installation Instructions
 1. Download the latest version of AndroidStudio (installation steps for IDE can be found at https://developer.android.com/studio/install)
