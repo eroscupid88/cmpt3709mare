@@ -2,7 +2,6 @@ package ca.nomosnow.cmpt370_9mare
 
 import android.view.KeyEvent
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -10,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.security.InvalidParameterException
 
 /**
  * NOTE: TEST SUITE DOES NOT REFLECT ModifyTest AS MOST TESTING IS CHECKING VALIDATION
