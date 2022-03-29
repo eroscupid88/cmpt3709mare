@@ -1,6 +1,7 @@
 package ca.nomosnow.cmpt370_9mare
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -10,13 +11,20 @@ import androidx.test.filters.LargeTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
+/**
+ * This test suite ensures the functionality of "List of Events" (Dashboard) fragment
+ * which shows past/future events and gives user an option to search for an event using its name
+ */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class DashboardTest : BaseTest() {
+
+    /**
+     * Check default view which is "future events"
+     */
     @Test
-    fun dashboard_event_list() {
-        val testTitle = "Test Dashboard Default List"
+    fun d1_dashboard_event_list() {
+        val testTitle = "D1 - Default List"
 
         createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -25,9 +33,12 @@ class DashboardTest : BaseTest() {
         deleteEvent(testTitle)
     }
 
+    /**
+     * Check view when picking "future events" option
+     */
     @Test
-    fun dashboard_future_events() {
-        val testTitle = "Test Dashboard Future Events"
+    fun d2_dashboard_future_events() {
+        val testTitle = "D2 - Future Event"
 
         createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -37,9 +48,12 @@ class DashboardTest : BaseTest() {
         deleteEvent(testTitle)
     }
 
+    /**
+     * Check view when picking "past events" option
+     */
     @Test
-    fun dashboard_past_events() {
-        val testTitle = "Test Dashboard Past Events"
+    fun d3_dashboard_past_events() {
+        val testTitle = "D3 - Past Event"
 
         createEvent(testTitle, PAST)
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -49,9 +63,12 @@ class DashboardTest : BaseTest() {
         deleteEvent(testTitle, true)
     }
 
+    /**
+     * Check "search event" functionality
+     */
     @Test
-    fun dashboard_search_event() {
-        val testTitle = "Test Dashboard Search Event"
+    fun d4_dashboard_search_event() {
+        val testTitle = "D4 - Search Event"
 
         createEvent(testTitle)
         onView(withId(R.id.navigation_dashboard)).perform(click())
@@ -60,5 +77,23 @@ class DashboardTest : BaseTest() {
         onView(withText("SEARCH")).perform(click())
         onView(withText(testTitle)).check(matches(isDisplayed()))
         deleteEvent(testTitle)
+    }
+
+    /**
+     * Edge case of "search event": input empty string
+     */
+    @Test
+    fun d5_dashboard_search_empty_name() {
+        val testTitle = "D5 - Search with Empty Name"
+
+        createEvent(testTitle)
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        onView(withId(R.id.search_event)).perform(click())
+        onView(withText("SEARCH")).perform(click())
+        try {
+            onView(withText(testTitle)).check(matches(isDisplayed()))
+        } catch (e: NoMatchingViewException) {
+            deleteEvent(testTitle)
+        }
     }
 }

@@ -68,6 +68,7 @@ open class BaseTest {
     fun deleteEvent(title: String, past: Boolean = false) {
         onView(withId(R.id.navigation_dashboard)).perform(click())
         if (past) onView(withId(R.id.show_past_events)).perform(click())
+        else onView(withId(R.id.show_future_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(
             ScrollToBottom()
         )
