@@ -56,6 +56,9 @@ class CreateEventFragmentInit(
         view.setAdapter(ArrayAdapter(fragment.requireContext(), R.layout.dropdown_item, objects))
     }
 
+    /**
+     * Handler for setting up button, switch, and parameter listeners
+     */
     fun setupListeners() {
         binding.apply {
 
@@ -66,9 +69,11 @@ class CreateEventFragmentInit(
                 if (isCheck) conflictCheck.isChecked = false
                 preloadTime()
             }
+            // Listener for "Repeat" Toggle to repeat events
             conflictCheck.setOnCheckedChangeListener { _, isCheck ->
                 if (isCheck && fragment.eventId <= 0) repeatButton.isChecked = false
             }
+            // Listener for "Conflict" Toggle to check for conflicting events
             repeatButton.setOnCheckedChangeListener { _, isCheck ->
                 if (isCheck) conflictCheck.isChecked = false
                 repeatSpinners.isVisible = isCheck
@@ -86,6 +91,7 @@ class CreateEventFragmentInit(
                 )
             }
 
+            // Repeat Listener for changing text field based on parameter input
             spRepetitionIntervalAutocomplete.addTextChangedListener {
                 repeatDescription.text =
                     when (binding.spRepetitionIntervalAutocomplete.text.toString()) {
@@ -97,6 +103,9 @@ class CreateEventFragmentInit(
         }
     }
 
+    /**
+     * Function to preload the timeTo input with a set time of 23:59 on opening
+     */
     fun preloadTime() {
         fragment.scheduleEventShareViewModel.pickTimeFrom(
             LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
