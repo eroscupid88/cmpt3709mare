@@ -11,13 +11,12 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.endsWith
 import org.hamcrest.Matcher
 import org.junit.Rule
 
 open class BaseTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(ca.nomosnow.cmpt370_9mare.MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     companion object {
         const val FUTURE = "future"
@@ -37,40 +36,40 @@ open class BaseTest {
             else -> date
         }
 
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.navigation_calendar)).perform(click())
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.floatingActionButton)).perform(click())
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.input_title)).perform(typeText(title))
+        onView(withId(R.id.navigation_calendar)).perform(click())
+        onView(withId(R.id.floatingActionButton)).perform(click())
+        onView(withId(R.id.input_title)).perform(typeText(title))
             .perform(pressKey(KeyEvent.KEYCODE_ENTER))
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputDate)).perform(
+        onView(withId(R.id.inputDate)).perform(
             SetButtonText(
                 randomDate
             )
         )
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputTimeFrom)).perform(
+        onView(withId(R.id.inputTimeFrom)).perform(
             SetButtonText(
                 timeFrom
             )
         )
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.inputTimeTo)).perform(
+        onView(withId(R.id.inputTimeTo)).perform(
             SetButtonText(
                 timeTo
             )
         )
         if (conflictCheck) {
-            onView(withId(ca.nomosnow.cmpt370_9mare.R.id.conflict_check)).perform(click())
+            onView(withId(R.id.conflict_check)).perform(click())
         }
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.submit_create_event)).perform(click())
+        onView(withId(R.id.submit_create_event)).perform(click())
     }
 
     fun deleteEvent(title: String, past: Boolean = false) {
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.navigation_dashboard)).perform(click())
-        if (past) onView(withId(ca.nomosnow.cmpt370_9mare.R.id.show_past_events)).perform(click())
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.event_list_recycler_view)).perform(
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        if (past) onView(withId(R.id.show_past_events)).perform(click())
+        onView(withId(R.id.event_list_recycler_view)).perform(
             ScrollToBottom()
         )
         onView(withText(title)).perform(click())
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.edit_fab)).perform(click())
-        onView(withId(ca.nomosnow.cmpt370_9mare.R.id.delete_event)).perform(scrollTo(), click())
+        onView(withId(R.id.edit_fab)).perform(click())
+        onView(withId(R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
     }
 

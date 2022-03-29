@@ -37,15 +37,19 @@ class CreateEventValidation(
     }
 
     private fun validateTimeInput(): Boolean {
-        return if (binding.inputTimeFrom.text.toString() != fragment.getString(R.string.all_day) && binding.inputTimeFrom.text.toString() != "" && binding.inputTimeTo.text.toString() != "") {
-            if (LocalTime.parse(binding.inputTimeFrom.text.toString()) >= LocalTime.parse(binding.inputTimeTo.text.toString())) {
-                binding.dateTimeLayout.error = "TimeTo must be later than TimeFrom"
-                false
-            } else {
-                binding.dateTimeLayout.isErrorEnabled = false
-                true
+        binding.apply {
+            return when {
+                allDay.isChecked -> true
+                inputTimeFrom.text.toString() >= inputTimeTo.text.toString() -> {
+                    dateTimeLayout.error = "TimeTo must be later than TimeFrom"
+                    false
+                }
+                else -> {
+                    dateTimeLayout.isErrorEnabled = false
+                    true
+                }
             }
-        } else true
+        }
     }
 
 
@@ -81,8 +85,8 @@ class CreateEventValidation(
     }
 
     /*
-* applying text watcher on each text field
-*/
+    * applying text watcher on each text field
+    */
     inner class TextFieldValidation(private val view: View) : TextWatcher {
         override fun afterTextChanged(s: Editable?) {}
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

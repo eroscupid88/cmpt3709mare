@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_home_fragment"
-    android:layout_marginTop="@dimen/margin"
+    android:layout_marginTop="2dp"
     tools:context=".ui.home.HomeFragment">
 
     <data>
@@ -17,7 +17,6 @@
             type="ca.nomosnow.cmpt370_9mare.ui.home.HomeFragment" />
     </data>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,50 +27,56 @@
             android:layout_width="match_parent"
             android:layout_height="300dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@color/red_900"
-                android:orientation="vertical">
+                android:paddingTop="@dimen/base_margin">
+
+                <ImageView
+                    android:id="@+id/calendar_bar"
+                    android:layout_width="245dp"
+                    android:layout_height="120dp"
+                    android:contentDescription="@string/title_calendar"
+                    android:src="@drawable/calendar_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/this_month"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="50sp" />
+                    android:textSize="35sp"
+                    app:layout_constraintBottom_toBottomOf="@id/calendar_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="September" />
 
                 <TextView
                     android:id="@+id/day_number"
-                    android:layout_width="200sp"
-                    android:layout_height="200sp"
-                    android:layout_marginStart="100sp"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="150sp" />
-
-
-            </LinearLayout>
-
-
+                    android:layout_width="244dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/border"
+                    android:textAlignment="center"
+                    android:textSize="110sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/calendar_bar"
+                    tools:text="31" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
 
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:dividerHeight="10dp" />
 
     </LinearLayout>
-
-
 </layout>
 
 

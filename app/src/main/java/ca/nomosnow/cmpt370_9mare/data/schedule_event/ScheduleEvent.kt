@@ -39,8 +39,3 @@ fun getCurrentDate(): String {
 
     return String.format("$year-%02d-%02d", month, day)
 }
-
-/**
- * Returns the passed in price in currency format.
- */
-fun getFormattedTime(dayFrom: String, timeFrom: String): String = "At $dayFrom, $timeFrom"

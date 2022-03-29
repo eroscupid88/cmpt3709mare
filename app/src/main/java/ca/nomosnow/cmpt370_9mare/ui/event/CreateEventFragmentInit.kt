@@ -64,6 +64,7 @@ class CreateEventFragmentInit(
                 pickTime.isVisible = !isCheck
                 // Do not check for conflict if "All-Day" is selected
                 if (isCheck) conflictCheck.isChecked = false
+                preloadTime()
             }
             conflictCheck.setOnCheckedChangeListener { _, isCheck ->
                 if (isCheck && fragment.eventId <= 0) repeatButton.isChecked = false
@@ -110,7 +111,7 @@ class CreateEventFragmentInit(
         binding.apply {
             inputTitle.setText(event.title, TextView.BufferType.SPANNABLE)
             inputLocation.setText(event.location, TextView.BufferType.SPANNABLE)
-            groupMenuAutocomplete.setText(event.group)
+            groupMenuAutocomplete.setText(event.group, false)
             inputDate.text = event.date
             eventUrl.setText(event.url, TextView.BufferType.SPANNABLE)
             eventNotes.setText(event.notes, TextView.BufferType.SPANNABLE)
