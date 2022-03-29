@@ -33,7 +33,7 @@ Designed by Dillon, Lucius, Nam, Kyle, and Abdul
 23. In the search bar at the top search for "Animations", click on the first result and switch on the "Remove animations".
 24. Upon wiping the data and turning of animations, you can navigate to and click on the "Project" window (left side navigation bar of the IDE).
 25. Navigation in to the "/java" directory and right click the directory "/ca.nomosnow.cmpt370_9mare (androidTest)" selecting "Run 'Tests in ...'".
-26. NOTE: If encountering issues in either running or testing the app, consult the Demo Video for further explination.
+26. NOTE: If encountering issues in either running or testing the app, consult the Demo Video for further explanation.
 
 ## Gradle Commands (For running the app from a terminal window)
 

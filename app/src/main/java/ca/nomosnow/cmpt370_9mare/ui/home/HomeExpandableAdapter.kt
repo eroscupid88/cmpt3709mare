@@ -15,39 +15,51 @@ class HomeExpandableAdapter internal constructor(
     private val dataList: HashMap<String, List<String>>
 ) : BaseExpandableListAdapter() {
 
+    // Ensure bindings and inflater are within the current context
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private lateinit var groupBinding: GroupEventBinding
     private lateinit var itemBinding: EventItemBinding
 
+    /**
+     * GET functionalities
+     */
 
+    // Get size
     override fun getGroupCount(): Int {
         return this.titleList.size
     }
 
+    // Get children size
     override fun getChildrenCount(listPosition: Int): Int {
         return this.dataList[this.titleList[listPosition]]!!.size
     }
 
+    // Get all in group
     override fun getGroup(listPosition: Int): Any {
         return this.titleList[listPosition]
     }
 
+    // Get specific child
     override fun getChild(listPosition: Int, expandableListPosition: Int): Any {
         return this.dataList[this.titleList[listPosition]]!![expandableListPosition]
     }
 
+    // Get group ID
     override fun getGroupId(listPosition: Int): Long {
         return listPosition.toLong()
     }
 
+    // Get child ID
     override fun getChildId(listPosition: Int, expandableListPosition: Int): Long {
         return expandableListPosition.toLong()
     }
 
+    // Ensure stable ID is false
     override fun hasStableIds(): Boolean {
         return false
     }
 
+    // Get entire group as a view
     override fun getGroupView(
         listPosition: Int,
         isExpanded: Boolean,
@@ -71,6 +83,7 @@ class HomeExpandableAdapter internal constructor(
 
     }
 
+    // Get all children as a view
     override fun getChildView(
         listPosition: Int,
         expandableListPosition: Int,
@@ -95,10 +108,12 @@ class HomeExpandableAdapter internal constructor(
         return convertView
     }
 
+    // Make sure all children are selectable
     override fun isChildSelectable(p0: Int, p1: Int): Boolean {
         return true
     }
 
+    // Labeling for item and group view holders
     inner class ItemViewHolder {
         internal var label: TextView? = null
     }
