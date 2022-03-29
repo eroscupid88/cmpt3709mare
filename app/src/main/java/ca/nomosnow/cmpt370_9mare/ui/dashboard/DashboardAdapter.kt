@@ -17,6 +17,9 @@ import ca.nomosnow.cmpt370_9mare.ui.calendar.DailyEventCalendarAdapter
 class DashboardAdapter(private val fragmentManager: FragmentManager) :
     ListAdapter<DashboardGroupEvents, DashboardAdapter.DashboardViewHolder>(DiffCallback) {
 
+    /**
+     * call back Singleton object function to compare objects
+     */
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<DashboardGroupEvents>() {
             override fun areItemsTheSame(
@@ -45,6 +48,9 @@ class DashboardAdapter(private val fragmentManager: FragmentManager) :
         )
     }
 
+    /**
+     * binding item to view holder
+     */
     override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(current)

@@ -3,6 +3,10 @@ package ca.nomosnow.cmpt370_9mare.data.schedule_event
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+
+/**
+ * Dao query for database
+ */
 @Dao
 interface ScheduleEventDao {
     // ignore the conflict for now

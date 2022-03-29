@@ -2,7 +2,6 @@ package ca.nomosnow.cmpt370_9mare.ui.calendar
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,21 +17,33 @@ import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import ca.nomosnow.cmpt370_9mare.databinding.FragmentCalendarBinding
 import ca.nomosnow.cmpt370_9mare.ui.dashboard.ShowEventDetailsFragment
 
-private const val TAG = "CalendarFragment"
 
+/**
+ * Calendar Fragment
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
     // Binding
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * shared CalendarViewModel
+     */
     private val sharedViewModel: CalendarViewModel by activityViewModels {
         CalendarViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
     }
+
+    /**
+     * shared ScheduleEventViewModel
+     */
     private val sharedScheduleEvent: ScheduleEventViewModel by activityViewModels {
         ScheduleEventViewModelFactory((activity?.application as ScheduleApplication).database.scheduleEventDao())
     }
 
+    /**
+     * Create view function for the flagment
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +54,9 @@ class CalendarFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * onViewCreated bind data from calendar fragment layout
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -68,27 +82,34 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    /**
+     * destroy all binding data and view when leave fragment
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * Initialize MonthCalendarAdapter
+     */
     private fun initializeMonthCalendarAdapter() {
         binding.monthCalendarGrid.adapter =
             MonthCalendarAdapter(sharedViewModel, viewLifecycleOwner) {
                 sharedViewModel.setSelectDate(it.date)
                 initializeDailyEventAdapter(sharedScheduleEvent.eventFromDate(it.date.toString()))
-                Log.d(TAG, "clicked: ${it.date}")
             }
     }
 
+
+    /**
+     * Inlitialize DailyEventAdapter
+     */
     private fun initializeDailyEventAdapter(events: LiveData<List<ScheduleEvent>>) {
         val dailyEventAdapter = DailyEventCalendarAdapter {
-            Log.d(TAG, "clicked: ${it.title}")
 
             val action =
                 CalendarFragmentDirections.actionNavigationCalendarToCreateEventFragment(it.id)
-
             ShowEventDetailsFragment(it, action).show(
                 childFragmentManager,
                 ShowEventDetailsFragment.EVENT_DETAILS

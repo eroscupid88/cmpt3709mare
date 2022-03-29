@@ -90,7 +90,8 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
 
     /**
-     * Update event function
+     * Update event function take ScheduleEvent as an arguments to update event
+     * [event]: ScheduleEvent
      */
     fun updateItem(
         event: ScheduleEvent
@@ -100,34 +101,62 @@ class ScheduleEventViewModel(private val scheduleEventDao: ScheduleEventDao) : V
 
 
     /**
-     *  DeleteEvent
+     *  deleteItem function take ScheduleEvent as an argument to invoke deleteEvent
+     *  [event]: ScheduleEvent
      */
     fun deleteItem(event: ScheduleEvent) {
         deleteEvent(event)
     }
 
     /**
-     * Return an event which has the given ID
+     * eventFromId function take an Int id and return an event which has the given ID
+     * [id]: Int
+     * return: LiveData<ScheduleEvent>
      */
     fun eventFromId(id: Int): LiveData<ScheduleEvent> =
         scheduleEventDao.getScheduleEvent(id).asLiveData()
 
+    /**
+     * eventFromDate function take a String and return list of events
+     * [date]:String
+     * return LiveData<List<ScheduleEvent>>
+     */
     fun eventFromDate(date: String): LiveData<List<ScheduleEvent>> {
         return scheduleEventDao.getEventByDate(date).asLiveData()
     }
 
+    /**
+     * setter pickDate function take date as string and set value of pickedDate
+     * [date]:String
+     */
     fun pickDate(date: String) {
         pickedDate.value = date
     }
 
+    /**
+     * setter pickTimeFrom function take time as String and set PickedTimeFrom value
+     * [time]:String
+     */
     fun pickTimeFrom(time: String) {
         pickedTimeFrom.value = time
     }
 
+    /**
+     * setter pickTimeTo function take time as String and set pickedTimeTo value
+     * [time]:String
+     */
     fun pickTimeTo(time: String) {
         pickedTimeTo.value = time
     }
 
+    /**
+     * eventConflicts function take date, timeFrom,timeTo,EventId and return live list of Schedule Event
+     * [date]:String
+     * [timeFrom]:String
+     * [timeTo]:String
+     * [eventId]:Int
+     * return Flow<List<ScheduleEvent>>
+     */
     fun eventConflicts(
         date: String,
         timeFrom: String,

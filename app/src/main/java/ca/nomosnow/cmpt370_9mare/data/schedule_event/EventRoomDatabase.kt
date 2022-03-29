@@ -5,11 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+/**
+ * database
+ */
 @Database(entities = [ScheduleEvent::class], version = 1, exportSchema = false)
 abstract class EventRoomDatabase : RoomDatabase() {
 
     abstract fun scheduleEventDao(): ScheduleEventDao
 
+    /**
+     * Singleton object
+     */
     companion object {
         @Volatile
         private var INSTANCE: EventRoomDatabase? = null
