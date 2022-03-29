@@ -34,6 +34,7 @@ Designed by Dillon, Lucius, Nam, Kyle, and Abdul
 24. Upon wiping the data and turning of animations, you can navigate to and click on the "Project" window (left side navigation bar of the IDE).
 25. Navigation in to the "/java" directory and right click the directory "/ca.nomosnow.cmpt370_9mare (androidTest)" selecting "Run 'Tests in ...'".
 26. NOTE: If encountering issues in either running or testing the app, consult the Demo Video for further explanation.
+27. ADDITION: All instrumental tests are performance related. In some cases where the app is overloaded with information or lag is induced by the user through background processes then errors may occur and tests may fail. Please restart and re-wipe data and re-attempt tests if encountering this issue.
 
 ## Gradle Commands (For running the app from a terminal window)
 
