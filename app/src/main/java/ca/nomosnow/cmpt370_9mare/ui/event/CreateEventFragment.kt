@@ -3,7 +3,6 @@ package ca.nomosnow.cmpt370_9mare.ui.event
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,9 +24,6 @@ import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarViewModel
 import ca.nomosnow.cmpt370_9mare.ui.calendar.CalendarViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
-
-private const val TAG = "createEventFragment"
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventFragment : Fragment() {
@@ -53,6 +49,7 @@ class CreateEventFragment : Fragment() {
     private val navigationArgs: CreateEventFragmentArgs by navArgs()
     var eventId = 0
 
+    // Sub-classes for createEventFragment functionalities
     private val initialization get() = CreateEventFragmentInit(this, binding)
     private val validation get() = CreateEventValidation(this, binding)
     private val inputs get() = CreateEventInputHandler(this, binding)
@@ -140,33 +137,32 @@ class CreateEventFragment : Fragment() {
         }
     }
 
-    /*
-        Handle for all creation and modifications of events.
+    /**
+     *  Handler for all creation and modifications of events within the
+     *  CreateEventFragment.
      */
     fun createModifyEvent() {
+        // No Conflict Checks
         if (!binding.conflictCheck.isChecked) {
-            if (eventId > 0) {
+            if (eventId > 0) { // Update/Modify Event
                 inputs.updateEvent()
-            } else {
+            } else { // Add Event
                 inputs.addNewEvent()
             }
-        } else {
+        } else { // Conflict Checks
             inputs.apply {
-                Log.d(TAG, "$TAG: $date, $timeFrom, $timeTo, $eventId")
+                // Begin a coroutine to wait on the Query to database to finish
                 lifecycle.coroutineScope.launch {
                     scheduleEventShareViewModel.eventConflicts(date, timeFrom, timeTo, eventId)
                         .collect {
                             when {
-                                it.isNotEmpty() -> {
-                                    Log.i(TAG, "$TAG: Conflicts!")
+                                it.isNotEmpty() -> { // Query came back with 1+ conflicting events
                                     validation.showConflictDialog(it)
                                 }
-                                eventId > 0 -> {
-                                    Log.i(TAG, "$TAG: update Event button was clicked")
+                                eventId > 0 -> { // No conflicts + Modify/Update Event
                                     updateEvent()
                                 }
-                                else -> {
-                                    Log.i(TAG, "$TAG: add Event button was clicked")
+                                else -> { // No conflicts + Add Event
                                     addNewEvent()
                                 }
                             }
@@ -177,9 +173,10 @@ class CreateEventFragment : Fragment() {
     }
 
     /**
-     * Delete Event
+     * Handler for deleting event confirmation pop-up
      */
     fun deleteEvent() {
+        // Build dialog with confirm and cancel buttons
         val builder = AlertDialog.Builder(this.context)
         builder.setMessage("Delete the current event?")
             .setCancelable(false)
@@ -191,21 +188,28 @@ class CreateEventFragment : Fragment() {
             .show()
     }
 
+    /**
+     * Button Listeners
+     */
+
+    // User wants to stop creating/modifying event
     fun cancelEvent() {
-        Log.i(TAG, "$TAG: cancel Event button was clicked")
         findNavController().navigateUp()
     }
 
+    // User wants to edit date
     fun showDatePicker() = DatePickerFragment(inputs.date).show(
         childFragmentManager,
         DatePickerFragment.DATE_PICKER
     )
 
+    // User wants to edit timeFrom
     fun showTimeFromPicker() = TimePickerFragment(inputs.timeFrom).show(
         childFragmentManager,
         TimePickerFragment.TIME_FROM_PICKER
     )
 
+    // User wants to edit timeTo
     fun showTimeToPicker() = TimePickerFragment(inputs.timeTo).show(
         childFragmentManager,
         TimePickerFragment.TIME_TO_PICKER
