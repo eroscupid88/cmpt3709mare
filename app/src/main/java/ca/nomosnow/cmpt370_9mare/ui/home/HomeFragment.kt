@@ -19,35 +19,40 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 class HomeFragment : Fragment() {
 
+    // Initialize Bindings and ViewModels
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
-
     private val homeViewModel: HomeViewModel by activityViewModels()
-
     private val viewModel: ScheduleEventViewModel by activityViewModels {
         ScheduleEventViewModelFactory(
             (activity?.application as ScheduleApplication).database.scheduleEventDao()
         )
     }
 
+    // Initialize adapter
     private var adapter: ExpandableListAdapter? = null
     private var titleList: List<String>? = null
 
 
+    /**
+     * Bind layout and view to binding
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
-
     }
 
+    /**
+     * Apply necessary inputs based on current date and time
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Set current date and time to binding
         val today = LocalDate.now().dayOfMonth
         val month = LocalDate.now().month
         binding.apply {
@@ -58,9 +63,10 @@ class HomeFragment : Fragment() {
             thisMonth.text = month.toString()
         }
 
+        // Set up expandable "Next Events" and "Todays Event" functionality
         val expandableListView = binding.expandableListView
         viewModel.todayAndFutureEvents.observe(this.viewLifecycleOwner) { items ->
-            items.let {
+            items.let { // Put all children (Schedule Events) into expandable view
                 val listData = getData(it)
                 titleList = ArrayList(listData.keys)
                 adapter = HomeExpandableAdapter(
@@ -73,6 +79,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Getting all data and creating correct expandable containers
+     */
     private fun getData(listSchedule: List<ScheduleEvent>): HashMap<String, List<String>> {
         val listData = HashMap<String, List<String>>()
         val todayEvents = ArrayList<String>()
@@ -84,8 +93,8 @@ class HomeFragment : Fragment() {
                 todayEvents.add(event.time_from + " to " + event.time_to + "      " + event.title)
                 lastEvent = event.id
             }
-            //if (event.id > homeViewModel.getToday(). )
         }
+        // No events on current day
         if (todayEvents.isEmpty()) {
             todayEvents.add("No events for Today")
             if (listSchedule.isNotEmpty()) {
@@ -93,13 +102,14 @@ class HomeFragment : Fragment() {
             } else {
                 nextEvent.add("No event for future")
             }
-        } else {
+        } else { // 1+ events on current day
             for (event in listSchedule) {
                 if (event.id == lastEvent + 1) {
                     nextEvent.add(event.date + "            " + event.title)
                 }
             }
         }
+        // No events in the future
         if (nextEvent.isEmpty()) {
             nextEvent.add("No event for the Future")
         }
@@ -108,11 +118,12 @@ class HomeFragment : Fragment() {
         listData["Today Event"] = todayEvents
         listData["Next Event"] = nextEvent
 
-
         return listData
     }
 
-
+    /**
+     * Destroy bindings if done with fragment
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

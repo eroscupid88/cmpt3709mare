@@ -62,12 +62,15 @@ open class BaseTest {
         }
         onView(withId(R.id.group_menu_autocomplete)).perform(click())
         onView(withText(eventGroup)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        Thread.sleep(50)
         onView(withId(R.id.submit_create_event)).perform(click())
     }
 
     fun deleteEvent(title: String, past: Boolean = false) {
+        Thread.sleep(50)
         onView(withId(R.id.navigation_dashboard)).perform(click())
         if (past) onView(withId(R.id.show_past_events)).perform(click())
+        else onView(withId(R.id.show_future_events)).perform(click())
         onView(withId(R.id.event_list_recycler_view)).perform(
             ScrollToBottom()
         )
