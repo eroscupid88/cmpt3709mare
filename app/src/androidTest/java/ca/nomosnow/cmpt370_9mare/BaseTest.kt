@@ -8,6 +8,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.CoreMatchers.allOf
@@ -29,6 +30,7 @@ open class BaseTest {
         conflictCheck: Boolean = false,
         timeFrom: String = "04:02",
         timeTo: String = "12:16",
+        eventGroup: String = "Personal"
     ) {
         val randomDate = when (date) {
             FUTURE -> "${(2023..9999).random()}-04-02"
@@ -58,6 +60,8 @@ open class BaseTest {
         if (conflictCheck) {
             onView(withId(R.id.conflict_check)).perform(click())
         }
+        onView(withId(R.id.group_menu_autocomplete)).perform(click())
+        onView(withText(eventGroup)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.submit_create_event)).perform(click())
     }
 
