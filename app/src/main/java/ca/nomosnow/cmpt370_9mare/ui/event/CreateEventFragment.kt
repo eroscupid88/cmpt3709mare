@@ -98,11 +98,14 @@ class CreateEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Bind view models to displayed fragment
         binding.apply {
             viewModel = scheduleEventShareViewModel
             createEventFragment = this@CreateEventFragment
         }
 
+        // Check to see if passing an ID to the fragment (Update Case)
+        // If so specialize fragment for modifying events
         if (eventId > 0) {
             binding.apply {
                 submitCreateEvent.text = getString(R.string.update_button_text)
@@ -121,6 +124,7 @@ class CreateEventFragment : Fragment() {
             binding.repeatDescription.text = getString(R.string.repeat_description, "Day")
         }
 
+        // Init all other inputs/validations
         initialization.setupListeners()
         initialization.setInputBinding()
         validation.setUpValidations()
@@ -128,6 +132,7 @@ class CreateEventFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // Take current date and time and apply it to the event parameters
         scheduleEventShareViewModel.apply {
             pickedDate.observe(viewLifecycleOwner) { binding.inputDate.text = it }
             pickedTimeFrom.observe(viewLifecycleOwner) { binding.inputTimeFrom.text = it }
@@ -135,6 +140,9 @@ class CreateEventFragment : Fragment() {
         }
     }
 
+    /*
+        Handle for all creation and modifications of events.
+     */
     fun createModifyEvent() {
         if (!binding.conflictCheck.isChecked) {
             if (eventId > 0) {
