@@ -2,6 +2,7 @@ package ca.nomosnow.cmpt370_9mare
 
 import android.view.KeyEvent
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -9,6 +10,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.security.InvalidParameterException
+
+/**
+ * NOTE: TEST SUITE DOES NOT REFLECT ModifyTest AS MOST TESTING IS CHECKING VALIDATION
+ */
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -160,5 +166,32 @@ class ModifyTest : BaseTest() {
         // Delete event
         onView(withId(R.id.delete_event)).perform(scrollTo(), click())
         onView(withText("Confirm")).perform(click())
+    }
+
+    /*
+        This test ensures that if an invalid input is entered when modifying an
+        event we cannot update the event.
+     */
+    @Test
+    fun TC5_invalid_input_with_modify() {
+        val testTitle = "TC5 First event"
+
+        // Create and enter event
+        createEvent(testTitle)
+        onView(withId(R.id.navigation_dashboard)).perform(click())
+        onView(withId(R.id.event_list_recycler_view)).perform(ScrollToBottom())
+
+        // Modify event with a incorrect timing given
+        onView(withText(testTitle)).perform(click())
+        onView(withText("Edit")).perform(click())
+        onView(withId(R.id.inputTimeTo)).perform(SetButtonText("00:00"))
+        // Try to submit an invalid event, catch error if thrown and delete event
+        try {
+            onView(withId(R.id.submit_create_event)).perform(click())
+        }
+        catch (e: Throwable) {
+            onView(withId(R.id.delete_event)).perform(scrollTo(), click())
+            onView(withText("Confirm")).perform(click())
+        }
     }
 }
