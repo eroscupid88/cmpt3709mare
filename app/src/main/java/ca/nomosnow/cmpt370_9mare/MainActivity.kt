@@ -12,6 +12,9 @@ import ca.nomosnow.cmpt370_9mare.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
+/**
+ * Main activity of app to host navigation menu
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController

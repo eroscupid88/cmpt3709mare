@@ -177,4 +177,158 @@ class ScheduleEventDaoTest {
 
     }
 
+
+    /**
+     * Testing searchDatesByEventName from Dao Object
+     */
+    @Test
+    @Throws(IOException::class)
+    fun searchDatesByEventNameTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(
+                1,
+                "event1",
+                "Saskatoon",
+                "",
+                "2022-05-05",
+                "10:15",
+                "15:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        assertEquals(
+            scheduleEvent1.date,
+            scheduleEventDao.searchDatesByEventName("event1").first()[0]
+        )
+    }
+
+
+    /**
+     * testing getEventFromDateAndName from ScheduleEventDao Object
+     */
+    @Test
+    @Throws(IOException::class)
+    fun getEventFromDatesAndNameTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(
+                1,
+                "event1",
+                "Saskatoon",
+                "",
+                "2022-05-05",
+                "10:15",
+                "15:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        assertEquals(
+            scheduleEvent1.time_to,
+            scheduleEventDao.getEventFromDateAndName("2022-05-05", "event1").first()[0].time_to
+        )
+    }
+
+
+    /**
+     * function test getFutureDates from ScheduleEventDao Object
+     */
+    @Test
+    @Throws(IOException::class)
+    fun getFutureDatesTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(
+                1,
+                "event1",
+                "Saskatoon",
+                "",
+                "2022-05-05",
+                "10:15",
+                "15:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+
+        val currentDate = "2022-05-04"
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        assertEquals(
+            scheduleEvent1.date,
+            scheduleEventDao.getFutureDates(currentDate).first()[0]
+        )
+    }
+
+
+    /**
+     * function test getPastDates from ScheduleEventDao
+     */
+    @Test
+    @Throws(IOException::class)
+    fun getPastDatesTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(
+                1,
+                "event1",
+                "Saskatoon",
+                "",
+                "2022-05-03",
+                "10:15",
+                "15:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+
+        val currentDate = "2022-05-04"
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        assertEquals(
+            scheduleEvent1.date,
+            scheduleEventDao.getPastDates(currentDate).first()[0]
+        )
+    }
+
+
+    /**
+     * function test getTodayAndFutureEvent from ScheduleEventDao
+     */
+    @Test
+    @Throws(IOException::class)
+    fun getTodayAndFutureEventTest(): Unit = runBlocking {
+        val scheduleEvent1 =
+            ScheduleEvent(
+                1,
+                "event1",
+                "Saskatoon",
+                "",
+                "2022-05-04",
+                "10:15",
+                "15:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+        val scheduleEvent2 =
+            ScheduleEvent(
+                2,
+                "event2",
+                "Saskatoon",
+                "",
+                "2022-05-03",
+                "16:15",
+                "18:15",
+                "https://nomosnow.ca",
+                "Just a Notes"
+            )
+
+        val currentDate = "2022-05-03"
+        scheduleEventDao.insertEvent(scheduleEvent1)
+        scheduleEventDao.insertEvent(scheduleEvent2)
+        assertEquals(
+            scheduleEvent2.date,
+            scheduleEventDao.getTodayAndFutureEvent(currentDate).first()[0].date
+        )
+        assertEquals(
+            scheduleEvent1.date,
+            scheduleEventDao.getTodayAndFutureEvent(currentDate).first()[1].date
+        )
+    }
+
+
 }

@@ -78,6 +78,9 @@ class ConflictTest : BaseTest() {
         deleteEvent(testTitle)
     }
 
+    /**
+     * testing multiple conflict event to see if conflict events functionality work!
+     */
     @Test
     fun TC5_multiple_conflicting_events() {
         val conflictDate = "${(2023..9999).random()}-04-02"

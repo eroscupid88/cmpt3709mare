@@ -4,6 +4,9 @@ import androidx.lifecycle.*
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEventDao
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.getCurrentDate
 
+/**
+ * DashboardViewModel is a shared model across entire app
+ */
 class DashboardViewModel(private val scheduleEventDao: ScheduleEventDao) : ViewModel() {
 
     private val today = getCurrentDate()

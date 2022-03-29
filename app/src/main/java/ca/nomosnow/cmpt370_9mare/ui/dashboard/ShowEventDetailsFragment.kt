@@ -14,11 +14,19 @@ import ca.nomosnow.cmpt370_9mare.R
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import ca.nomosnow.cmpt370_9mare.databinding.FragmentEventDetailsBinding
 
+
+/**
+ * ShowEventDetailsFragment class constructor with ScheduleEvent and NavDirections as parameters
+ * show detail of events
+ */
 class ShowEventDetailsFragment(
     private val event: ScheduleEvent,
     private val action: NavDirections
 ) : DialogFragment() {
 
+    /**
+     * Singleton Object
+     */
     companion object {
         const val EVENT_DETAILS = "eventDetails_tag"
     }
@@ -26,6 +34,10 @@ class ShowEventDetailsFragment(
     private var _binding: FragmentEventDetailsBinding? = null
     private val binding get() = _binding!!
 
+
+    /**
+     * createDialog View
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it, R.style.RoundedCornersDialog)
@@ -36,6 +48,9 @@ class ShowEventDetailsFragment(
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    /**
+     * createView and binding data to layout
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +70,7 @@ class ShowEventDetailsFragment(
                 requireDialog().cancel()
                 NavHostFragment.findNavController(requireParentFragment()).navigate(action)
             }
-            
+
             eventDetailsColor.setBackgroundColor(
                 ContextCompat.getColor(
                     eventDetailsColor.context,

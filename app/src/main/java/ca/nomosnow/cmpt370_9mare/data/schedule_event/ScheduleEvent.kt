@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 
+/**
+ * Entity data class
+ */
 @Entity(tableName = "event")
 data class ScheduleEvent(
     @PrimaryKey(autoGenerate = true)

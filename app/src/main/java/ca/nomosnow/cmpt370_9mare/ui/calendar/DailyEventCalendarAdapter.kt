@@ -10,10 +10,16 @@ import ca.nomosnow.cmpt370_9mare.R
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import ca.nomosnow.cmpt370_9mare.databinding.DailyEventViewBinding
 
+/**
+ * DailyEventCalendarAdapter
+ */
 class DailyEventCalendarAdapter(private val onItemClicked: (ScheduleEvent) -> Unit) :
     ListAdapter<ScheduleEvent, DailyEventCalendarAdapter.DailyEventViewHolder>(DiffCallback) {
 
 
+    /**
+     * DailyEventViewHolder create view holder and bind data into it
+     */
     class DailyEventViewHolder(private var binding: DailyEventViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(scheduleEvent: ScheduleEvent) {
@@ -35,6 +41,9 @@ class DailyEventCalendarAdapter(private val onItemClicked: (ScheduleEvent) -> Un
         }
     }
 
+    /**
+     * create layout
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyEventViewHolder {
         return DailyEventViewHolder(
             DailyEventViewBinding.inflate(
@@ -46,6 +55,9 @@ class DailyEventCalendarAdapter(private val onItemClicked: (ScheduleEvent) -> Un
     }
 
 
+    /**
+     * bind item with onClick()
+     */
     override fun onBindViewHolder(holder: DailyEventViewHolder, position: Int) {
         val scheduleEvent = getItem(position)
         holder.itemView.setOnClickListener {
@@ -54,6 +66,9 @@ class DailyEventCalendarAdapter(private val onItemClicked: (ScheduleEvent) -> Un
         holder.bind(scheduleEvent)
     }
 
+    /**
+     * Singleton Object to compare if the same object is called
+     */
     companion object DiffCallback : DiffUtil.ItemCallback<ScheduleEvent>() {
         override fun areItemsTheSame(oldItem: ScheduleEvent, newItem: ScheduleEvent): Boolean {
             return oldItem.title == newItem.title

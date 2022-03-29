@@ -22,6 +22,8 @@ private const val FUTURE = "future"
 private const val PAST = "past"
 private const val SEARCH = "search"
 
+
+// DashboardFragment
 class DashboardFragment : Fragment() {
 
     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
@@ -37,6 +39,10 @@ class DashboardFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
+
+    /**
+     * crete view for fragment
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +53,9 @@ class DashboardFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * binding data to View
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,6 +65,9 @@ class DashboardFragment : Fragment() {
         initializeDashboardAdapter(viewModel.futureEvents)
     }
 
+    /**
+     * create option menu
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.dashboard_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -85,11 +97,17 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    /**
+     * destroy view and binding data
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * initialize adapter for dashboard
+     */
     private fun initializeDashboardAdapter(events: LiveData<List<DashboardGroupEvents>>) {
         val dashboardAdapter = DashboardAdapter(childFragmentManager)
 
@@ -102,6 +120,9 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    /**
+     * setting up showEvents for future events and past events
+     */
     private fun showEvents(type: String): Boolean {
         when (type) {
             FUTURE -> initializeDashboardAdapter(viewModel.futureEvents)
@@ -112,6 +133,9 @@ class DashboardFragment : Fragment() {
         return true
     }
 
+    /**
+     * invoke shw search dialog
+     */
     private fun showSearchDialog() {
         val builder = AlertDialog.Builder(this.context)
         builder.setTitle("Search for Events by Name")
@@ -135,6 +159,9 @@ class DashboardFragment : Fragment() {
             .show()
     }
 
+    /**
+     * searchEventAndSetAdapter function take Editable data and display event
+     */
     private fun searchEventAndSetAdapter(name: Editable) {
         val eventName = String.format("%%$name%%")
         if (eventName != "%%") {

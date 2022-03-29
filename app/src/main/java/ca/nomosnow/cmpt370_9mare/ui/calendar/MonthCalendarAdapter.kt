@@ -28,6 +28,9 @@ class MonthCalendarAdapter(
     ListAdapter<Day, MonthCalendarAdapter.DayViewHolder>(DiffCallback) {
 
 
+    /**
+     * DayViewHolder create holder and binding data to layout
+     */
     inner class DayViewHolder(
         private var binding: CalendarCellLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -41,7 +44,7 @@ class MonthCalendarAdapter(
                     )
                 )
             }
-
+            // set background round color for current click day
             viewModel.selectDate.observe(lifecycleOwner) {
                 if (it == day.date) {
                     binding.dateBackgroundId.visibility = View.VISIBLE
@@ -50,6 +53,7 @@ class MonthCalendarAdapter(
                 }
             }
 
+            // set dot for day which contain event
             viewModel.datesWithEventInMonth.observe(lifecycleOwner) {
                 if (it.contains(day.date.toString())) {
                     binding.dotDay.visibility = View.VISIBLE
@@ -58,6 +62,7 @@ class MonthCalendarAdapter(
                 }
             }
 
+            // binding day and Adapter to layout
             binding.apply {
                 this.day = day
                 lifecycleOwner = this@MonthCalendarAdapter.lifecycleOwner
@@ -67,6 +72,9 @@ class MonthCalendarAdapter(
         }
     }
 
+    /**
+     * call back Singleton Object to compare object
+     */
     companion object DiffCallback : DiffUtil.ItemCallback<Day>() {
         override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {
             return (oldItem.date == newItem.date) && (oldItem.date != null)
@@ -91,7 +99,6 @@ class MonthCalendarAdapter(
     }
 
     /**
-     *
      * Replaces the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: MonthCalendarAdapter.DayViewHolder, position: Int) {
