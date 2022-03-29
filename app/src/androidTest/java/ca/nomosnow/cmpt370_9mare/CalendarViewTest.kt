@@ -54,8 +54,8 @@ class CalendarViewTest : BaseTest() {
         val testTitle = "C3 - Last Month"
 
         createEvent(testTitle, date)
-        onView(withId(R.id.next_month_calendar)).perform(click())
+        onView(withId(R.id.button_last_month)).perform(click())
         onView(withText(testTitle)).check(matches(isDisplayed()))
-        deleteEvent(testTitle)
+        deleteEvent(testTitle, true)
     }
 }

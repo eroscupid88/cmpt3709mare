@@ -19,19 +19,20 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class ColorTest: BaseTest(){
+class ColorTest : BaseTest() {
 
-    companion object{
-        const val  PERSONAL = "Personal"
+    companion object {
+        const val PERSONAL = "Personal"
         const val WORK = "Work"
         const val SCHOOL = "School"
 
     }
+
     @Test
-    /**
-     * Checking to see if the Personal group exist in the list of events
-     * */
-    fun dashboardEventList(){
+            /**
+             * Checking to see if the Personal group exist in the list of events
+             * */
+    fun dashboardEventList() {
         val title = "Doctor's appointment"
         val group = PERSONAL
 
@@ -46,11 +47,11 @@ class ColorTest: BaseTest(){
 
 
     @Test
-    /**
-     * Checking to see if the Work group exist in the list of events
-     * */
-    fun dashboardEventList_2(){
-        val title = "Group meeting about new project"
+            /**
+             * Checking to see if the Work group exist in the list of events
+             * */
+    fun dashboardEventList_2() {
+        val title = "Group meeting"
         val group = WORK
 
         createEvent(title, eventGroup = group)
@@ -62,10 +63,10 @@ class ColorTest: BaseTest(){
     }
 
     @Test
-    /**
-     * Checking to see if the School group exist in the list of events
-     * */
-    fun dashboardEventList_3(){
+            /**
+             * Checking to see if the School group exist in the list of events
+             * */
+    fun dashboardEventList_3() {
         val title = "CMPT paper due"
         val group = SCHOOL
 
@@ -76,8 +77,4 @@ class ColorTest: BaseTest(){
         onView(isRoot()).perform(pressBack())
         deleteEvent(title)
     }
-
-
-
-
 }
