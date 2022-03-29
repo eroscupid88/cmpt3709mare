@@ -9,15 +9,25 @@ import androidx.annotation.RequiresApi
 import ca.nomosnow.cmpt370_9mare.R
 import ca.nomosnow.cmpt370_9mare.data.schedule_event.ScheduleEvent
 import ca.nomosnow.cmpt370_9mare.databinding.FragmentCreateEventBinding
-import java.time.LocalTime
 
+/**
+ * This class handles all validation used in the creation or modification of events.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateEventValidation(
     private val fragment: CreateEventFragment,
     private val binding: FragmentCreateEventBinding
 ) {
+    // Boolean holding the validation state of current inputs
     private val isValidated get() = validateTitle() && validateTimeInput()
 
+    /**
+     * Checks for a valid entry for Title input
+     *
+     * Fails if any of the following are met:
+     *  - No title
+     *  - Title is greater than 30 chars
+     */
     private fun validateTitle(): Boolean {
         return when {
             binding.inputTitle.text.toString().trim().isEmpty() -> {
@@ -36,6 +46,12 @@ class CreateEventValidation(
         }
     }
 
+    /**
+     * Checks for a valid entry for the times
+     *
+     * Fails if any of the following are met:
+     *  - timeTo is less than timeFrom
+     */
     private fun validateTimeInput(): Boolean {
         binding.apply {
             return when {
@@ -52,7 +68,10 @@ class CreateEventValidation(
         }
     }
 
-
+    /**
+     * Handler for if the button to allow updates/creation of events
+     * should be shown or hidden.
+     */
     private fun showSubmitButton(boolean: Boolean) {
         binding.submitCreateEvent.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
     }
@@ -76,6 +95,9 @@ class CreateEventValidation(
         builder.show()
     }
 
+    /**
+     * Create listeners for all inputs requiring validations
+     */
     fun setUpValidations() {
         binding.apply {
             inputTitle.addTextChangedListener(TextFieldValidation(inputTitle))
@@ -84,9 +106,9 @@ class CreateEventValidation(
         }
     }
 
-    /*
-    * applying text watcher on each text field
-    */
+    /**
+     * applying text watcher on each text field
+     */
     inner class TextFieldValidation(private val view: View) : TextWatcher {
         override fun afterTextChanged(s: Editable?) {}
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
