@@ -14,11 +14,11 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "ca.nomosnow"
+        applicationId "ca.nomosnow.cmpt370_9mare"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -139,5 +139,6 @@ dependencies {
     implementation("androidx.hilt:hilt-work:1.0.0")
     // When using Kotlin.
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
 }
